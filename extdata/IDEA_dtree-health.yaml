@@ -1,0 +1,57 @@
+name: IDEA study health
+payoff: 0
+type: decision
+Enhanced:
+  payoff: 0
+  type: chance
+  TB:
+    p: 0.25
+    payoff: 0
+    type: chance
+    Clinical judgement high risk:
+      type: terminal
+      p: 0.4
+      payoff: 0
+    Clinical judgement low risk:
+      payoff: 0
+      p: 0.6
+      type: chance
+      Ruleout test positive:
+        type: terminal
+        p: 0.7
+        payoff: 0
+      Ruleout test negative:
+        type: terminal
+        p: 0.3
+        payoff: 0
+  Not TB:
+    p: 0.75
+    payoff: 0
+    type: chance
+    Clinical judgement high risk:
+      type: terminal
+      p: 0.4
+      payoff: 10.75
+    Clinical judgement low risk:
+      payoff: 0
+      p: 0.6
+      type: chance
+      Ruleout test positive:
+        type: terminal
+        p: 0.7
+        payoff: 10.75
+      Ruleout test negative:
+        type: terminal
+        p: 0.3
+        payoff: 0
+Standard:
+  payoff: 0
+  type: chance
+  TB:
+    type: terminal
+    p: 0.25
+    payoff: 0
+  Not TB:
+    type: terminal
+    p: 0.75
+    payoff: 10.75

@@ -1,0 +1,105 @@
+name: IDEA study cost
+payoff: 0
+type: decision
+Enhanced:
+  payoff: 0
+  type: chance
+  Dosanjh1:
+    p: 0.21
+    payoff: 0
+    type: chance
+    Clinical judgement high risk:
+      type: terminal
+      p: 0.3
+      payoff: 0
+    Clinical judgement low risk:
+      payoff: 0
+      p: 0.3
+      type: chance
+      Ruleout test positive:
+        type: terminal
+        p: 0.7
+        payoff: 0
+      Ruleout test negative:
+        type: terminal
+        p: 0.3
+        payoff: 0
+  Dosanjh2:
+    p: 0.04
+    payoff: 0
+    type: chance
+    Clinical judgement high risk:
+      type: terminal
+      p: 0.3
+      payoff: 9.34
+    Clinical judgement low risk:
+      payoff: 0
+      p: 0.3
+      type: chance
+      Ruleout test positive:
+        type: terminal
+        p: 0.7
+        payoff: 9.34
+      Ruleout test negative:
+        type: terminal
+        p: 0.3
+        payoff: 9.34
+  Dosanjh3:
+    p: 0.06
+    payoff: 0
+    type: chance
+    Clinical judgement high risk:
+      type: terminal
+      p: 0.3
+      payoff: 16.04
+    Clinical judgement low risk:
+      payoff: 0
+      p: 0.3
+      type: chance
+      Ruleout test positive:
+        type: terminal
+        p: 0.7
+        payoff: 16.04
+      Ruleout test negative:
+        type: terminal
+        p: 0.3
+        payoff: 16.04
+  Dosanjh4:
+    p: 0.69
+    payoff: 0
+    type: chance
+    Clinical judgement high risk:
+      type: terminal
+      p: 0.3
+      payoff: 10.75
+    Clinical judgement low risk:
+      payoff: 0
+      p: 0.3
+      type: chance
+      Ruleout test positive:
+        type: terminal
+        p: 0.7
+        payoff: 10.75
+      Ruleout test negative:
+        type: terminal
+        p: 0.3
+        payoff: 0
+Standard:
+  payoff: 0
+  type: chance
+  Dosanjh1:
+    type: terminal
+    p: 0.21
+    payoff: 0
+  Dosanjh2:
+    type: terminal
+    p: 0.04
+    payoff: 0
+  Dosanjh3:
+    type: terminal
+    p: 0.06
+    payoff: 0
+  Dosanjh4:
+    type: terminal
+    p: 0.68
+    payoff: 0

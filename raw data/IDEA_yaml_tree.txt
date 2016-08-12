@@ -1,0 +1,32 @@
+Initial decision tree:
+                                          Probability  Payoff Cost     Type
+ IDEA study                                                                
+  ¦--Enhanced                                                      decision
+  ¦   ¦--TB                                   20.00 %       0        chance
+  ¦   ¦   ¦--Clinical judgement high risk     30.00 % 200,000        chance
+  ¦   ¦   °--Clinical judgement low risk                             chance
+  ¦   ¦       ¦--Ruleout test positive        70.00 %       0        chance
+  ¦   ¦       °--Ruleout test negative        30.00 %       0        chance
+  ¦   °--Not TB                               20.00 %       0        chance
+  ¦       ¦--Clinical judgement high risk     30.00 % 200,000        chance
+  ¦       °--Clinical judgement low risk                             chance
+  ¦           ¦--Ruleout test positive        70.00 %       0        chance
+  ¦           °--Ruleout test negative        30.00 %       0        chance
+  °--Standard                                               0      decision
+
+
+Final decision tree:
+                                          Probability    Payoff Cost     Type
+ IDEA study                                           24,000.00              
+  ¦--Enhanced                                         24,000.00      decision
+  ¦   ¦--TB                                   20.00 % 60,000.00        chance
+  ¦   ¦   ¦--Clinical judgement high risk     30.00 %   200,000        chance
+  ¦   ¦   °--Clinical judgement low risk                   0.00        chance
+  ¦   ¦       ¦--Ruleout test positive        70.00 %         0        chance
+  ¦   ¦       °--Ruleout test negative        30.00 %         0        chance
+  ¦   °--Not TB                               20.00 % 60,000.00        chance
+  ¦       ¦--Clinical judgement high risk     30.00 %   200,000        chance
+  ¦       °--Clinical judgement low risk                   0.00        chance
+  ¦           ¦--Ruleout test positive        70.00 %         0        chance
+  ¦           °--Ruleout test negative        30.00 %         0        chance
+  °--Standard                                                 0      decision
