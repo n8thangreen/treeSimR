@@ -1,0 +1,202 @@
+
+library(yaml)
+
+
+sink("raw data/LTBI_dtree-cost-distns.yaml")
+
+cat("
+    name: LTBI screening cost
+    type: decision
+    distn: gamma
+    mean: 1
+    sd: 1
+    Screening:
+      distn: gamma
+      mean: 1
+      sd: 1
+      type: chance
+      LTBI:
+        p: 0.25
+        distn: gamma
+        mean: 1
+        sd: 1
+        type: chance
+        Not GP registered:
+          type: terminal
+          p: 0.4
+          distn: gamma
+          mean: 1
+          sd: 1
+        GP registered:
+          type: chance
+          p: 0.4
+          distn: gamma
+          mean: 1
+          sd: 1
+          Not Agree to Screen:
+            p: 0.6
+            type: terminal
+            distn: gamma
+            mean: 1
+            sd: 1
+          Agree to Screen:
+            p: 0.6
+            type: chance
+            distn: gamma
+            mean: 1
+            sd: 1
+            Test Negative:
+              type: terminal
+              p: 0.7
+              distn: gamma
+              mean: 1
+              sd: 1
+            Test Positive:
+              type: chance
+              p: 0.7
+              distn: gamma
+              mean: 1
+              sd: 1
+              Not Start Treatment:
+                type: terminal
+                p: 0.3
+                distn: gamma
+                mean: 1
+                sd: 1
+              Start Treatment:
+                type: chance
+                p: 0.3
+                distn: gamma
+                mean: 1
+                sd: 1
+                Complete Treatment:
+                  type: terminal
+                  p: 0.75
+                  distn: gamma
+                  mean: 1
+                  sd: 1
+                Not Complete Treatment:
+                  type: terminal
+                  p: 0.75
+                  distn: gamma
+                  mean: 1
+                  sd: 1
+      non-LTBI:
+        p: 0.25
+        distn: gamma
+        mean: 1
+        sd: 1
+        type: chance
+        Not GP registered:
+          type: terminal
+          p: 0.4
+          distn: gamma
+          mean: 1
+          sd: 1
+        GP registered:
+          type: terminal
+          p: 0.4
+          distn: gamma
+          mean: 1
+          sd: 1
+          Not Agree to Screen:
+            p: 0.6
+            type: chance
+            distn: gamma
+            mean: 1
+            sd: 1
+          Agree to Screen:
+            p: 0.6
+            type: chance
+            distn: gamma
+            mean: 1
+            sd: 1
+            Test Negative:
+              type: terminal
+              p: 0.7
+              distn: gamma
+              mean: 1
+              sd: 1
+            Test Positive:
+              type: terminal
+              p: 0.7
+              distn: gamma
+              mean: 1
+              sd: 1
+              Not Start Treatment:
+                type: terminal
+                p: 0.3
+                distn: gamma
+                mean: 1
+                sd: 1
+              Start Treatment:
+                type: terminal
+                p: 0.3
+                distn: gamma
+                mean: 1
+                sd: 1
+                Complete Treatment:
+                  type: terminal
+                  p: 0.75
+                  distn: gamma
+                  mean: 1
+                  sd: 1
+                Not Complete Treatment:
+                  type: terminal
+                  p: 0.75
+                  distn: gamma
+                  mean: 1
+                  sd: 1
+    No Screening:
+      p: 0.25
+      distn: gamma
+      mean: 1
+      sd: 1
+      type: chance
+      LTBI:
+        type: terminal
+        p: 0.4
+        distn: gamma
+        mean: 1
+        sd: 1
+      non-LTBI:
+        p: 0.6
+        type: terminal
+        distn: gamma
+        mean: 1
+        sd: 1
+    ", fill=TRUE)
+sink()
+
+
+# osList <- yaml.load(yaml)
+osList <- yaml.load_file("raw data/LTBI_dtree-cost-distns.yaml")
+osNode <- as.Node(osList)
+print(osNode, "type", "p", "distn", "mean", "sd")
+
+sampleNode <- function(node) {
+  DISTN <- list(distn=node$distn, params=c(mean=node$mean, sd=node$sd))
+  sample.distributions(list(DISTN))
+}
+
+rpayoff <- osNode$Get(sampleNode)
+osNode$Set(payoff = rpayoff)
+print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+
+osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
+
+print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+
+osNode$Do(decision, filterFun = function(x) x$type == 'decision')
+osNode$Get('decision')[1]
+
+
+## probabilty of successfully & correctly treating LTBI
+dummy <- rep(0, osNode$totalCount)
+dummy[12] <- 1
+osNode$Set(payoff = dummy)
+print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
+print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+osNode$Get('payoff')[1]
+

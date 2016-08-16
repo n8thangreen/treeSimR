@@ -216,7 +216,7 @@ createParamGrid <- function(Nrepl=10,
 
 
 
-#' CEplane_yaml
+#' Cost-effectiveness plane
 #'
 #' blah
 #'

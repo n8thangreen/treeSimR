@@ -1,6 +1,9 @@
 
 #' Calculate weighted expectations
 #'
+#' Gives maximum payoff, given optimal decisions
+#' https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html
+#'
 #' @param node
 #'
 #' @return jl$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)

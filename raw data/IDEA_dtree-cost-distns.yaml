@@ -1,0 +1,89 @@
+
+name: IDEA study cost
+type: decision
+distn: gamma
+mean: 1
+sd: 1
+Enhanced:
+  distn: gamma
+  mean: 1
+  sd: 1
+  type: chance
+  TB:
+    p: 0.25
+    distn: gamma
+    mean: 1
+    sd: 1
+    type: chance
+    Clinical judgement high risk:
+      type: terminal
+      p: 0.4
+      distn: gamma
+      mean: 1
+      sd: 1
+    Clinical judgement low risk:
+      p: 0.6
+      type: chance
+      distn: gamma
+      mean: 1
+      sd: 1
+      Ruleout test positive:
+        type: terminal
+        p: 0.7
+        distn: gamma
+        mean: 1
+        sd: 1
+      Ruleout test negative:
+        type: terminal
+        p: 0.3
+        distn: gamma
+        mean: 1
+        sd: 1
+  Not TB:
+    type: chance
+    p: 0.75
+    distn: gamma
+    mean: 1
+    sd: 1
+    Clinical judgement high risk:
+      type: terminal
+      p: 0.4
+      distn: gamma
+      mean: 1
+      sd: 1
+    Clinical judgement low risk:
+      type: chance
+      p: 0.6
+      distn: gamma
+      mean: 1
+      sd: 1
+      Ruleout test positive:
+        type: terminal
+        p: 0.7
+        distn: gamma
+        mean: 1
+        sd: 1
+      Ruleout test negative:
+        type: terminal
+        p: 0.3
+        distn: gamma
+        mean: 1
+        sd: 1
+Standard:
+  distn: gamma
+  mean: 1
+  sd: 1
+  type: chance
+  TB:
+    type: terminal
+    p: 0.25
+    distn: gamma
+    mean: 1
+    sd: 1
+  Not TB:
+    type: terminal
+    p: 0.75
+    distn: gamma
+    mean: 1
+    sd: 1
+

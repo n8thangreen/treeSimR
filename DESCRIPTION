@@ -17,4 +17,5 @@ Imports:
     igraph,
     yaml
 Suggests:
-    ggtree
+    ggtree,
+    triangle

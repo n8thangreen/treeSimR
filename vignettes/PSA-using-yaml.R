@@ -5,6 +5,7 @@
 #
 #
 
+library(data.tree)
 
 ## have a separate tree for health and cost so that we can then calculate ICER more easily
 ## only non-zero payoffs at terminal nodes
