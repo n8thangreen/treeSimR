@@ -1,4 +1,25 @@
-    library(yaml)
+    treeSimR
+========
+
+R package for easy forward simulating probability decision trees and
+PSA.
+
+Currently contains functions to:
+
+-   read-in and check tree object
+-   simulate final outcomes
+-   Monte Carlo simulate multiple simulations
+
+Read-in trees
+-------------
+
+Simulate a scenario
+-------------------
+
+Monte Carlo forward simulation
+------------------------------
+
+library(yaml)
 
     ## Warning: package 'yaml' was built under R version 3.3.1
 
