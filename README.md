@@ -1,4 +1,4 @@
-    treeSimR
+treeSimR
 ========
 
 R package for easy forward simulating probability decision trees and
