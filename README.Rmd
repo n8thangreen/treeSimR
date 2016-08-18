@@ -4,6 +4,23 @@ date:
 output: md_document
 ---
 
+# treeSimR
+
+R package for easy forward simulating probability decision trees and PSA.
+
+Currently contains functions to:
+
+* read-in and check tree object
+* simulate final outcomes
+* Monte Carlo simulate multiple simulations
+
+## Read-in trees
+
+## Simulate a scenario
+
+## Monte Carlo forward simulation
+
+
 ```{r}
 library(yaml)
 library(data.tree)

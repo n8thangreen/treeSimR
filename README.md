@@ -1,7 +1,25 @@
+treeSimR
+========
+
+R package for easy forward simulating probability decision trees and
+PSA.
+
+Currently contains functions to:
+
+-   read-in and check tree object
+-   simulate final outcomes
+-   Monte Carlo simulate multiple simulations
+
+Read-in trees
+-------------
+
+Simulate a scenario
+-------------------
+
+Monte Carlo forward simulation
+------------------------------
+
     library(yaml)
-
-    ## Warning: package 'yaml' was built under R version 3.3.1
-
     library(data.tree)
 
     ## Warning: package 'data.tree' was built under R version 3.3.1
@@ -247,6 +265,139 @@
 
     ## Loading required package: triangle
 
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
+    ## Loading required package: triangle
+
+    ## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+    ## logical.return = TRUE, : there is no package called 'triangle'
+
     osNode$Set(payoff = rpayoff)
     print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 
@@ -278,34 +429,34 @@
     ## 25  °--No Screening                                     chance 0.25 gamma
     ## 26      ¦--LTBI                                       terminal 0.40 gamma
     ## 27      °--non-LTBI                                   terminal 0.60 gamma
-    ##    mean sd    payoff
-    ## 1     1  1 4.5107784
-    ## 2     1  1 0.5607906
-    ## 3     1  1 0.1367957
-    ## 4     1  1 1.3205362
-    ## 5     1  1 1.5735139
-    ## 6     1  1 2.5569487
-    ## 7     1  1 1.1241522
-    ## 8     1  1 0.7146934
-    ## 9     1  1 0.3045186
-    ## 10    1  1 0.6952084
-    ## 11    1  1 0.4995321
-    ## 12    1  1 1.8853262
-    ## 13    1  1 3.0972807
-    ## 14    1  1 1.0815729
-    ## 15    1  1 1.9505662
-    ## 16    1  1 0.3293278
-    ## 17    1  1 0.2013202
-    ## 18    1  1 1.4345249
-    ## 19    1  1 0.2683697
-    ## 20    1  1 3.0815861
-    ## 21    1  1 0.4378544
-    ## 22    1  1 0.1077776
-    ## 23    1  1 0.5076647
-    ## 24    1  1 0.2424056
-    ## 25    1  1 1.0754149
-    ## 26    1  1 0.7080922
-    ## 27    1  1 1.7876971
+    ##    mean sd     payoff
+    ## 1     1  1 3.30531260
+    ## 2     1  1 2.36279105
+    ## 3     1  1 0.49236500
+    ## 4     1  1 0.17607808
+    ## 5     1  1 0.27138625
+    ## 6     1  1 0.66941045
+    ## 7     1  1 0.63856947
+    ## 8     1  1 1.31207854
+    ## 9     1  1 0.82938164
+    ## 10    1  1 0.44553443
+    ## 11    1  1 0.30431002
+    ## 12    1  1 1.42773989
+    ## 13    1  1 0.42231625
+    ## 14    1  1 1.61070146
+    ## 15    1  1 0.49758701
+    ## 16    1  1 0.04771607
+    ## 17    1  1 0.64248260
+    ## 18    1  1 0.20041042
+    ## 19    1  1 0.04820516
+    ## 20    1  1 0.46702178
+    ## 21    1  1 0.83897947
+    ## 22    1  1 0.84342320
+    ## 23    1  1 0.11357021
+    ## 24    1  1 1.75092383
+    ## 25    1  1 0.49926005
+    ## 26    1  1 0.32469764
+    ## 27    1  1 0.21497765
 
     osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
 
@@ -339,34 +490,34 @@
     ## 25  °--No Screening                                     chance 0.25 gamma
     ## 26      ¦--LTBI                                       terminal 0.40 gamma
     ## 27      °--non-LTBI                                   terminal 0.60 gamma
-    ##    mean sd    payoff
-    ## 1     1  1 1.3558551
-    ## 2     1  1 0.5993223
-    ## 3     1  1 1.4853317
-    ## 4     1  1 1.3205362
-    ## 5     1  1 2.3927931
-    ## 6     1  1 2.5569487
-    ## 7     1  1 1.4310398
-    ## 8     1  1 0.7146934
-    ## 9     1  1 1.3296491
-    ## 10    1  1 0.6952084
-    ## 11    1  1 3.7369552
-    ## 12    1  1 1.8853262
-    ## 13    1  1 3.0972807
-    ## 14    1  1 0.9119576
-    ## 15    1  1 1.9505662
-    ## 16    1  1 0.3293278
-    ## 17    1  1 0.2013202
-    ## 18    1  1 2.3449691
-    ## 19    1  1 0.2683697
-    ## 20    1  1 3.0815861
-    ## 21    1  1 0.4378544
-    ## 22    1  1 0.1077776
-    ## 23    1  1 0.5076647
-    ## 24    1  1 0.2424056
-    ## 25    1  1 1.3558551
-    ## 26    1  1 0.7080922
-    ## 27    1  1 1.7876971
+    ##    mean sd     payoff
+    ## 1     1  1 0.25886565
+    ## 2     1  1 0.19050681
+    ## 3     1  1 0.54390599
+    ## 4     1  1 0.17607808
+    ## 5     1  1 1.18368690
+    ## 6     1  1 0.66941045
+    ## 7     1  1 1.30340105
+    ## 8     1  1 1.31207854
+    ## 9     1  1 0.54992296
+    ## 10    1  1 0.44553443
+    ## 11    1  1 1.38754210
+    ## 12    1  1 1.42773989
+    ## 13    1  1 0.42231625
+    ## 14    1  1 0.21812123
+    ## 15    1  1 0.49758701
+    ## 16    1  1 0.04771607
+    ## 17    1  1 0.64248260
+    ## 18    1  1 0.36065886
+    ## 19    1  1 0.04820516
+    ## 20    1  1 0.46702178
+    ## 21    1  1 0.83897947
+    ## 22    1  1 0.84342320
+    ## 23    1  1 0.11357021
+    ## 24    1  1 1.75092383
+    ## 25    1  1 0.25886565
+    ## 26    1  1 0.32469764
+    ## 27    1  1 0.21497765
 
     osNode$Do(decision, filterFun = function(x) x$type == 'decision')
     osNode$Get('decision')[1]
