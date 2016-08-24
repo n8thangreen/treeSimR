@@ -2,7 +2,7 @@
 #' Calculate weighted expectations
 #'
 #' Gives maximum payoff, given optimal decisions
-#' https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html
+#' [This is the original example using data.tree](https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html)
 #'
 #' @param node
 #'
@@ -16,7 +16,28 @@ payoff <- function(node) {
 }
 
 
-#' Calculate optimal decision
+#' Randomly Sample a Value for a Node
+#'
+#' @param node
+#'
+#' @return sampled value
+#' @export
+#'
+#' @examples
+sampleNode <- function(node) {
+
+  DISTN <- switch(node$distn,
+                  gamma = list(distn=node$distn, params=c(mean=node$mean, sd=node$sd)),
+                  unif = list(distn=node$distn,  params=c(min=node$min, max=node$max)))
+
+  return(sample.distributions(list(DISTN)))
+}
+
+
+
+#' Calculate Optimal Decision
+#'
+#' Depends on how we calculate the payoff function.
 #'
 #' @param x
 #'
@@ -31,7 +52,7 @@ decision <- function(x) {
 }
 
 
-#' Nodelabel
+#' Node label
 #'
 #' @param node
 #'

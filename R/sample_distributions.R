@@ -11,20 +11,23 @@
 
 sample.distributions <- function(param.distns){
 
-  require(triangle)
+  try(library(triangle), silent = TRUE)
 
   out <- data.frame(matrix(NA, nrow = 1, ncol = length(param.distns)))
   for (i in 1:length(param.distns)){
 
-    out[i] <- switch(param.distns[[i]]$distn,
+    distn <- match.arg(param.distns[[i]]$distn, c("gamma", "unif", "triangle", "none"))
+
+    out[i] <- switch(distn,
                      gamma = {
-                       mom <- MoM.gamma(mean=param.distns[[i]]$params["mean"], var=param.distns[[i]]$params["sd"]^2)
+                       mom <- MoM.gamma(mean=param.distns[[i]]$params["mean"],
+                                        var=param.distns[[i]]$params["sd"]^2)
                        gamma = rgamma(1, shape = mom$shape, scale = mom$scale)
                      },
                      unif = runif(1, param.distns[[i]]$params["min"],
-                                  param.distns[[i]]$params["max"]),
+                                     param.distns[[i]]$params["max"]),
                      triangle = rtriangle(1, param.distns[[i]]$params["min"],
-                                          param.distns[[i]]$params["max"]),
+                                             param.distns[[i]]$params["max"]),
                      none = param.distns[[i]]$params["mean"])
   }
 
@@ -34,9 +37,22 @@ sample.distributions <- function(param.distns){
 }
 
 
+#' Sample a data.tree Node
+#'
+#' @param node data.tree node
+#'
+#' @return
+#' @export
+#'
+#' @examples
+sampleNode <- function(node) {
+  DISTN <- list(distn = node$distn,
+                params = c(mean=node$mean, sd=node$sd, min=node$min, max=node$max))
+  sample.distributions(list(DISTN))
+}
 
 
-#' Get standard deviation from Normal confidence interval
+#' Get Standard Deviation from Normal Confidence Interval
 #'
 #' http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and
 #'

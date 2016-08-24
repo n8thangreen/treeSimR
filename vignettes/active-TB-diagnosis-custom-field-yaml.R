@@ -1,8 +1,8 @@
 
-library(yaml)
-
 ## test tree
-yaml <- "
+sink("raw data/IDEA_dtree-cost-distns.yaml")
+# yaml <-
+cat("
 name: IDEA study cost
 type: decision
 distn: gamma
@@ -42,7 +42,9 @@ Standard:
     distn: gamma
     mean: 1
     sd: 1
-"
+", fill=TRUE)
+sink()
+
 
 ## full tree
 sink("raw data/IDEA_dtree-cost-distns.yaml")
@@ -142,18 +144,13 @@ sink()
 
 # osList <- yaml.load(yaml)
 osList <- yaml.load_file("raw data/IDEA_dtree-cost-distns.yaml")
-osNode <- as.Node(osList)
+osNode <- data.tree::as.Node(osList)
 print(osNode, "type", "p", "distn", "mean", "sd")
-
-sampleNode <- function(node) {
-  DISTN <- list(distn=node$distn, params=c(mean=node$mean, sd=node$sd))
-  sample.distributions(list(DISTN))
-}
 
 rpayoff <- osNode$Get(sampleNode)
 osNode$Set(payoff = rpayoff)
 print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 
-osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
+osNode$Do(fun = payoff, traversal = "post-order")#, filterFun = isNotLeaf)
 print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 
