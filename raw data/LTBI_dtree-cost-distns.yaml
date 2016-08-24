@@ -1,10 +1,10 @@
-  name: LTBI screening cost
-  distn: gamma
-  mean: 1
-  sd: 1
-  p: 0.25
-  type: chance
-  under 40k cob incidence:
+
+    name: LTBI screening cost
+    distn: gamma
+    mean: 1
+    sd: 1
+    type: chance
+    under 40k cob incidence:
       distn: gamma
       mean: 1
       sd: 1
@@ -15,7 +15,7 @@
         mean: 1
         sd: 1
         p: 0.25
-        type: chance
+        type: logical
         LTBI:
           p: 0.25
           distn: gamma
@@ -153,7 +153,7 @@
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         LTBI:
           type: terminal
           p: 0.4
@@ -166,7 +166,7 @@
           distn: gamma
           mean: 1
           sd: 1
-  40-150k cob incidence:
+    40-150k cob incidence:
       p: 0.25
       distn: gamma
       mean: 1
@@ -177,7 +177,7 @@
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         LTBI:
           p: 0.25
           distn: gamma
@@ -315,7 +315,7 @@
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         LTBI:
           type: terminal
           p: 0.4
@@ -328,7 +328,7 @@
           distn: gamma
           mean: 1
           sd: 1
-  over 150k cob incidence:
+    over 150k cob incidence:
       p: 0.25
       distn: gamma
       mean: 1
@@ -338,7 +338,7 @@
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         p: 0.25
         LTBI:
           p: 0.25
@@ -477,7 +477,7 @@
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         LTBI:
           type: terminal
           p: 0.4
@@ -490,3 +490,4 @@
           distn: gamma
           mean: 1
           sd: 1
+    

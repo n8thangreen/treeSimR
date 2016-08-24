@@ -18,7 +18,8 @@ create.costeffectiveness.tree <- function(yaml_tree){
 
   osNode <- data.tree::as.Node(osList)
 
-  stopifnot(all(osNode$Get("distn")%in%c("unif","gamma","triangle")))
+  if(!all(osNode$Get("distn")%in%c("unif","gamma","triangle")))
+                  stop("Error: Need to provide distributions for all branches")
   stopifnot(all(osNode$Get("type", filterFun = isLeaf)=="terminal"))
 
   class(osNode) <- c(class(osNode),"costeffectiveness.tree")

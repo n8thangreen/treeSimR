@@ -18,7 +18,7 @@ cat("
         mean: 1
         sd: 1
         p: 0.25
-        type: chance
+        type: logical
         LTBI:
           p: 0.25
           distn: gamma
@@ -156,7 +156,7 @@ cat("
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         LTBI:
           type: terminal
           p: 0.4
@@ -180,7 +180,7 @@ cat("
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         LTBI:
           p: 0.25
           distn: gamma
@@ -318,7 +318,7 @@ cat("
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         LTBI:
           type: terminal
           p: 0.4
@@ -341,7 +341,7 @@ cat("
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         p: 0.25
         LTBI:
           p: 0.25
@@ -480,7 +480,7 @@ cat("
         distn: gamma
         mean: 1
         sd: 1
-        type: chance
+        type: logical
         LTBI:
           type: terminal
           p: 0.4
@@ -500,15 +500,15 @@ sink()
 # osList <- yaml.load(yaml)
 osList <- yaml::yaml.load_file("raw data/LTBI_dtree-cost-distns.yaml")
 osNode <- data.tree::as.Node(osList)
-print(osNode, "type", "p", "distn", "mean", "sd")
 # osNode <- create.costeffectiveness.tree(yaml_tree="raw data/LTBI_dtree-cost-distns.yaml")
+print(osNode, "type", "p", "distn", "mean", "sd")
+
 
 rpayoff <- osNode$Get(sampleNode)
 osNode$Set(payoff = rpayoff)
 print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
-
-osNode$Do(payoff, traversal = "post-order")#, filterFun = isNotLeaf)
-
+osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
+# osNode <- calc.expectedValues(osNode)
 print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 
 osNode$Do(decision, filterFun = function(x) x$type == 'decision')

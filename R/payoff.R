@@ -1,7 +1,9 @@
 
-#' Calculate weighted expectations
+#' Calculate Weighted Expectations
 #'
-#' Gives maximum payoff, given optimal decisions
+#'  Calculates sum of probability times values (e.g. cost) for all branches in decision tree.
+#'
+#' (previously: Gives maximum payoff, given optimal decisions)
 #' [This is the original example using data.tree](https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html)
 #'
 #' @param node
@@ -11,8 +13,10 @@
 
 payoff <- function(node) {
 
-  if (node$type == 'chance') node$payoff <- sum(sapply(node$children, function(child) child$payoff * child$p))
-  else if (node$type == 'decision') node$payoff <- max(sapply(node$children, function(child) child$payoff))
+  if (node$type != 'terminal') node$payoff <- sum(sapply(node$children, function(child) child$payoff * child$p))
+
+  # if (node$type == 'chance') node$payoff <- sum(sapply(node$children, function(child) child$payoff * child$p))
+  # else if (node$type == 'decision') node$payoff <- max(sapply(node$children, function(child) child$payoff))
 }
 
 
