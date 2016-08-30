@@ -42,7 +42,7 @@ calc.expectedValues <- function(osNode){
 #' @param osNode A data.tree object with class costeffectiveness.tree
 #' @param n Number of simulations
 #'
-#' @return column-named array of n sets of expected values
+#' @return list containing array of n sets of expected values and sampled nodes full names
 #' @export
 #' @seealso calc.expectedValues
 #'

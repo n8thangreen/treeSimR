@@ -11,15 +11,3 @@ calcCostHealthGrid(tree_cost$Enhanced, tree_health$Enhanced,
 
 # see Radient website
 # https://github.com/vnijs/radiant
-
-
-##simple tree
-testyaml <- yaml.load_file("C:/Users/ngreen1/Dropbox/TB/IDEA/output_data/test.yaml")
-
-test.node <- as.Node(testyaml)
-print(test.node, "type", "payoff", "p")
-test.node$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
-print(test.node, "type", "payoff", "p")
-
-
-
