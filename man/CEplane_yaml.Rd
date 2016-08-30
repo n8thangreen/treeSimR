@@ -2,7 +2,7 @@
 % Please edit documentation in R/cost-effectiveness-fns2.R
 \name{CEplane_yaml}
 \alias{CEplane_yaml}
-\title{CEplane_yaml}
+\title{Cost-effectiveness plane}
 \usage{
 CEplane_yaml(N = 2, tree_cost, tree_health, Ctest = 100, sens = 0.9,
   spec = 0.9, table = FALSE)

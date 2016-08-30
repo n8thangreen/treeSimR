@@ -1,15 +1,29 @@
-#' Calculate Expected Values for Each Branch of Decision Tree
+#' Calculate Expected Values for Each Node of Decision Tree
+#'
+#' Takes an object of class costeffectiveness.tree.
 #'
 #' @param osNode
 #'
 #' @return osNode
 #' @export
 #'
+#' @seealso create.costeffectiveness.tree, payoff
+#'
 #' @examples
+#' ## read-in decision tree
+#' osNode <- create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+#' print(osNode, "type", "p", "distn", "mean", "sd")
+#'
+#' ## calculate a single realisation expected values
+#' osNode <- calc.expectedValues(osNode)
+#' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+#'
+#' ## calculate multiple realisation for specific nodes
+#' MonteCarlo.expectedValues(osNode, n=100)
 #'
 calc.expectedValues <- function(osNode){
 
-  stopifnot(class(osNode)=="costeffectiveness.tree")
+  stopifnot("costeffectiveness.tree" %in% class(osNode))
 
   rpayoff <- osNode$Get(sampleNode)
   osNode$Set(payoff = rpayoff)
@@ -22,29 +36,46 @@ calc.expectedValues <- function(osNode){
 
 #' Monte Carlo Forward Simulation of Decision Tree
 #'
-#' @param osNode data.tree object
+#' Results are returned for the nodes labelled logical in decision tree.
+#' Require at least one logical node.
+#'
+#' @param osNode A data.tree object with class costeffectiveness.tree
 #' @param n Number of simulations
 #'
-#' @return column names array of n sets of expected values
+#' @return column-named array of n sets of expected values
 #' @export
+#' @seealso calc.expectedValues
 #'
 #' @examples
+#' ## read-in decision tree
+#' osNode <- create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+#' print(osNode, "type", "p", "distn", "mean", "sd")
+#'
+#' ## calculate a single realisation expected values
+#' osNode <- calc.expectedValues(osNode)
+#' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+#'
+#' ## calculate multiple realisation for specific nodes
+#' MonteCarlo.expectedValues(osNode, n=100)
 #'
 MonteCarlo.expectedValues <- function(osNode, n=100){
 
-  if(!any(osNode$Get("type")=="logical"))
+  stopifnot("costeffectiveness.tree" %in% class(osNode))
+
+  if(!any(osNode$Get("type") == "logical"))
     stop("Error: Need at least one node labeled 'logical'")
 
-  out <-  NULL
+  NodeNames <- osNode$Get("pathString", filterFun = function(x) x$type=="logical")
+  names(NodeNames) <- NULL
+
+  out <-  matrix(data=NA, nrow=n, ncol=length(NodeNames))
   for (i in 1:n){
 
     osNode <- calc.expectedValues(osNode)
-
     res <- osNode$Get("payoff", filterFun = function(x) x$type=="logical")
-    names(res) <- osNode$Get("pathString", filterFun = function(x) x$type=="logical")
-
-    out <- rbind(out, res)
+    out[i,] <- res
   }
 
-  out
+  list("expected values" = out,
+       "node names" = NodeNames)
 }

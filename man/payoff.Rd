@@ -2,17 +2,21 @@
 % Please edit documentation in R/payoff.R
 \name{payoff}
 \alias{payoff}
-\title{Calculate weighted expectations}
+\title{Calculate Weighted Expectations}
 \usage{
 payoff(node)
 }
 \arguments{
-\item{node}{}
+\item{node}{The node of a data.tree package tree object}
 }
 \value{
 jl$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
 }
 \description{
-Calculate weighted expectations
+Calculates sum of probability times values (e.g. cost) for all branches in decision tree.
+}
+\details{
+(previously: Gives maximum payoff, given optimal decisions)
+[This is the original example using data.tree](https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html)
 }
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/payoff.R
 \name{Nodelabel}
 \alias{Nodelabel}
-\title{Nodelabel}
+\title{Node label}
 \usage{
 Nodelabel(node)
 }
@@ -10,6 +10,6 @@ Nodelabel(node)
 \item{node}{}
 }
 \description{
-Nodelabel
+Node label
 }
 

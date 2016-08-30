@@ -2,7 +2,7 @@
 % Please edit documentation in R/payoff.R
 \name{decision}
 \alias{decision}
-\title{Calculate optimal decision}
+\title{Calculate Optimal Decision}
 \usage{
 decision(x)
 }
@@ -10,6 +10,6 @@ decision(x)
 \item{x}{}
 }
 \description{
-Calculate optimal decision
+Depends on how we calculate the payoff function.
 }
 
