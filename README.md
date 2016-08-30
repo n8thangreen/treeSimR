@@ -15,6 +15,14 @@ Read-in trees
 
 Simulate a scenario
 -------------------
+<<<<<<< HEAD
+=======
+
+Monte Carlo forward simulation
+------------------------------
+
+library(yaml)
+>>>>>>> dc6b2fd5c9b1974b862ca61523f01ae9e8b5cf37
 
 Monte Carlo forward simulation
 ------------------------------
