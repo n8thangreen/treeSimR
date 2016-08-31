@@ -214,7 +214,7 @@ osNode <- as.Node(osList)
 osNode
 ```
 
-Better still, use the package function to do this, checking for tree integrity and defining an additional costeffectiveness.tree class.
+Better still, use the treeSimR package function to do this, checking for tree integrity and defining an additional costeffectiveness.tree class.
 
 ```{r}
 osNode <- treeSimR::create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
@@ -226,7 +226,7 @@ print(osNode, "type", "p", "distn", "mean", "sd")
 ## Simulate a scenario
 
 We can now sample values for each branch, given the distributions defined for each.
-This could be the cost or health detrminent.
+This could be the cost or health detriment.
 
 ```{r}
 rpayoff <- osNode$Get(sampleNode)
@@ -234,7 +234,7 @@ osNode$Set(payoff = rpayoff)
 print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 ```
 
-Now given the sampled values, e.g. cost, and the probabilities, we can calculate the expected values at each not from leaf to root.
+Now given the sampled values, e.g. cost, and the probabilities, we can calculate the expected values at each node, from leaf to root.
 
 ```{r}
 osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
@@ -254,7 +254,7 @@ print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 ## Monte Carlo forward simulation
 
 
-We are now in a position to do a probability sensitivity analysis (PSA) and calculate multiple realisation for specific nodes e.g. those at which a decision is to be made.
+We are now in a position to do a probability sensitivity analysis (PSA) and calculate multiple realisations for specific nodes e.g. those at which a decision is to be made.
 
 ```{r}
 MonteCarlo.expectedValues(osNode, n=100)
@@ -263,7 +263,7 @@ MonteCarlo.expectedValues(osNode, n=100)
 
 ## Optimal decisions
 
-We can get the software to calculate the optimal decision for us, rather than returning the expections to compare
+We can get the software to calculate the optimal decision for us, rather than returning the expections to compare.
 
 ```{r eval=FALSE}
 ##TODO##

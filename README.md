@@ -19,7 +19,13 @@ Read-in trees
 -------------
 
     library(yaml)
+
+    ## Warning: package 'yaml' was built under R version 3.3.1
+
     library(data.tree)
+
+    ## Warning: package 'data.tree' was built under R version 3.3.1
+
     devtools::load_all(".")
 
     ## Loading treeSimR
@@ -285,8 +291,8 @@ represented as a list in R.
     ## 81          ¦--LTBI                                      
     ## 82          °--non-LTBI
 
-Better still, use the package function to do this, checking for tree
-integrity and defining an additional costeffectiveness.tree class.
+Better still, use the treeSimR package function to do this, checking for
+tree integrity and defining an additional costeffectiveness.tree class.
 
     osNode <- treeSimR::create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
     print(osNode, "type", "p", "distn", "mean", "sd")
@@ -379,186 +385,186 @@ Simulate a scenario
 -------------------
 
 We can now sample values for each branch, given the distributions
-defined for each. This could be the cost or health detrminent.
+defined for each. This could be the cost or health detriment.
 
     rpayoff <- osNode$Get(sampleNode)
     osNode$Set(payoff = rpayoff)
     print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 
-    ##                                                 levelName     type    p distn mean sd     payoff
-    ## 1  LTBI screening cost                                      chance   NA gamma    1  1 0.82019736
-    ## 2   ¦--under 40k cob incidence                              chance 0.25 gamma    1  1 0.38080785
-    ## 3   ¦   ¦--Screening                                       logical 0.25 gamma    1  1 1.74460970
-    ## 4   ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 1.04067417
-    ## 5   ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.38680176
-    ## 6   ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 2.53353334
-    ## 7   ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.18931035
-    ## 8   ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 0.52112361
-    ## 9   ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.68606771
-    ## 10  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 2.62054993
-    ## 11  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.79198136
-    ## 12  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.10367548
-    ## 13  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.98573206
-    ## 14  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.95048157
-    ## 15  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.46766027
-    ## 16  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.11392417
-    ## 17  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 0.08833898
-    ## 18  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.70500315
-    ## 19  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 2.19814880
-    ## 20  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.09694015
-    ## 21  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 1.61902762
-    ## 22  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.37917998
-    ## 23  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.66521626
-    ## 24  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 2.78032955
-    ## 25  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.41692745
-    ## 26  ¦   °--No Screening                                    logical 0.25 gamma    1  1 1.82151884
-    ## 27  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 2.92523402
-    ## 28  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 0.51971309
-    ## 29  ¦--40-150k cob incidence                                chance 0.25 gamma    1  1 0.87364106
-    ## 30  ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.62592528
-    ## 31  ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.01192190
-    ## 32  ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 1.62129651
-    ## 33  ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 1.26055670
-    ## 34  ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.09760245
-    ## 35  ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 0.01201039
-    ## 36  ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 2.75184540
-    ## 37  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.27293986
-    ## 38  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.17523101
-    ## 39  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 0.08689138
-    ## 40  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.14469446
-    ## 41  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.49520999
-    ## 42  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.40434654
-    ## 43  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.98963483
-    ## 44  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 0.94738515
-    ## 45  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.70294457
-    ## 46  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.55035916
-    ## 47  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.52778056
-    ## 48  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.51810406
-    ## 49  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 2.15167912
-    ## 50  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 1.34388262
-    ## 51  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.16835572
-    ## 52  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.38347310
-    ## 53  ¦   °--No Screening                                    logical 0.25 gamma    1  1 1.10752717
-    ## 54  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 0.23844250
-    ## 55  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 0.71725563
-    ## 56  °--over 150k cob incidence                              chance 0.25 gamma    1  1 0.10385520
-    ## 57      ¦--Screening                                       logical 0.25 gamma    1  1 0.55986668
-    ## 58      ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 1.69489501
-    ## 59      ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.24835113
-    ## 60      ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 0.04005879
-    ## 61      ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.45517985
-    ## 62      ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 0.69340230
-    ## 63      ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 1.62395884
-    ## 64      ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.32497614
-    ## 65      ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.10325034
-    ## 66      ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 2.73598757
-    ## 67      ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.36895014
-    ## 68      ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 1.07714208
-    ## 69      ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.11826024
-    ## 70      ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.65563558
-    ## 71      ¦       °--GP registered                            chance 0.40 gamma    1  1 0.08011226
-    ## 72      ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.98582019
-    ## 73      ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.10748663
-    ## 74      ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.68846032
-    ## 75      ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.64003819
-    ## 76      ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 1.26091124
-    ## 77      ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.37109050
-    ## 78      ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 3.08882555
-    ## 79      ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 1.44591659
-    ## 80      °--No Screening                                    logical 0.25 gamma    1  1 0.05794306
-    ## 81          ¦--LTBI                                       terminal 0.40 gamma    1  1 0.97136113
-    ## 82          °--non-LTBI                                   terminal 0.60 gamma    1  1 1.57086912
+    ##                                                 levelName     type    p distn mean sd      payoff
+    ## 1  LTBI screening cost                                      chance   NA gamma    1  1 1.438212275
+    ## 2   ¦--under 40k cob incidence                              chance 0.25 gamma    1  1 1.247919769
+    ## 3   ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.489413881
+    ## 4   ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 1.682068660
+    ## 5   ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.481956161
+    ## 6   ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 1.229342807
+    ## 7   ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.073133203
+    ## 8   ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 0.253634544
+    ## 9   ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 2.739111675
+    ## 10  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.121040005
+    ## 11  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.656127736
+    ## 12  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.383402173
+    ## 13  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.742012329
+    ## 14  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.076886652
+    ## 15  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.076978708
+    ## 16  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.089023283
+    ## 17  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 1.915698334
+    ## 18  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.626775819
+    ## 19  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.260810472
+    ## 20  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.823952843
+    ## 21  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.142864275
+    ## 22  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.333369548
+    ## 23  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.202043514
+    ## 24  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.708568953
+    ## 25  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.518901716
+    ## 26  ¦   °--No Screening                                    logical 0.25 gamma    1  1 0.062203765
+    ## 27  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 0.623775134
+    ## 28  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 1.489811169
+    ## 29  ¦--40-150k cob incidence                                chance 0.25 gamma    1  1 1.215079910
+    ## 30  ¦   ¦--Screening                                       logical 0.25 gamma    1  1 1.170650576
+    ## 31  ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.545258520
+    ## 32  ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.281507226
+    ## 33  ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 0.040036931
+    ## 34  ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 2.221423193
+    ## 35  ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 1.626930615
+    ## 36  ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 3.232428238
+    ## 37  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.785906216
+    ## 38  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.223168559
+    ## 39  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.627207398
+    ## 40  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.789903547
+    ## 41  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 1.519820666
+    ## 42  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.630945231
+    ## 43  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 1.611710137
+    ## 44  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 0.884715160
+    ## 45  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.216913683
+    ## 46  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.146791422
+    ## 47  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.005642871
+    ## 48  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 1.677347988
+    ## 49  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.832450001
+    ## 50  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.347308527
+    ## 51  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 3.072809972
+    ## 52  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 1.609807134
+    ## 53  ¦   °--No Screening                                    logical 0.25 gamma    1  1 1.482902901
+    ## 54  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 1.208393630
+    ## 55  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 0.305765331
+    ## 56  °--over 150k cob incidence                              chance 0.25 gamma    1  1 0.776613379
+    ## 57      ¦--Screening                                       logical 0.25 gamma    1  1 1.478410822
+    ## 58      ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.278006804
+    ## 59      ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.474299957
+    ## 60      ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 0.059255237
+    ## 61      ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.258565194
+    ## 62      ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 2.265026634
+    ## 63      ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.501935598
+    ## 64      ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 3.438728793
+    ## 65      ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 1.235301345
+    ## 66      ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.513001621
+    ## 67      ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.664521332
+    ## 68      ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 1.674642627
+    ## 69      ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.744085472
+    ## 70      ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.153520720
+    ## 71      ¦       °--GP registered                            chance 0.40 gamma    1  1 2.031108889
+    ## 72      ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 1.475150377
+    ## 73      ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.278349923
+    ## 74      ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.356614601
+    ## 75      ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.710144000
+    ## 76      ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 1.706755326
+    ## 77      ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.399483365
+    ## 78      ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.521928872
+    ## 79      ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.164539372
+    ## 80      °--No Screening                                    logical 0.25 gamma    1  1 1.268892533
+    ## 81          ¦--LTBI                                       terminal 0.40 gamma    1  1 0.690568103
+    ## 82          °--non-LTBI                                   terminal 0.60 gamma    1  1 0.996761233
 
 Now given the sampled values, e.g. cost, and the probabilities, we can
-calculate the expected values at each not from leaf to root.
+calculate the expected values at each node, from leaf to root.
 
     osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
 
     print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 
-    ##                                                 levelName     type    p distn mean sd     payoff
-    ## 1  LTBI screening cost                                      chance   NA gamma    1  1 0.27979014
-    ## 2   ¦--under 40k cob incidence                              chance 0.25 gamma    1  1 0.42281428
-    ## 3   ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.20933566
-    ## 4   ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.46631930
-    ## 5   ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.38680176
-    ## 6   ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 0.77899649
-    ## 7   ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.18931035
-    ## 8   ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 1.10901713
-    ## 9   ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.68606771
-    ## 10  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.89824247
-    ## 11  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.79198136
-    ## 12  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 2.20216022
-    ## 13  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.98573206
-    ## 14  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.95048157
-    ## 15  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.37102336
-    ## 16  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.11392417
-    ## 17  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 0.81363422
-    ## 18  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.70500315
-    ## 19  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.65105388
-    ## 20  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.09694015
-    ## 21  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.83313682
-    ## 22  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.37917998
-    ## 23  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 2.39794276
-    ## 24  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 2.78032955
-    ## 25  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.41692745
-    ## 26  ¦   °--No Screening                                    logical 0.25 gamma    1  1 1.48192147
-    ## 27  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 2.92523402
-    ## 28  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 0.51971309
-    ## 29  ¦--40-150k cob incidence                                chance 0.25 gamma    1  1 0.26379539
-    ## 30  ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.52945119
-    ## 31  ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 1.16727325
-    ## 32  ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 1.62129651
-    ## 33  ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 1.29688661
-    ## 34  ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.09760245
-    ## 35  ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 2.06387524
-    ## 36  ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 2.75184540
-    ## 37  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.19654780
-    ## 38  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.17523101
-    ## 39  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 0.47992833
-    ## 40  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.14469446
-    ## 41  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.49520999
-    ## 42  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.95053152
-    ## 43  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.98963483
-    ## 44  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 1.38669397
-    ## 45  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.70294457
-    ## 46  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 1.60821204
-    ## 47  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.52778056
-    ## 48  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.76966522
-    ## 49  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 2.15167912
-    ## 50  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.41387162
-    ## 51  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.16835572
-    ## 52  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.38347310
-    ## 53  ¦   °--No Screening                                    logical 0.25 gamma    1  1 0.52573038
-    ## 54  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 0.23844250
-    ## 55  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 0.71725563
-    ## 56  °--over 150k cob incidence                              chance 0.25 gamma    1  1 0.43255088
-    ## 57      ¦--Screening                                       logical 0.25 gamma    1  1 0.39913760
-    ## 58      ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.57907480
-    ## 59      ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.24835113
-    ## 60      ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 1.19933588
-    ## 61      ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.45517985
-    ## 62      ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 1.54371328
-    ## 63      ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 1.62395884
-    ## 64      ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.58134585
-    ## 65      ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.10325034
-    ## 66      ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.83456916
-    ## 67      ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.36895014
-    ## 68      ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 1.07714208
-    ## 69      ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 1.01747559
-    ## 70      ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.65563558
-    ## 71      ¦       °--GP registered                            chance 0.40 gamma    1  1 1.88805339
-    ## 72      ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.98582019
-    ## 73      ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 2.16093547
-    ## 74      ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.68846032
-    ## 75      ¦               °--Test Positive                    chance 0.70 gamma    1  1 1.39859035
-    ## 76      ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 1.26091124
-    ## 77      ¦                   °--Start Treatment              chance 0.30 gamma    1  1 3.40105661
-    ## 78      ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 3.08882555
-    ## 79      ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 1.44591659
-    ## 80      °--No Screening                                    logical 0.25 gamma    1  1 1.33106593
-    ## 81          ¦--LTBI                                       terminal 0.40 gamma    1  1 0.97136113
-    ## 82          °--non-LTBI                                   terminal 0.60 gamma    1  1 1.57086912
+    ##                                                 levelName     type    p distn mean sd      payoff
+    ## 1  LTBI screening cost                                      chance   NA gamma    1  1 0.242966878
+    ## 2   ¦--under 40k cob incidence                              chance 0.25 gamma    1  1 0.368848452
+    ## 3   ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.331997054
+    ## 4   ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.772328414
+    ## 5   ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.481956161
+    ## 6   ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 1.448864874
+    ## 7   ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.073133203
+    ## 8   ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 2.341641587
+    ## 9   ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 2.739111675
+    ## 10  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.606090592
+    ## 11  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.656127736
+    ## 12  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.364174236
+    ## 13  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.742012329
+    ## 14  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.076886652
+    ## 15  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.555659804
+    ## 16  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.089023283
+    ## 17  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 1.300126227
+    ## 18  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.626775819
+    ## 19  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 1.540101225
+    ## 20  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.823952843
+    ## 21  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.376191765
+    ## 22  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.333369548
+    ## 23  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.920603002
+    ## 24  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.708568953
+    ## 25  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.518901716
+    ## 26  ¦   °--No Screening                                    logical 0.25 gamma    1  1 1.143396755
+    ## 27  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 0.623775134
+    ## 28  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 1.489811169
+    ## 29  ¦--40-150k cob incidence                                chance 0.25 gamma    1  1 0.306816501
+    ## 30  ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.560449355
+    ## 31  ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 1.325147671
+    ## 32  ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.281507226
+    ## 33  ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 3.031361952
+    ## 34  ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 2.221423193
+    ## 35  ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 2.830846727
+    ## 36  ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 3.232428238
+    ## 37  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.811638516
+    ## 38  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.223168559
+    ## 39  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 2.482293159
+    ## 40  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.789903547
+    ## 41  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 1.519820666
+    ## 42  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.916649748
+    ## 43  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 1.611710137
+    ## 44  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 0.679914232
+    ## 45  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.216913683
+    ## 46  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.916276704
+    ## 47  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.005642871
+    ## 48  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 1.303323849
+    ## 49  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.832450001
+    ## 50  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 3.511962829
+    ## 51  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 3.072809972
+    ## 52  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 1.609807134
+    ## 53  ¦   °--No Screening                                    logical 0.25 gamma    1  1 0.666816651
+    ## 54  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 1.208393630
+    ## 55  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 0.305765331
+    ## 56  °--over 150k cob incidence                              chance 0.25 gamma    1  1 0.296202557
+    ## 57      ¦--Screening                                       logical 0.25 gamma    1  1 0.310526249
+    ## 58      ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.486780395
+    ## 59      ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.474299957
+    ## 60      ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 0.742651031
+    ## 61      ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.258565194
+    ## 62      ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 0.979186524
+    ## 63      ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.501935598
+    ## 64      ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.896902294
+    ## 65      ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 1.235301345
+    ## 66      ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.754372969
+    ## 67      ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.664521332
+    ## 68      ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 1.674642627
+    ## 69      ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.755324599
+    ## 70      ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.153520720
+    ## 71      ¦       °--GP registered                            chance 0.40 gamma    1  1 1.734790779
+    ## 72      ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 1.475150377
+    ## 73      ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 1.416167588
+    ## 74      ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.356614601
+    ## 75      ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.666481953
+    ## 76      ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 1.706755326
+    ## 77      ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.514851183
+    ## 78      ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.521928872
+    ## 79      ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.164539372
+    ## 80      °--No Screening                                    logical 0.25 gamma    1  1 0.874283981
+    ## 81          ¦--LTBI                                       terminal 0.40 gamma    1  1 0.690568103
+    ## 82          °--non-LTBI                                   terminal 0.60 gamma    1  1 0.996761233
 
 Similarly to above, we have created a better wrapper function to perform
 these steps:
@@ -567,200 +573,200 @@ these steps:
     print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 
     ##                                                 levelName     type    p distn mean sd     payoff
-    ## 1  LTBI screening cost                                      chance   NA gamma    1  1 0.30332602
-    ## 2   ¦--under 40k cob incidence                              chance 0.25 gamma    1  1 0.20075886
-    ## 3   ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.46024165
-    ## 4   ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 1.17731794
-    ## 5   ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.74323580
-    ## 6   ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 2.20005905
-    ## 7   ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 1.67132831
-    ## 8   ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 1.99543677
-    ## 9   ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.73598519
-    ## 10  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 2.11463877
-    ## 11  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 2.75207527
-    ## 12  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 4.29672064
-    ## 13  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 3.53316934
-    ## 14  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 2.19579152
-    ## 15  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.66364868
-    ## 16  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.18825429
-    ## 17  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 1.47086740
-    ## 18  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 1.27329988
-    ## 19  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 1.17814579
-    ## 20  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.86075818
-    ## 21  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.82230723
-    ## 22  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.39148413
-    ## 23  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 2.34953998
-    ## 24  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 2.71684641
-    ## 25  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.41587356
-    ## 26  ¦   °--No Screening                                    logical 0.25 gamma    1  1 0.34279380
-    ## 27  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 0.49314158
-    ## 28  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 0.24256194
-    ## 29  ¦--40-150k cob incidence                                chance 0.25 gamma    1  1 0.57642123
-    ## 30  ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.40197071
-    ## 31  ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.80658285
-    ## 32  ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.35758332
-    ## 33  ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 1.65887380
-    ## 34  ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 1.50406945
-    ## 35  ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 1.26072022
-    ## 36  ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 1.28011990
-    ## 37  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.52090899
-    ## 38  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.69349143
-    ## 39  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.04287186
-    ## 40  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.61350233
-    ## 41  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.77699348
-    ## 42  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.80130000
-    ## 43  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.86402547
-    ## 44  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 1.13922452
-    ## 45  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.37295289
-    ## 46  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 1.52575464
-    ## 47  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.91214234
-    ## 48  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 1.26750715
-    ## 49  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 1.22332045
-    ## 50  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 3.00170337
-    ## 51  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 3.74718640
-    ## 52  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.25508476
-    ## 53  ¦   °--No Screening                                    logical 0.25 gamma    1  1 1.90371423
-    ## 54  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 1.60344979
-    ## 55  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 2.10389052
-    ## 56  °--over 150k cob incidence                              chance 0.25 gamma    1  1 0.43612398
-    ## 57      ¦--Screening                                       logical 0.25 gamma    1  1 0.24139634
-    ## 58      ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.46594592
-    ## 59      ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.11870750
-    ## 60      ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 1.04615731
-    ## 61      ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.89563530
-    ## 62      ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 0.84796021
-    ## 63      ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.85771641
-    ## 64      ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.35365532
-    ## 65      ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.79060616
-    ## 66      ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 0.38824491
-    ## 67      ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.34726924
-    ## 68      ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.17039064
-    ## 69      ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.49963945
-    ## 70      ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.26001320
-    ## 71      ¦       °--GP registered                            chance 0.40 gamma    1  1 0.98908541
-    ## 72      ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.07621439
-    ## 73      ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 1.57226130
-    ## 74      ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.27742976
-    ## 75      ¦               °--Test Positive                    chance 0.70 gamma    1  1 1.96865780
-    ## 76      ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 5.67346838
-    ## 77      ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.88872429
-    ## 78      ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 1.16649747
-    ## 79      ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.01846825
-    ## 80      °--No Screening                                    logical 0.25 gamma    1  1 1.50309958
-    ## 81          ¦--LTBI                                       terminal 0.40 gamma    1  1 1.12167046
-    ## 82          °--non-LTBI                                   terminal 0.60 gamma    1  1 1.75738566
+    ## 1  LTBI screening cost                                      chance   NA gamma    1  1 0.37721049
+    ## 2   ¦--under 40k cob incidence                              chance 0.25 gamma    1  1 0.42925142
+    ## 3   ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.25483131
+    ## 4   ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.26069666
+    ## 5   ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.28565940
+    ## 6   ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 0.36608224
+    ## 7   ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.15075363
+    ## 8   ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 0.45938344
+    ## 9   ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.28831929
+    ## 10  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.36794278
+    ## 11  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.38094924
+    ## 12  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 0.84552668
+    ## 13  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.72364142
+    ## 14  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.40372749
+    ## 15  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.75862856
+    ## 16  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.64861189
+    ## 17  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 1.24795952
+    ## 18  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.11260505
+    ## 19  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 1.96732749
+    ## 20  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 1.83708426
+    ## 21  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.97338358
+    ## 22  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 2.29086941
+    ## 23  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.95374252
+    ## 24  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.46743947
+    ## 25  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.80421722
+    ## 26  ¦   °--No Screening                                    logical 0.25 gamma    1  1 1.46217439
+    ## 27  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 1.15434135
+    ## 28  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 1.66739641
+    ## 29  ¦--40-150k cob incidence                                chance 0.25 gamma    1  1 0.40342283
+    ## 30  ¦   ¦--Screening                                       logical 0.25 gamma    1  1 0.31551157
+    ## 31  ¦   ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.51590137
+    ## 32  ¦   ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.23266292
+    ## 33  ¦   ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 1.05709051
+    ## 34  ¦   ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 1.12271496
+    ## 35  ¦   ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 0.63910256
+    ## 36  ¦   ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.25560547
+    ## 37  ¦   ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.65739820
+    ## 38  ¦   ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.43429408
+    ## 39  ¦   ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 1.75703325
+    ## 40  ¦   ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.67248323
+    ## 41  ¦   ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 1.67022776
+    ## 42  ¦   ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.74614490
+    ## 43  ¦   ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.36980597
+    ## 44  ¦   ¦       °--GP registered                            chance 0.40 gamma    1  1 1.49555628
+    ## 45  ¦   ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 1.82593455
+    ## 46  ¦   ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.66665924
+    ## 47  ¦   ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.63602653
+    ## 48  ¦   ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.31634382
+    ## 49  ¦   ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.21468592
+    ## 50  ¦   ¦                   °--Start Treatment              chance 0.30 gamma    1  1 0.83979349
+    ## 51  ¦   ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.52916366
+    ## 52  ¦   ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.59056099
+    ## 53  ¦   °--No Screening                                    logical 0.25 gamma    1  1 1.29817974
+    ## 54  ¦       ¦--LTBI                                       terminal 0.40 gamma    1  1 0.53420392
+    ## 55  ¦       °--non-LTBI                                   terminal 0.60 gamma    1  1 1.80749694
+    ## 56  °--over 150k cob incidence                              chance 0.25 gamma    1  1 0.67616770
+    ## 57      ¦--Screening                                       logical 0.25 gamma    1  1 0.39504713
+    ## 58      ¦   ¦--LTBI                                         chance 0.25 gamma    1  1 0.71820013
+    ## 59      ¦   ¦   ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.96470853
+    ## 60      ¦   ¦   °--GP registered                            chance 0.40 gamma    1  1 0.83079179
+    ## 61      ¦   ¦       ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 0.11136211
+    ## 62      ¦   ¦       °--Agree to Screen                      chance 0.60 gamma    1  1 1.27329088
+    ## 63      ¦   ¦           ¦--Test Negative                  terminal 0.70 gamma    1  1 0.99276748
+    ## 64      ¦   ¦           °--Test Positive                    chance 0.70 gamma    1  1 0.82621948
+    ## 65      ¦   ¦               ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.27189001
+    ## 66      ¦   ¦               °--Start Treatment              chance 0.30 gamma    1  1 2.48217494
+    ## 67      ¦   ¦                   ¦--Complete Treatment     terminal 0.75 gamma    1  1 3.04912947
+    ## 68      ¦   ¦                   °--Not Complete Treatment terminal 0.75 gamma    1  1 0.26043711
+    ## 69      ¦   °--non-LTBI                                     chance 0.25 gamma    1  1 0.86198841
+    ## 70      ¦       ¦--Not GP registered                      terminal 0.40 gamma    1  1 0.76723034
+    ## 71      ¦       °--GP registered                            chance 0.40 gamma    1  1 1.38774068
+    ## 72      ¦           ¦--Not Agree to Screen                terminal 0.60 gamma    1  1 1.48122052
+    ## 73      ¦           °--Agree to Screen                      chance 0.60 gamma    1  1 0.83168060
+    ## 74      ¦               ¦--Test Negative                  terminal 0.70 gamma    1  1 0.76272367
+    ## 75      ¦               °--Test Positive                    chance 0.70 gamma    1  1 0.42539148
+    ## 76      ¦                   ¦--Not Start Treatment        terminal 0.30 gamma    1  1 0.02172132
+    ## 77      ¦                   °--Start Treatment              chance 0.30 gamma    1  1 1.39625027
+    ## 78      ¦                       ¦--Complete Treatment     terminal 0.75 gamma    1  1 0.91719619
+    ## 79      ¦                       °--Not Complete Treatment terminal 0.75 gamma    1  1 0.94447083
+    ## 80      °--No Screening                                    logical 0.25 gamma    1  1 2.30962365
+    ## 81          ¦--LTBI                                       terminal 0.40 gamma    1  1 2.87070861
+    ## 82          °--non-LTBI                                   terminal 0.60 gamma    1  1 1.93556700
 
 Monte Carlo forward simulation
 ------------------------------
 
 We are now in a position to do a probability sensitivity analysis (PSA)
-and calculate multiple realisation for specific nodes e.g. those at
+and calculate multiple realisations for specific nodes e.g. those at
 which a decision is to be made.
 
     MonteCarlo.expectedValues(osNode, n=100)
 
     ## $`expected values`
-    ##             [,1]       [,2]      [,3]       [,4]       [,5]       [,6]
-    ##   [1,] 0.2305792 0.33340770 0.5198195 1.79114111 0.57818631 0.94478524
-    ##   [2,] 0.3584413 1.37083291 0.3095722 1.02640438 0.34550337 1.10196463
-    ##   [3,] 0.2993599 0.37748783 0.5162063 0.70928778 0.60513284 0.43963943
-    ##   [4,] 0.3986020 0.78146985 0.3973478 0.97442454 0.32607433 1.16765749
-    ##   [5,] 0.6208113 0.70203809 0.6386587 0.58974678 0.35088377 0.21959280
-    ##   [6,] 0.6620302 0.34973123 0.3675732 3.60802309 0.53846468 0.93069104
-    ##   [7,] 0.3315650 0.82393694 0.2299921 1.23264904 0.71159855 0.15975008
-    ##   [8,] 0.4036854 0.05674091 0.3593760 1.46004930 0.50107782 2.85726636
-    ##   [9,] 0.2171778 1.01664668 0.3123177 1.36135091 0.52714989 0.17947347
-    ##  [10,] 0.3928303 0.67298271 0.2546877 0.43916861 0.42114770 0.29785323
-    ##  [11,] 1.0174348 1.07192275 0.3631355 1.21440310 0.57409574 0.06501868
-    ##  [12,] 0.3491342 0.76473089 0.3222415 0.57067459 0.39549739 0.17880485
-    ##  [13,] 0.3597752 1.22678097 0.3421334 1.88280146 0.41133829 1.46767345
-    ##  [14,] 0.3281760 1.24717139 0.4872960 0.75020654 0.54824858 1.03464719
-    ##  [15,] 0.6876201 0.65437780 0.5905332 1.96625442 0.59347857 0.72890426
-    ##  [16,] 0.4618111 2.88322007 0.3286115 2.32286256 0.28684908 0.59554887
-    ##  [17,] 0.6940652 1.07315076 0.2959901 0.28062652 0.53566690 1.32370187
-    ##  [18,] 0.3793169 0.66573035 0.4901263 0.16650522 0.32505809 1.46263555
-    ##  [19,] 0.5298286 0.52964966 0.4610943 0.14667861 0.53398952 2.29111785
-    ##  [20,] 0.2600675 1.24783159 0.7192319 0.86233650 0.77360348 0.18059718
-    ##  [21,] 0.4601851 0.30529206 0.3459502 1.84548016 0.30580887 0.25243547
-    ##  [22,] 0.6888359 0.51643202 0.4921530 0.72122882 0.29085845 1.37101666
-    ##  [23,] 0.5240788 0.74882712 0.4686377 0.37234914 0.21082045 0.67435095
-    ##  [24,] 0.3107091 1.01249137 0.4791786 2.73822304 0.43264692 1.67346942
-    ##  [25,] 0.4615935 0.75413375 0.5974913 0.67304434 0.53511254 0.47494911
-    ##  [26,] 0.5210160 0.94917244 0.4094736 0.67076823 0.62106938 0.95934591
-    ##  [27,] 0.4395235 0.52259682 0.4776404 0.98089018 0.37807138 1.20743469
-    ##  [28,] 0.3280185 0.96098618 0.3512462 0.66617121 0.45488923 0.38241540
-    ##  [29,] 0.5614695 1.08552409 0.5971054 1.96982477 0.37641430 0.75629002
-    ##  [30,] 0.1692334 0.47520767 0.5473278 0.27780795 0.37417977 0.81476887
-    ##  [31,] 0.6660380 0.73421372 0.2715891 0.93071859 0.58076171 0.32250801
-    ##  [32,] 0.4657251 1.03632552 0.2945899 0.50202727 0.44445089 2.16396075
-    ##  [33,] 0.3657796 2.59474613 0.7077596 0.40173383 0.83998117 0.29301654
-    ##  [34,] 0.4771392 0.50187164 0.3480651 0.93285801 0.57788198 0.71134535
-    ##  [35,] 0.8122444 0.31941765 0.5166745 0.10300109 0.35778965 2.77905756
-    ##  [36,] 0.5792520 2.94004400 0.5842297 0.56920937 0.39049241 0.77732402
-    ##  [37,] 0.6732463 1.79727704 0.4599917 0.87394106 0.35140442 1.94162547
-    ##  [38,] 0.3803147 0.40015732 0.6049668 0.60862713 0.49298851 0.56246341
-    ##  [39,] 0.1818363 0.87003244 0.1933197 1.73289107 0.49151299 0.29509604
-    ##  [40,] 0.2931017 0.29937107 0.6767887 0.76466109 0.42061698 0.94544011
-    ##  [41,] 0.6231221 1.54986550 0.3603379 0.84975023 0.79998273 2.37862895
-    ##  [42,] 0.6707190 1.64324380 0.4270688 0.29354202 0.18165226 3.14806379
-    ##  [43,] 0.2218548 0.38863430 0.5822044 0.59173865 0.27638399 1.04564154
-    ##  [44,] 0.3301503 2.96665563 0.2797657 0.39038729 0.40920359 1.36685161
-    ##  [45,] 0.5991307 1.50170721 0.2141838 1.17194221 0.29959347 0.43202003
-    ##  [46,] 0.3311010 1.42156791 0.7084017 1.29115945 0.69317544 0.63965597
-    ##  [47,] 0.1920742 0.22846036 0.3412126 0.18735062 0.24043098 1.12069135
-    ##  [48,] 0.3493986 0.78000007 0.5530911 0.10380087 0.57682063 0.81259233
-    ##  [49,] 0.3575175 0.82161818 0.4695622 1.66044500 0.45349387 1.15400609
-    ##  [50,] 0.3106777 1.32519180 0.4247381 0.36925530 0.67591513 3.18569777
-    ##  [51,] 0.3308854 0.32592734 0.3780550 0.38883609 0.84267981 2.03828708
-    ##  [52,] 0.4272423 2.23543919 0.3267432 0.37834841 0.22750700 1.01814474
-    ##  [53,] 0.5310072 2.09219589 0.4704639 1.05599008 0.31442549 2.98291088
-    ##  [54,] 0.8704226 0.10883053 0.4762194 1.61602992 0.38900385 1.97623429
-    ##  [55,] 0.3960560 0.58041838 0.5541645 0.38957679 0.09730931 1.09127451
-    ##  [56,] 0.3835983 1.53310227 0.1580085 1.25311834 0.39428941 0.09412331
-    ##  [57,] 0.3066237 0.11327006 0.3640435 0.61787837 0.83185189 1.29946560
-    ##  [58,] 0.5872963 1.13926167 0.3106855 0.13026500 0.49129916 0.55219160
-    ##  [59,] 0.3540460 1.41989331 0.7407435 0.41076453 0.53760398 1.12153256
-    ##  [60,] 0.5047358 2.72401382 0.3641992 1.91488589 0.52869333 0.31715568
-    ##  [61,] 0.3415916 0.42619653 0.8767736 1.35516945 0.37510008 0.66904201
-    ##  [62,] 0.8759408 0.25556733 0.5013819 1.28098600 0.41024426 2.00766763
-    ##  [63,] 0.4252948 0.71723125 0.2398519 1.56016548 0.50080778 0.28614425
-    ##  [64,] 0.5957296 0.47010018 0.5749048 0.57483892 0.57473340 1.31854453
-    ##  [65,] 0.6470271 0.23370998 0.6794442 1.23018944 0.32975523 1.05303050
-    ##  [66,] 0.3533383 0.19305902 0.4801226 0.90859765 0.66205503 1.45783922
-    ##  [67,] 0.1777400 0.35397696 0.6643179 0.86463957 0.47709506 0.60434152
-    ##  [68,] 0.4980443 0.89126517 0.7780035 0.16194740 0.70189301 0.81223634
-    ##  [69,] 0.5471317 0.86687300 0.4078122 0.97072209 0.60165329 0.55222295
-    ##  [70,] 0.2967350 0.81077629 0.8980344 0.39910642 0.55782701 1.95777290
-    ##  [71,] 0.4075197 1.53040229 0.2170135 2.56732168 0.65548194 0.20063636
-    ##  [72,] 0.4726145 1.86281365 0.4018938 2.14922012 0.67311544 0.47831671
-    ##  [73,] 0.2452011 2.82543287 0.3606711 0.90589078 0.49810963 0.84266889
-    ##  [74,] 0.5788764 2.59111267 0.3845286 0.68295610 0.43312380 3.52665417
-    ##  [75,] 0.6605805 0.85721454 0.7679099 0.81502211 0.39025007 0.84555939
-    ##  [76,] 0.4909179 0.69388520 0.8288076 1.70532673 0.53280158 0.58040810
-    ##  [77,] 0.3679965 0.57579526 0.2288707 0.61886748 0.43549371 0.66996132
-    ##  [78,] 0.3057609 0.61269499 0.3844894 0.98700227 0.29770246 2.71494857
-    ##  [79,] 0.2354515 0.50612890 0.9152078 1.91681926 0.48972728 0.80661428
-    ##  [80,] 0.5949235 0.61230466 0.6224363 0.62598357 0.34426614 0.96358728
-    ##  [81,] 0.6247782 2.36423401 1.0184911 0.04637506 0.53217414 1.19453754
-    ##  [82,] 0.5626857 0.42915693 0.3399051 1.14962891 0.29491379 0.97581138
-    ##  [83,] 0.1704350 0.34961238 0.3068447 0.37003220 0.62988546 1.67882441
-    ##  [84,] 0.4841448 0.35999127 0.6437234 2.42092833 0.47643292 1.53944023
-    ##  [85,] 0.2694150 1.11068252 0.6978201 0.93303294 0.32859362 0.55720892
-    ##  [86,] 0.3273773 1.74789085 0.4549441 1.37111759 0.33976526 0.95955578
-    ##  [87,] 0.2450320 1.15193751 0.3761741 0.50192397 0.47123120 0.45224187
-    ##  [88,] 0.4190007 3.03042008 0.2946885 0.80775327 0.70388837 0.79144497
-    ##  [89,] 0.5353271 0.55781080 0.4290865 0.14195397 0.37366589 1.53424267
-    ##  [90,] 0.6321819 2.01917954 0.6127675 1.63630106 0.31092823 0.77733648
-    ##  [91,] 0.3525002 0.28281847 0.5032175 0.18521771 0.50780829 0.78299978
-    ##  [92,] 0.4631830 1.83569176 0.3712277 0.93997342 0.38666673 0.44026335
-    ##  [93,] 0.3813119 0.56398818 0.6634231 0.68237356 0.62819216 0.32541155
-    ##  [94,] 0.6570128 0.23857989 0.6012310 0.33197220 0.61653972 1.05459158
-    ##  [95,] 1.0562662 1.63658974 0.7200890 1.31024482 0.35516178 0.44275939
-    ##  [96,] 1.1323714 1.41744866 0.7022261 0.68108873 0.43536766 0.43252822
-    ##  [97,] 0.4964660 0.59025574 0.7835828 1.03463721 0.72993306 1.28915154
-    ##  [98,] 0.4454725 2.35390790 0.4226265 0.47772295 0.46710938 0.05968219
-    ##  [99,] 0.4228120 0.40576496 0.6169047 1.47236587 0.37174715 0.44279037
-    ## [100,] 0.2146961 0.31017188 0.3552602 1.44508924 0.46570484 1.42997856
+    ##             [,1]       [,2]      [,3]       [,4]      [,5]      [,6]
+    ##   [1,] 0.6525697 0.38242945 0.4325969 0.75211974 0.2878153 0.3667157
+    ##   [2,] 0.4908816 0.47727081 0.2818920 1.79296537 0.4899303 0.8030240
+    ##   [3,] 0.4828136 0.96630181 0.5511549 0.56120520 0.3606188 0.6718566
+    ##   [4,] 0.4443935 0.03345866 0.8044013 0.18781541 0.4412486 2.3025326
+    ##   [5,] 0.6325982 0.82439359 0.5917539 0.95547918 0.4442551 2.1496552
+    ##   [6,] 0.3328564 1.08147253 0.5619533 1.28721464 0.3929387 0.5256920
+    ##   [7,] 0.3814345 0.41222923 0.3094905 1.02935617 0.6364011 1.4952978
+    ##   [8,] 0.2097475 1.38771563 0.1887902 0.91683171 0.2996616 0.9634025
+    ##   [9,] 0.4158534 0.40027527 0.2207790 1.13027129 0.3182382 0.5718682
+    ##  [10,] 0.5784703 2.29669114 0.2487891 3.20993064 0.4086328 0.7577397
+    ##  [11,] 0.4437004 1.21162005 0.2997410 0.73668984 0.5362256 0.6591989
+    ##  [12,] 0.3162437 0.96724881 0.2837401 0.56780505 0.5618908 0.4392871
+    ##  [13,] 0.5409811 1.23488190 0.2347970 1.46890145 0.3990814 0.8375598
+    ##  [14,] 0.5555895 2.12667042 0.5236972 1.44595226 0.2311449 0.2268494
+    ##  [15,] 0.6106736 1.45124410 0.6319184 0.01095086 0.2650240 1.2123428
+    ##  [16,] 0.3467403 0.45621512 0.6393560 0.58443466 0.6089123 1.7111286
+    ##  [17,] 0.3473107 1.85837666 0.3734991 1.21165982 0.4001442 0.8027384
+    ##  [18,] 0.1508115 0.87205077 0.5586747 0.55339048 0.5992109 0.9723730
+    ##  [19,] 0.8278383 1.19488940 0.5444570 1.18734892 0.2531189 0.5826897
+    ##  [20,] 0.2721503 1.69725125 0.8039005 0.59426105 0.4242638 0.6445375
+    ##  [21,] 0.2998982 0.51251328 0.4827159 0.56696111 0.5677856 0.9152619
+    ##  [22,] 0.9179438 0.53677651 0.5809427 1.36784346 0.4366354 0.6430519
+    ##  [23,] 0.5112185 0.58552605 0.2816385 2.37932217 0.4205316 0.3110026
+    ##  [24,] 0.4712182 0.41613896 0.6881502 0.89360676 0.4323267 0.2377089
+    ##  [25,] 0.3143520 0.50798624 0.3980891 0.59872631 0.3840562 0.6557489
+    ##  [26,] 0.5284236 0.30474708 0.2518777 1.36415656 0.6004138 0.3927847
+    ##  [27,] 0.2582256 1.78652470 0.7040387 0.19168443 0.4884666 1.3620048
+    ##  [28,] 0.2852369 2.13943856 0.6028250 0.30836600 0.5867556 0.5997754
+    ##  [29,] 0.3657103 1.08070258 0.2744823 1.40885156 0.4921550 1.2775237
+    ##  [30,] 0.5651602 0.87958068 0.2465847 3.05378568 0.4665816 0.9116252
+    ##  [31,] 0.5180318 0.95877739 0.4477102 1.57300268 0.3744657 0.8692228
+    ##  [32,] 0.3023539 0.63486192 0.3299984 0.79684056 0.6298587 0.6092031
+    ##  [33,] 0.4640585 0.19729591 0.5751184 1.57594864 0.5589642 0.5952908
+    ##  [34,] 0.3430256 0.92262297 0.3412622 1.00878149 0.5619034 0.2458516
+    ##  [35,] 0.2093243 0.95534386 0.2784750 0.37106150 0.9012874 0.5832636
+    ##  [36,] 0.2558048 1.71009941 0.4458545 1.74172171 0.4336871 2.9467617
+    ##  [37,] 0.3477694 0.95990774 0.3002508 0.49092358 0.2528072 0.7448156
+    ##  [38,] 0.6528087 0.47480971 0.2994397 0.80257174 0.2434422 0.2967551
+    ##  [39,] 0.5215448 1.47499048 0.8150708 1.59024145 0.4906705 0.7991901
+    ##  [40,] 0.3778689 0.07420711 0.5061456 1.00976821 0.2034682 0.5666263
+    ##  [41,] 0.6125544 0.29543745 0.7596774 1.73536377 0.5903057 0.6712282
+    ##  [42,] 0.4651901 1.17684865 0.3543185 2.08596578 0.5304797 1.5932283
+    ##  [43,] 0.5363406 1.89672424 0.4333276 0.42274474 0.2616173 0.1405603
+    ##  [44,] 0.3189014 0.85855053 0.4000145 0.48954426 0.7143958 0.5843227
+    ##  [45,] 0.1938620 1.52351387 0.3885232 2.61404875 0.3039077 0.8636615
+    ##  [46,] 0.6008169 0.97282809 0.8505000 1.11479445 0.3333773 1.0142301
+    ##  [47,] 0.2865286 0.80192622 0.4556391 0.62197868 0.2150015 0.6869823
+    ##  [48,] 0.4108942 0.73104582 0.4485808 0.67209617 0.3527102 3.9738966
+    ##  [49,] 0.8303524 4.50646917 0.1972620 1.44694140 0.2898040 0.6350808
+    ##  [50,] 0.6649242 0.47115070 0.2597948 0.62744231 0.4391161 0.3737729
+    ##  [51,] 0.3117955 1.53486527 0.4604857 0.85499425 0.9218014 0.5618079
+    ##  [52,] 0.3310074 0.41259201 0.5380660 1.14856405 0.3457679 0.9343701
+    ##  [53,] 0.3438801 1.08665476 0.4124418 2.24783787 0.3093640 0.1645513
+    ##  [54,] 0.3732511 0.98028028 0.3494821 0.94231809 0.4139885 1.5667858
+    ##  [55,] 0.2528647 0.09504634 0.3782943 0.23122778 0.6146687 0.2057746
+    ##  [56,] 0.7224444 1.13074581 0.2665315 1.40866098 0.7576389 0.5254727
+    ##  [57,] 0.4973374 1.43045090 0.4473000 0.12101040 0.4908533 1.7381837
+    ##  [58,] 0.2817981 0.83850441 0.5400017 1.12365250 0.9586424 2.0526704
+    ##  [59,] 0.6423219 0.39963353 0.5025478 1.74259259 0.7660998 2.2476030
+    ##  [60,] 0.5293830 0.27435931 0.3676617 1.05600718 0.4154280 0.8239671
+    ##  [61,] 0.5170350 0.98886808 0.8273540 0.45457716 0.6015835 0.9376331
+    ##  [62,] 0.5903876 0.39098993 0.5249282 1.75653505 0.5689248 1.7451231
+    ##  [63,] 0.3029004 1.18015189 0.3282014 0.09260131 0.4656082 3.1848361
+    ##  [64,] 0.3288478 1.11575885 0.2767638 0.50611277 0.2842136 1.6484978
+    ##  [65,] 0.7352288 2.34364644 0.1606899 1.12398809 0.4144578 0.7861546
+    ##  [66,] 0.4203043 0.66272799 0.4485402 0.27578536 0.7543560 1.7736189
+    ##  [67,] 0.2616391 1.01661963 0.3246163 0.87993925 0.6019593 0.5529853
+    ##  [68,] 0.4476640 0.74296583 0.7713632 0.56031987 0.5188095 0.3728364
+    ##  [69,] 0.5636409 0.28149235 0.3481340 0.96302368 0.3676437 2.2730910
+    ##  [70,] 0.4787562 0.63181792 0.9527959 0.40463644 0.3802531 1.6492056
+    ##  [71,] 0.4603001 0.41151958 0.5539747 0.26106232 0.2923730 1.3277372
+    ##  [72,] 0.6139865 3.98673842 0.4300813 0.17342386 0.6871384 0.5476798
+    ##  [73,] 0.7804861 0.67067748 0.5466858 0.87299911 0.2422993 1.9684895
+    ##  [74,] 0.5001613 0.24196897 0.2697273 0.83067401 0.5851269 0.7079920
+    ##  [75,] 0.5969461 1.80473740 0.3750929 0.20073168 0.3921014 2.4380543
+    ##  [76,] 0.5927666 0.18682787 0.3686401 1.23185732 0.2556563 0.6950983
+    ##  [77,] 0.3282245 0.47807675 0.4764842 1.80658456 0.6027039 4.2174937
+    ##  [78,] 0.5470152 3.47658449 0.2673918 0.32697534 0.6222199 1.1147683
+    ##  [79,] 0.5041295 2.15187220 0.4414914 0.66931616 0.4124545 1.5532928
+    ##  [80,] 0.3482267 0.48535807 0.2961933 0.25001252 0.4162144 1.8851909
+    ##  [81,] 0.6948618 0.43021468 0.4850350 0.48904315 0.2474393 0.5295208
+    ##  [82,] 0.5628867 0.31693117 0.5040598 0.54385853 0.4477901 0.2089490
+    ##  [83,] 0.4933243 1.22216733 0.5158885 0.14610303 0.7231181 0.1524620
+    ##  [84,] 0.3919220 2.66475722 0.4274485 2.82104497 0.5706044 0.5203545
+    ##  [85,] 0.5677956 0.10261909 0.3618632 0.62353817 0.5022898 1.2148582
+    ##  [86,] 0.5174656 0.68382861 0.4433304 0.50164400 0.3952285 1.7995725
+    ##  [87,] 0.6514707 0.22060337 0.7558115 1.10404184 0.3543430 0.1777215
+    ##  [88,] 0.4238805 0.93481953 0.5137063 1.40464708 0.4108845 1.1668078
+    ##  [89,] 0.4161815 0.07495260 0.1766041 1.75969300 0.1797270 0.9774002
+    ##  [90,] 0.2214637 0.92084287 0.7593786 0.38022410 0.3560091 2.0336677
+    ##  [91,] 0.3001250 2.29879417 0.4698295 1.57523973 0.3885128 0.9024901
+    ##  [92,] 0.3943428 1.59649025 0.4145992 1.07761544 0.4426566 1.3037311
+    ##  [93,] 0.5409515 0.48090377 0.2118147 0.86733865 0.5094280 0.8470721
+    ##  [94,] 0.1915219 0.09376651 0.5290424 0.97645306 0.8257523 0.5179631
+    ##  [95,] 0.5414657 2.54933663 0.3529240 0.47301884 0.2187522 2.0044344
+    ##  [96,] 0.4959751 1.22323359 0.4334801 0.40584219 0.2851052 1.0610862
+    ##  [97,] 0.4303070 2.66208279 0.4553667 0.91166656 0.2885600 0.1679200
+    ##  [98,] 0.5330906 0.90536355 0.3353224 0.81748844 0.4103651 0.4493375
+    ##  [99,] 0.4202827 0.91559030 0.5202458 2.02660346 0.7968471 0.6365321
+    ## [100,] 0.8448930 1.32946618 0.2327913 0.52237572 0.7546476 0.6305920
     ## 
     ## $`node names`
     ## [1] "LTBI screening cost/under 40k cob incidence/Screening"    "LTBI screening cost/under 40k cob incidence/No Screening" "LTBI screening cost/40-150k cob incidence/Screening"      "LTBI screening cost/40-150k cob incidence/No Screening"   "LTBI screening cost/over 150k cob incidence/Screening"    "LTBI screening cost/over 150k cob incidence/No Screening"
@@ -769,7 +775,7 @@ Optimal decisions
 -----------------
 
 We can get the software to calculate the optimal decision for us, rather
-than returning the expections to compare
+than returning the expections to compare.
 
     ##TODO##
     osNode$Do(decision, filterFun = function(x) x$type == 'decision')
