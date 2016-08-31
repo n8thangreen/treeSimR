@@ -12,7 +12,7 @@ MonteCarlo.expectedValues(osNode, n = 100)
 \item{n}{Number of simulations}
 }
 \value{
-column-named array of n sets of expected values
+list containing array of n sets of expected values and sampled nodes full names
 }
 \description{
 Results are returned for the nodes labelled logical in decision tree.

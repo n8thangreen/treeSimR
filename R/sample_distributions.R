@@ -48,6 +48,9 @@ sample.distributions <- function(param.distns){
 sampleNode <- function(node) {
   DISTN <- list(distn = node$distn,
                 params = c(mean=node$mean, sd=node$sd, min=node$min, max=node$max))
+  # DISTN <- switch(node$distn,
+  #                 gamma = list(distn=node$distn, params=c(mean=node$mean, sd=node$sd)),
+  #                 unif = list(distn=node$distn,  params=c(min=node$min, max=node$max)))
   sample.distributions(list(DISTN))
 }
 
