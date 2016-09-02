@@ -270,12 +270,14 @@ To feed into a compartmental model like a Markov model we need state probabiliti
 That is, the probability of ending-up in the one of the terminal state of the tree that are also starting states for the other model.
 These are calculated by taking the product of the probabilities along each pathway from root to leaf.
 
-Once again, we've written a function to do this, which we can append to the the tree.
+Once again, we've written a function to do this, which we can append to the the tree. Below we give the terminal states in a dataframe.
 
 ```{r}
 path_probs <- calc.pathway_probs(osNode)
 osNode$Set(path_probs = path_probs)
-print(osNode, "type", "p", "path_probs")
+
+data.frame(pathname = osNode$Get('pathString', filterFun = isLeaf),
+           path_probs = osNode$Get('path_probs', filterFun = isLeaf))
 ```
 
 
