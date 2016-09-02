@@ -25,6 +25,9 @@ TODO
 * plotting functions: C-E plane, C-E curve (others)
 
 
+The package leans heavily on the `data.tree` package, (introduction [here](https://cran.r-project.org/web/packages/data.tree/vignettes/data.tree.html) and examples [here](https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html) ).
+
+
 ## Read-in trees
 
 ```{r load packages}
@@ -259,6 +262,22 @@ We are now in a position to do a probability sensitivity analysis (PSA) and calc
 ```{r}
 MonteCarlo.expectedValues(osNode, n=100)
 ```
+
+
+## Pathway Probabilities
+
+To feed into a compartmental model like a Markov model we need state probabilities.
+That is, the probability of ending-up in the one of the terminal state of the tree that are also starting states for the other model.
+These are calculated by taking the product of the probabilities along each pathway from root to leaf.
+
+Once again, we've written a function to do this, which we can append to the the tree.
+
+```{r}
+path_probs <- calc.pathway_probs(osNode)
+osNode$Set(path_probs = path_probs)
+print(osNode, "type", "p", "path_probs")
+```
+
 
 
 ## Optimal decisions
