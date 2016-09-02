@@ -16,11 +16,7 @@ calc.pathway_probs <- function(osNode){
   for(i in 2:osNode$totalCount){
 
     currentCount <- Get(t, "totalCount")[i]
-    if (currentCount!=1){
-      pos <- i + currentCount - 1
-    }else{
-      pos <- i
-    }
+    pos <- i + currentCount - 1
     x[i:pos] <- x[i:pos] + rep(osNode$Get("p")[i], currentCount)
   }
 
