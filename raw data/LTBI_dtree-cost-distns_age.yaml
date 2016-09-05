@@ -1,7 +1,4 @@
 
-sink("raw data/LTBI_dtree-cost-distns_age.yaml")
-
-cat("
     name: LTBI screening cost
     distn: gamma
     mean: 1
@@ -2761,5 +2758,4 @@ cat("
           distn: gamma
           mean: 1
           sd: 1
-    ", fill=TRUE)
-sink()
+    

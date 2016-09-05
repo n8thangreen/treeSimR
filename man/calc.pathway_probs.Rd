@@ -15,9 +15,14 @@ calc.pathway_probs(osNode, FUN = "product")
 vector of values
 }
 \description{
-Calculate Total Pathway Probabilities of Decision Tree
+Sequential event operations.
+The probabilities are calculate with \code{FUN="product"}
+and the values are calculated with \code{FUN="sum"}.
 }
 \examples{
 
+}
+\seealso{
+\link{calc.riskprofile}
 }
 

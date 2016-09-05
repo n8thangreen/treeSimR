@@ -227,6 +227,13 @@ osNode <- treeSimR::create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtr
 print(osNode, "type", "p", "distn", "mean", "sd")
 ```
 
+A neat way of exploring the tree is with the `listviewer` package widget.
+
+```{r eval=FALSE}
+library(listviewer)
+l <- ToListSimple(osNode)
+jsonedit(l)
+```
 
 
 ## Simulate a scenario
@@ -259,7 +266,6 @@ print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 
 ## Monte Carlo forward simulation
 
-
 We are now in a position to do a probability sensitivity analysis (PSA) and calculate multiple realisations for specific nodes e.g. those at which a decision is to be made.
 
 ```{r}
@@ -279,8 +285,40 @@ Once again, we've written a function to do this, which we can append to the the 
 path_probs <- calc.pathway_probs(osNode)
 osNode$Set(path_probs = path_probs)
 
-data.frame(pathname = osNode$Get('pathString', filterFun = isLeaf),
-           path_probs = osNode$Get('path_probs', filterFun = isLeaf))
+terminal_states <- data.frame(pathname = osNode$Get('pathString', filterFun = isLeaf),
+                              path_probs = osNode$Get('path_probs', filterFun = isLeaf))
+terminal_states
+```
+
+
+Specifically, the starting state probabilities of the subsequent compartmental model are for aggregated sub-populations.
+We can simply sum over these in an ad-hoc way:
+
+```{r}
+startstate_prob <- matrix(NA, nrow = 3, ncol = 2,
+                          dimnames = list(c("<40k","40-150k",">150k"), c("LTBI","nonLTBI")))
+
+startstate.LTBI <- grepl("/Complete Treatment", x = terminal_states$pathname) | grepl("non-LTBI", x = terminal_states$pathname)
+
+startstate_prob["<40k","nonLTBI"] <- sum(terminal_states$path_probs[grepl("under 40k cob incidence", x = terminal_states$pathname) &
+                                                                  startstate.LTBI])
+
+startstate_prob["<40k","LTBI"] <- sum(terminal_states$path_probs[grepl("under 40k cob incidence", x = terminal_states$pathname) &
+                                                               !startstate.LTBI])
+
+startstate_prob["40-150k","nonLTBI"] <- sum(terminal_states$path_probs[grepl("40-150k cob incidence", x = terminal_states$pathname) &
+                                                                     startstate.LTBI])
+
+startstate_prob["40-150k","LTBI"] <- sum(terminal_states$path_probs[grepl("40-150k cob incidence", x = terminal_states$pathname) &
+                                                                  !startstate.LTBI])
+
+startstate_prob[">150k","nonLTBI"] <- sum(terminal_states$path_probs[grepl("over 150k cob incidence", x = terminal_states$pathname) &
+                                                                   startstate.LTBI])
+
+startstate_prob[">150k","LTBI"] <- sum(terminal_states$path_probs[grepl("over 150k cob incidence", x = terminal_states$pathname) &
+                                                                  !startstate.LTBI])
+
+knitr::kable(startstate_prob/sum(startstate_prob))
 ```
 
 
