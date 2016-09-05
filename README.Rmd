@@ -16,21 +16,24 @@ An R package for easy forward simulating probability decision trees, calculating
 Currently contains functions to:
 
 * read-in and check tree object
-* simulate final outcomes
+* simulate final expected outcomes
 * Monte-Carlo simulate multiple simulations
 
 TODO
 
-* optimal decision function
-* plotting functions: C-E plane, C-E curve (others)
+* iteratively collapse expected outcome (from right to left)
+* iteratively collapse chance nodes (from right to left)
+* optimal decision function (iterative from right to left)
+* plotting functions: C-E plane, C-E curve, risk profile (with uncertainty), tornado, spider, ...
 
 
-The package leans heavily on the `data.tree` package, (introduction [here](https://cran.r-project.org/web/packages/data.tree/vignettes/data.tree.html) and examples [here](https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html) ).
+The package leans heavily on the `data.tree` package,
+(introduction [here](https://cran.r-project.org/web/packages/data.tree/vignettes/data.tree.html) and examples [here](https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html) ).
 
 
 ## Read-in trees
 
-```{r load packages}
+```{r load packages, echo=FALSE}
 library(yaml)
 library(data.tree)
 devtools::load_all(".")
@@ -281,10 +284,28 @@ data.frame(pathname = osNode$Get('pathString', filterFun = isLeaf),
 ```
 
 
+## Risk Profile
+
+Further, the pathway probabilities can be used to give the distribution of the terminal state values e.g. cost or time.
+This is called the risk profile of the decision tree.
+
+```{r}
+osNode <- calc.riskprofile(osNode)
+print(osNode, "type", "path_prob", "path_payoff")
+```
+
+```{r}
+plot(data.frame(osNode$Get('path_payoff', filterFun = isLeaf),
+           osNode$Get('path_prob', filterFun = isLeaf)), type="h",
+     xlab="payoff", ylab="probability")
+```
+
 
 ## Optimal decisions
 
 We can get the software to calculate the optimal decision for us, rather than returning the expections to compare.
+This can be done from right to left, iteratively.
+
 
 ```{r eval=FALSE}
 ##TODO##
