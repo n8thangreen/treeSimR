@@ -9,7 +9,7 @@ options(width = 1000)
 ```
 
 
-# treeSimR
+# `treeSimR`
 
 An R package for easy forward simulating probability decision trees, calculating cost-effectiveness and PSA.
 
@@ -19,7 +19,7 @@ Currently contains functions to:
 * simulate final expected outcomes
 * Monte-Carlo simulate multiple simulations
 
-TODO
+_TODO_
 
 * iteratively collapse expected outcome (from right to left)
 * iteratively collapse chance nodes (from right to left)
@@ -29,6 +29,22 @@ TODO
 
 The package leans heavily on the `data.tree` package,
 (introduction [here](https://cran.r-project.org/web/packages/data.tree/vignettes/data.tree.html) and examples [here](https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html) ).
+
+
+
+## Installing `treeSimR`
+
+To install the development version from github:
+```{r eval=FALSE}
+library(devtools)
+install_github("n8thangreen/treeSimR")
+```
+
+Then, to load the package, use:
+```{r eval=FALSE}
+library("treeSimR")
+```
+
 
 
 ## Read-in trees
