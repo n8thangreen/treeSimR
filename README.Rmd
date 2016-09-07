@@ -21,10 +21,10 @@ Currently contains functions to:
 
 _TODO_
 
-* iteratively collapse expected outcome (from right to left)
-* iteratively collapse chance nodes (from right to left)
-* optimal decision function (iterative from right to left)
-* plotting functions: C-E plane, C-E curve, risk profile (with uncertainty), tornado, spider, ...
+- [ ] iteratively collapse expected outcome (from right to left)
+- [ ] iteratively collapse chance nodes (from right to left)
+- [ ] optimal decision function (iterative from right to left)
+- [ ] plotting functions: C-E plane, C-E curve, risk profile (with uncertainty), tornado, spider, ...
 
 
 The package leans heavily on the `data.tree` package,
