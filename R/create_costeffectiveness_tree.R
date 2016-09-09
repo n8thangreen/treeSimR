@@ -1,4 +1,4 @@
-#' Create a Cost-Effectiveness Tree Object
+#' Constructor for a Cost-Effectiveness Tree Object
 #'
 #' The resulting object is used in the main package functions.
 #' Branch distributions are currently permitted as uniform, gamma and triangle.
@@ -7,18 +7,18 @@
 #'
 #' @param yaml_tree YAML file or location address
 #'
-#' @return data.tree object of class costeffectiveness.tree
+#' @return data.tree object of class costeffectiveness_tree
 #' @export
 #'
 #' @seealso calc.expectedValues
 #' @examples
-#' osNode <- create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+#' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
 #' print(osNode, "type", "p", "distn", "mean", "sd")
 #'
 #' osNode <- calc.expectedValues(osNode)
 #' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 #'
-create.costeffectiveness.tree <- function(yaml_tree){
+costeffectiveness_tree <- function(yaml_tree){
 
   stopifnot(is.character(yaml_tree))
 
@@ -33,7 +33,7 @@ create.costeffectiveness.tree <- function(yaml_tree){
                   stop("Error: Need to provide distributions for all branches")
   stopifnot(all(osNode$Get("type", filterFun = isLeaf) == "terminal"))
 
-  class(osNode) <- c(class(osNode), "costeffectiveness.tree")
+  class(osNode) <- c(class(osNode), "costeffectiveness_tree")
 
   osNode
 }

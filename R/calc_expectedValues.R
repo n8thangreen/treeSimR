@@ -1,17 +1,17 @@
 #' Calculate Expected Values for Each Node of Decision Tree
 #'
-#' Takes an object of class costeffectiveness.tree.
+#' Takes an object of class costeffectiveness_tree.
 #'
 #' @param osNode
 #'
 #' @return osNode
 #' @export
 #'
-#' @seealso create.costeffectiveness.tree, payoff
+#' @seealso costeffectiveness_tree, payoff
 #'
 #' @examples
 #' ## read-in decision tree
-#' osNode <- create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+#' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
 #' print(osNode, "type", "p", "distn", "mean", "sd")
 #'
 #' ## calculate a single realisation expected values
@@ -23,7 +23,7 @@
 #'
 calc.expectedValues <- function(osNode){
 
-  stopifnot("costeffectiveness.tree" %in% class(osNode))
+  stopifnot("costeffectiveness_tree" %in% class(osNode))
 
   rpayoff <- osNode$Get(sampleNode)
   osNode$Set(payoff = rpayoff)
@@ -39,7 +39,7 @@ calc.expectedValues <- function(osNode){
 #' Results are returned for the nodes labelled logical in decision tree.
 #' Require at least one logical node.
 #'
-#' @param osNode A data.tree object with class costeffectiveness.tree
+#' @param osNode A data.tree object with class costeffectiveness_tree
 #' @param n Number of simulations
 #'
 #' @return list containing array of n sets of expected values and sampled nodes full names
@@ -48,7 +48,7 @@ calc.expectedValues <- function(osNode){
 #'
 #' @examples
 #' ## read-in decision tree
-#' osNode <- create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+#' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
 #' print(osNode, "type", "p", "distn", "mean", "sd")
 #'
 #' ## calculate a single realisation expected values
@@ -60,7 +60,7 @@ calc.expectedValues <- function(osNode){
 #'
 MonteCarlo.expectedValues <- function(osNode, n=100){
 
-  stopifnot("costeffectiveness.tree" %in% class(osNode))
+  stopifnot("costeffectiveness_tree" %in% class(osNode))
 
   if(!any(osNode$Get("type") == "logical"))
     stop("Error: Need at least one node labeled 'logical'")

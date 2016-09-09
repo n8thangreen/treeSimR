@@ -5,7 +5,7 @@
 #' The probabilities are calculate with \code{FUN="product"}
 #' and the values are calculated with \code{FUN="sum"}.
 #'
-#' @param osNode object of class costeffectiveness.tree
+#' @param osNode object of class costeffectiveness_tree
 #' @param FUN sum or product
 #'
 #' @return vector of values
@@ -16,7 +16,7 @@
 #'
 calc.pathway_probs <- function(osNode, FUN = "product"){
 
-  stopifnot("costeffectiveness.tree" %in% class(osNode))
+  stopifnot("costeffectiveness_tree" %in% class(osNode))
   FUN <- match.arg(FUN, c("sum", "product"))
 
   if (FUN=="product"){
