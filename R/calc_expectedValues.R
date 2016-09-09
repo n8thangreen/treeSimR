@@ -15,13 +15,13 @@
 #' print(osNode, "type", "p", "distn", "mean", "sd")
 #'
 #' ## calculate a single realisation expected values
-#' osNode <- calc.expectedValues(osNode)
+#' osNode <- calc_expectedValues(osNode)
 #' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 #'
 #' ## calculate multiple realisation for specific nodes
-#' MonteCarlo.expectedValues(osNode, n=100)
+#' MonteCarlo_expectedValues(osNode, n=100)
 #'
-calc.expectedValues <- function(osNode){
+calc_expectedValues <- function(osNode){
 
   stopifnot("costeffectiveness_tree" %in% class(osNode))
 
@@ -44,7 +44,7 @@ calc.expectedValues <- function(osNode){
 #'
 #' @return list containing array of n sets of expected values and sampled nodes full names
 #' @export
-#' @seealso calc.expectedValues
+#' @seealso calc_expectedValues
 #'
 #' @examples
 #' ## read-in decision tree
@@ -52,13 +52,13 @@ calc.expectedValues <- function(osNode){
 #' print(osNode, "type", "p", "distn", "mean", "sd")
 #'
 #' ## calculate a single realisation expected values
-#' osNode <- calc.expectedValues(osNode)
+#' osNode <- calc_expectedValues(osNode)
 #' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 #'
 #' ## calculate multiple realisation for specific nodes
-#' MonteCarlo.expectedValues(osNode, n=100)
+#' MonteCarlo_expectedValues(osNode, n=100)
 #'
-MonteCarlo.expectedValues <- function(osNode, n=100){
+MonteCarlo_expectedValues <- function(osNode, n=100){
 
   stopifnot("costeffectiveness_tree" %in% class(osNode))
 
@@ -71,7 +71,7 @@ MonteCarlo.expectedValues <- function(osNode, n=100){
   out <-  matrix(data=NA, nrow=n, ncol=length(NodeNames))
   for (i in 1:n){
 
-    osNode <- calc.expectedValues(osNode)
+    osNode <- calc_expectedValues(osNode)
     res <- osNode$Get("payoff", filterFun = function(x) x$type=="logical")
     out[i,] <- res
   }

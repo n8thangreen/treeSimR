@@ -9,7 +9,7 @@
 #' @examples
 #' @export
 
-sample.distributions <- function(param.distns){
+sample_distributions <- function(param.distns){
 
   try(library(triangle), silent = TRUE)
 
@@ -31,9 +31,10 @@ sample.distributions <- function(param.distns){
                      none = param.distns[[i]]$params["mean"])
   }
 
-  names(out) <- names(param.distns)
+  # names(out) <- names(param.distns)
+  # return(out)
 
-  return(out)
+  return(setNames(out, names(param.distns)))
 }
 
 
@@ -43,7 +44,7 @@ sample.distributions <- function(param.distns){
 #'
 #' @return
 #' @export
-#'
+#' @seealso  \link{sample_distributions}
 #' @examples
 sampleNode <- function(node) {
   DISTN <- list(distn = node$distn,
@@ -51,7 +52,7 @@ sampleNode <- function(node) {
   # DISTN <- switch(node$distn,
   #                 gamma = list(distn=node$distn, params=c(mean=node$mean, sd=node$sd)),
   #                 unif = list(distn=node$distn,  params=c(min=node$min, max=node$max)))
-  sample.distributions(list(DISTN))
+  sample_distributions(list(DISTN))
 }
 
 
@@ -67,7 +68,7 @@ sampleNode <- function(node) {
 #' @return sd
 #' @export
 #'
-get.sd.from.normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
+get_sd_from_normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
 
   if(!is.na(lowerCI) & !is.na(x_bar)){
     sd <- sqrt(n) * (x_bar - lowerCI)/1.96
@@ -91,7 +92,7 @@ get.sd.from.normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
 #' @seealso rpert
 #' @export
 #'
-MoM.beta <- function(xbar, vbar){
+MoM_beta <- function(xbar, vbar){
 
   if(vbar==0){stop("zero variance not allowed")
   }else if(xbar*(1-xbar)<vbar){
@@ -110,10 +111,10 @@ MoM.beta <- function(xbar, vbar){
 #' @param var Variance
 #'
 #' @return shape, scale
-#' @seealso MoM.beta
+#' @seealso MoM_beta
 #' @export
 #'
-MoM.gamma <- function(mean, var){
+MoM_gamma <- function(mean, var){
 
   stopifnot(var>=0)
   stopifnot(mean>=0)

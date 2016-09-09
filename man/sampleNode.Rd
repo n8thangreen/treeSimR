@@ -12,4 +12,7 @@ sampleNode(node)
 \description{
 Sample a data.tree Node
 }
+\seealso{
+\link{sample_distributions}
+}
 

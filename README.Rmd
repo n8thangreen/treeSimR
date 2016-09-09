@@ -239,7 +239,7 @@ osNode
 Better still, use the treeSimR package function to do this, checking for tree integrity and defining an additional costeffectiveness.tree class.
 
 ```{r}
-osNode <- treeSimR::create.costeffectiveness.tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+osNode <- treeSimR::costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
 print(osNode, "type", "p", "distn", "mean", "sd")
 ```
 
@@ -274,7 +274,7 @@ print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 Similarly to above, we have created a better wrapper function to perform these steps:
 
 ```{r}
-osNode <- calc.expectedValues(osNode)
+osNode <- calc_expectedValues(osNode)
 print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 ```
 
@@ -285,7 +285,7 @@ print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 We are now in a position to do a probability sensitivity analysis (PSA) and calculate multiple realisations for specific nodes e.g. those at which a decision is to be made.
 
 ```{r}
-MonteCarlo.expectedValues(osNode, n=100)
+MonteCarlo_expectedValues(osNode, n=100)
 ```
 
 
@@ -298,7 +298,7 @@ These are calculated by taking the product of the probabilities along each pathw
 Once again, we've written a function to do this, which we can append to the the tree. Below we give the terminal states in a dataframe.
 
 ```{r}
-path_probs <- calc.pathway_probs(osNode)
+path_probs <- calc_pathway_probs(osNode)
 osNode$Set(path_probs = path_probs)
 
 terminal_states <- data.frame(pathname = osNode$Get('pathString', filterFun = isLeaf),
@@ -344,7 +344,7 @@ Further, the pathway probabilities can be used to give the distribution of the t
 This is called the risk profile of the decision tree.
 
 ```{r}
-osNode <- calc.riskprofile(osNode)
+osNode <- calc_riskprofile(osNode)
 print(osNode, "type", "path_prob", "path_payoff")
 ```
 
