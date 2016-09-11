@@ -89,7 +89,7 @@ get_sd_from_normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
 #' @param vbar Variance
 #'
 #' @return a and b of Beta(a,b)
-#' @seealso rpert
+#' @seealso \link{rpert}
 #' @export
 #'
 MoM_beta <- function(xbar, vbar){
@@ -111,7 +111,7 @@ MoM_beta <- function(xbar, vbar){
 #' @param var Variance
 #'
 #' @return shape, scale
-#' @seealso MoM_beta
+#' @seealso \link{MoM_beta}
 #' @export
 #'
 MoM_gamma <- function(mean, var){
@@ -128,7 +128,7 @@ MoM_gamma <- function(mean, var){
 
 #' Beta-PERT
 #'
-#' https://reference.wolfram.com/language/ref/PERTDistribution.html
+#' \link{https://reference.wolfram.com/language/ref/PERTDistribution.html}
 #'
 #' @param n Sample size
 #' @param x.min Lower limit

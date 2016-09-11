@@ -1,3 +1,9 @@
+
+calc_expectedValues <- function(osNode) UseMethod("calc_expectedValues")
+
+calc_expectedValues.default <- function(osNode, FUN = "product") "Inappropriate object"
+
+
 #' Calculate Expected Values for Each Node of Decision Tree
 #'
 #' Takes an object of class costeffectiveness_tree.
@@ -7,7 +13,7 @@
 #' @return osNode
 #' @export
 #'
-#' @seealso costeffectiveness_tree, payoff
+#' @seealso \link{costeffectiveness_tree}, \link{payoff}
 #'
 #' @examples
 #' ## read-in decision tree
@@ -21,9 +27,7 @@
 #' ## calculate multiple realisation for specific nodes
 #' MonteCarlo_expectedValues(osNode, n=100)
 #'
-calc_expectedValues <- function(osNode){
-
-  stopifnot("costeffectiveness_tree" %in% class(osNode))
+calc_expectedValues.costeffectiveness_tree <- function(osNode){
 
   rpayoff <- osNode$Get(sampleNode)
   osNode$Set(payoff = rpayoff)
@@ -33,6 +37,11 @@ calc_expectedValues <- function(osNode){
   osNode
 }
 
+
+
+MonteCarlo_expectedValues <- function(osNode) UseMethod("MonteCarlo_expectedValues")
+
+MonteCarlo_expectedValues.default <- function(osNode, FUN = "product") "Inappropriate object"
 
 #' Monte Carlo Forward Simulation of Decision Tree
 #'
@@ -58,9 +67,7 @@ calc_expectedValues <- function(osNode){
 #' ## calculate multiple realisation for specific nodes
 #' MonteCarlo_expectedValues(osNode, n=100)
 #'
-MonteCarlo_expectedValues <- function(osNode, n=100){
-
-  stopifnot("costeffectiveness_tree" %in% class(osNode))
+MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode, n=100){
 
   if(!any(osNode$Get("type") == "logical"))
     stop("Error: Need at least one node labeled 'logical'")
