@@ -18,6 +18,6 @@ shape, scale
 Method of Moments Gamma Distribution Parameter Transformation
 }
 \seealso{
-MoM_beta
+\link{MoM_beta}
 }
 

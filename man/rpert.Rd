@@ -21,6 +21,6 @@ rpert(n, x.min, x.max, x.mode, lambda = 4)
 sampled value
 }
 \description{
-https://reference.wolfram.com/language/ref/PERTDistribution.html
+\link{https://reference.wolfram.com/language/ref/PERTDistribution.html}
 }
 

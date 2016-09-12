@@ -18,6 +18,6 @@ a and b of Beta(a,b)
 Could alternatively use the beta-PERT \code{\link{rpert}} with maximum and minimum instead of variance.
 }
 \seealso{
-rpert
+\link{rpert}
 }
 

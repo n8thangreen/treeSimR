@@ -1,7 +1,7 @@
 
-calc_pathway_probs <- function(osNode) UseMethod("calc_pathway_probs")
+calc_pathway_probs <- function(osNode, FUN) UseMethod("calc_pathway_probs", osNode)
 
-calc_pathway_probs.default <- function(osNode, FUN = "product") "Inappropriate object"
+calc_pathway_probs.default <- function(osNode, ...) print("Error: inappropriate object")
 
 
 #' Calculate Total Pathway Probabilities of Decision Tree
@@ -59,7 +59,7 @@ calc_pathway_probs.costeffectiveness_tree <- function(osNode, FUN = "product"){
 
 calc_riskprofile <- function(osNode) UseMethod("calc_riskprofile")
 
-calc_riskprofile.default <- function(osNode, FUN = "product") "Inappropriate object"
+calc_riskprofile.default <- function(osNode, ...) print("Error: inappropriate object")
 
 
 #' Calculate Risk Profile

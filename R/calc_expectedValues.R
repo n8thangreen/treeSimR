@@ -1,7 +1,7 @@
 
 calc_expectedValues <- function(osNode) UseMethod("calc_expectedValues")
 
-calc_expectedValues.default <- function(osNode, FUN = "product") "Inappropriate object"
+calc_expectedValues.default <- function(osNode) print("Error: inappropriate object")
 
 
 #' Calculate Expected Values for Each Node of Decision Tree
@@ -39,9 +39,11 @@ calc_expectedValues.costeffectiveness_tree <- function(osNode){
 
 
 
-MonteCarlo_expectedValues <- function(osNode) UseMethod("MonteCarlo_expectedValues")
+MonteCarlo_expectedValues <- function(osNode, n){
+  UseMethod("MonteCarlo_expectedValues", osNode)
+}
 
-MonteCarlo_expectedValues.default <- function(osNode, FUN = "product") "Inappropriate object"
+MonteCarlo_expectedValues.default <- function(osNode, ...) print("Error: inappropriate object")
 
 #' Monte Carlo Forward Simulation of Decision Tree
 #'

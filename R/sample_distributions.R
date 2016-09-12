@@ -20,7 +20,7 @@ sample_distributions <- function(param.distns){
 
     out[i] <- switch(distn,
                      gamma = {
-                       mom <- MoM.gamma(mean=param.distns[[i]]$params["mean"],
+                       mom <- MoM_gamma(mean=param.distns[[i]]$params["mean"],
                                         var=param.distns[[i]]$params["sd"]^2)
                        gamma = rgamma(1, shape = mom$shape, scale = mom$scale)
                      },

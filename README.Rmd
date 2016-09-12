@@ -49,7 +49,7 @@ library("treeSimR")
 
 ## Read-in trees
 
-```{r load packages, echo=FALSE}
+```{r load packages, echo=FALSE, warning=FALSE}
 library(yaml)
 library(data.tree)
 devtools::load_all(".")
