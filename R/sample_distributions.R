@@ -58,7 +58,7 @@ sampleNode <- function(node) {
 
 #' Get Standard Deviation from Normal Confidence Interval
 #'
-#' http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and
+#' \link{http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and}
 #'
 #' @param n Sample size
 #' @param x_bar Mean
