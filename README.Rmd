@@ -308,56 +308,41 @@ terminal_states
 
 
 Specifically, the starting state probabilities of the subsequent compartmental model are for aggregated sub-populations.
-We can simply sum over these in an ad-hoc way:
+We can simply sum over these in an ad-hoc way.
+
+The non-LTBI individuals either never had LTBI or where successfully treated.
 
 ```{r}
-startstate_prob <- matrix(NA, nrow = 3, ncol = 2,
-                          dimnames = list(c("<40k","40-150k",">150k"), c("LTBI","nonLTBI")))
-
 startstate.nonLTBI <- grepl("/Complete Treatment", x = terminal_states$pathname) | grepl("nonLTBI", x = terminal_states$pathname)
 startstate.LTBI <- !startstate.nonLTBI
-
-startstate_prob["<40k","nonLTBI"] <- sum(terminal_states$path_probs[grepl("under 40k cob incidence", x = terminal_states$pathname) &
-                                                                  startstate.nonLTBI])
-
-startstate_prob["<40k","LTBI"] <- sum(terminal_states$path_probs[grepl("under 40k cob incidence", x = terminal_states$pathname) &
-                                                               startstate.LTBI])
-
-startstate_prob["40-150k","nonLTBI"] <- sum(terminal_states$path_probs[grepl("40-150k cob incidence", x = terminal_states$pathname) &
-                                                                     startstate.nonLTBI])
-
-startstate_prob["40-150k","LTBI"] <- sum(terminal_states$path_probs[grepl("40-150k cob incidence", x = terminal_states$pathname) &
-                                                                  startstate.LTBI])
-
-startstate_prob[">150k","nonLTBI"] <- sum(terminal_states$path_probs[grepl("over 150k cob incidence", x = terminal_states$pathname) &
-                                                                   startstate.nonLTBI])
-
-startstate_prob[">150k","LTBI"] <- sum(terminal_states$path_probs[grepl("over 150k cob incidence", x = terminal_states$pathname) &
-                                                                  startstate.LTBI])
-
-knitr::kable(startstate_prob/sum(startstate_prob))
 ```
+
+The expected proportion of individuals in LTBI and non-LTBI after screening is thus,
 
 ```{r}
+healthstatus <- NA
+healthstatus[startstate.nonLTBI] <- "nonLTBI"
+healthstatus[startstate.LTBI] <- "LTBI"
 
-terminal_states$'healthstatus' <- "nonLTBI"
-terminal_states$'healthstatus'[startstate.LTBI] <- "LTBI"
-
-terminal_states$'incidence' <- NA
-terminal_states$'incidence'[grepl("under 40k cob incidence", x = terminal_states$pathname)] <- '<40'
-terminal_states$'incidence'[grepl("40-150k cob incidence", x = terminal_states$pathname)] <- '40-150k'
-terminal_states$'incidence'[grepl("over 150k cob incidence", x = terminal_states$pathname)] <- '>150k'
+aggregate(terminal_states$path_probs, by=list(healthstatus), FUN=sum)
 ```
 
-
-Further, we can sample from the terminal state probabilities to give a sample of compartmental model start state proportions. This can capture the variability due to the cohort size.
+Further, we can sample from the terminal state probabilities to give a sample of compartmental model start state proportions.
+This can capture the variability due to the cohort size.
 
 ```{r}
+samplesize <- 100000
+numsamples <- 10
 
-SAMPLE <- sample(x = 1:nrow(terminal_states), size = 100000, prob = terminal_states$path_probs, replace = TRUE)
-knitr::kable(table(terminal_states$incidence[SAMPLE], terminal_states$healthstatus[SAMPLE])/100000)
+sample.mat <- matrix(NA, nrow = nrow(terminal_states), ncol = numsamples)
+for (i in 1:numsamples){
+  
+  sample.mat[,i] <- table(sample(x = 1:nrow(terminal_states), size = samplesize, prob = terminal_states$path_probs, replace = TRUE))/samplesize
+}
+
+head(sample.mat)
+apply(sample.mat, 2, function(x) aggregate(x, by=list(healthstatus), FUN=sum))
 ```
-
 
 
 ## Risk Profile
