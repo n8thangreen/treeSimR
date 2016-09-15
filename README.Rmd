@@ -345,6 +345,14 @@ apply(sample.mat, 2, function(x) aggregate(x, by=list(healthstatus), FUN=sum))
 ```
 
 
+The \code{treeSimR} function to do this is
+```{r eval=FALSE}
+get_start_state_proportions(terminal_states$path_probs, healthstatus, samplesize, numsamples)
+```
+
+
+
+
 ## Risk Profile
 
 Further, the pathway probabilities can be used to give the distribution of the terminal state values e.g. cost or time.
