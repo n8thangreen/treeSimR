@@ -1,11 +1,26 @@
 ---
 title: "README"
 date: 
-output: md_document
+output: html_document
 ---
 
 ```{r set-options, echo=FALSE, cache=FALSE}
 options(width = 1000)
+```
+
+``` {r setup, echo=FALSE, results="hide"}
+lang_output <- function(x, lang) {
+  cat(c(sprintf("```%s", lang), x, "```"), sep="\n")
+}
+
+c_output <- function(x) lang_output(x, "cc")
+r_output <- function(x) lang_output(x, "r")
+yaml_output <- function(x) lang_output(x, "yaml")
+plain_output <- function(x) lang_output(x, "plain")
+
+knitr::opts_chunk$set(
+  fig.width=7,
+  fig.height=5)
 ```
 
 
@@ -57,6 +72,15 @@ devtools::load_all(".")
 
 
 The raw decision tree file is a tab-spaced file such as the following:
+
+``` {r }
+path_dtree <- system.file("raw data/LTBI_dtree-cost-distns.yaml", package = "treeSimR")
+osList <- yaml.load_file(path_dtree)
+```
+
+``` {r echo=FALSE, results="asis"}
+yaml_output(readLines(path_dtree))
+```
 
 ```{r eval=FALSE}
 sink("raw data/LTBI_dtree-cost-distns.yaml")
