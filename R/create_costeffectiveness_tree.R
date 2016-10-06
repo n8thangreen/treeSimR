@@ -6,6 +6,7 @@
 #' All branches must end in a terminal node.
 #'
 #' @param yaml_tree YAML file or location address
+#' @param details general details of decision tree
 #'
 #' @return data.tree object of class costeffectiveness_tree
 #' @export
@@ -18,9 +19,10 @@
 #' osNode <- calc.expectedValues(osNode)
 #' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 #'
-costeffectiveness_tree <- function(yaml_tree){
+costeffectiveness_tree <- function(yaml_tree, details=NULL){
 
   stopifnot(is.character(yaml_tree))
+  stopifnot(is.string(details))
 
   if (grep(pattern = ".yaml$", x = yaml_tree))
     osList <- yaml::yaml.load_file(yaml_tree)
@@ -31,9 +33,17 @@ costeffectiveness_tree <- function(yaml_tree){
 
   if(!all(osNode$Get("distn")%in%c("unif","gamma","triangle")))
                   stop("Error: Need to provide distributions for all branches")
+
   stopifnot(all(osNode$Get("type", filterFun = isLeaf) == "terminal"))
 
-  class(osNode) <- c(class(osNode), "costeffectiveness_tree")
+  ##TODO##
+  # check for missing values
+  # if missing probabilities then fill-in where possible, otherwise throw error
+  # check that probabilities sum to 1
+  # if not then give a warning
+
+  class(osNode) <- c("costeffectiveness_tree", class(osNode))
+  attr(osNode, "details") <- details
 
   osNode
 }

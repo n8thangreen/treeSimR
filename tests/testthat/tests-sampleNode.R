@@ -1,6 +1,3 @@
-library(yaml)
-library(data.tree)
-
 context("sampleNode")
 
 test_that("different distributions and parameter values", {

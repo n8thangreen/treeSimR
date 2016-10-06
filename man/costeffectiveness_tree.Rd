@@ -4,10 +4,12 @@
 \alias{costeffectiveness_tree}
 \title{Constructor for a Cost-Effectiveness Tree Object}
 \usage{
-costeffectiveness_tree(yaml_tree)
+costeffectiveness_tree(yaml_tree, details = NULL)
 }
 \arguments{
 \item{yaml_tree}{YAML file or location address}
+
+\item{details}{general details of decision tree}
 }
 \value{
 data.tree object of class costeffectiveness_tree

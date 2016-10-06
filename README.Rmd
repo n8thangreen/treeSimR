@@ -13,10 +13,8 @@ lang_output <- function(x, lang) {
   cat(c(sprintf("```%s", lang), x, "```"), sep="\n")
 }
 
-c_output <- function(x) lang_output(x, "cc")
 r_output <- function(x) lang_output(x, "r")
 yaml_output <- function(x) lang_output(x, "yaml")
-plain_output <- function(x) lang_output(x, "plain")
 
 knitr::opts_chunk$set(
   fig.width=7,
@@ -61,7 +59,6 @@ library("treeSimR")
 ```
 
 
-
 ## Read-in trees
 
 ```{r load packages, echo=FALSE, warning=FALSE}
@@ -71,196 +68,27 @@ devtools::load_all(".")
 ```
 
 
-The raw decision tree file is a tab-spaced file such as the following:
-
-``` {r }
+```{r load_yaml}
 path_dtree <- system.file("raw data/LTBI_dtree-cost-distns.yaml", package = "treeSimR")
 osList <- yaml.load_file(path_dtree)
 ```
 
-``` {r echo=FALSE, results="asis"}
+The raw decision tree file is a tab-spaced file such as the following:
+
+```{r echo=FALSE, results="asis"}
 yaml_output(readLines(path_dtree))
 ```
 
-```{r eval=FALSE}
-sink("raw data/LTBI_dtree-cost-distns.yaml")
 
-cat("
-    name: LTBI screening cost
-    type: decision
-    distn: gamma
-    mean: 1
-    sd: 1
-    Screening:
-      distn: gamma
-      mean: 1
-      sd: 1
-      type: chance
-      LTBI:
-        p: 0.25
-        distn: gamma
-        mean: 1
-        sd: 1
-        type: chance
-        Not GP registered:
-          type: terminal
-          p: 0.4
-          distn: gamma
-          mean: 1
-          sd: 1
-        GP registered:
-          type: chance
-          p: 0.4
-          distn: gamma
-          mean: 1
-          sd: 1
-          Not Agree to Screen:
-            p: 0.6
-            type: terminal
-            distn: gamma
-            mean: 1
-            sd: 1
-          Agree to Screen:
-            p: 0.6
-            type: chance
-            distn: gamma
-            mean: 1
-            sd: 1
-            Test Negative:
-              type: terminal
-              p: 0.7
-              distn: gamma
-              mean: 1
-              sd: 1
-            Test Positive:
-              type: chance
-              p: 0.7
-              distn: gamma
-              mean: 1
-              sd: 1
-              Not Start Treatment:
-                type: terminal
-                p: 0.3
-                distn: gamma
-                mean: 1
-                sd: 1
-              Start Treatment:
-                type: chance
-                p: 0.3
-                distn: gamma
-                mean: 1
-                sd: 1
-                Complete Treatment:
-                  type: terminal
-                  p: 0.75
-                  distn: gamma
-                  mean: 1
-                  sd: 1
-                Not Complete Treatment:
-                  type: terminal
-                  p: 0.75
-                  distn: gamma
-                  mean: 1
-                  sd: 1
-      non-LTBI:
-        p: 0.25
-        distn: gamma
-        mean: 1
-        sd: 1
-        type: chance
-        Not GP registered:
-          type: terminal
-          p: 0.4
-          distn: gamma
-          mean: 1
-          sd: 1
-        GP registered:
-          type: terminal
-          p: 0.4
-          distn: gamma
-          mean: 1
-          sd: 1
-          Not Agree to Screen:
-            p: 0.6
-            type: chance
-            distn: gamma
-            mean: 1
-            sd: 1
-          Agree to Screen:
-            p: 0.6
-            type: chance
-            distn: gamma
-            mean: 1
-            sd: 1
-            Test Negative:
-              type: terminal
-              p: 0.7
-              distn: gamma
-              mean: 1
-              sd: 1
-            Test Positive:
-              type: terminal
-              p: 0.7
-              distn: gamma
-              mean: 1
-              sd: 1
-              Not Start Treatment:
-                type: terminal
-                p: 0.3
-                distn: gamma
-                mean: 1
-                sd: 1
-              Start Treatment:
-                type: terminal
-                p: 0.3
-                distn: gamma
-                mean: 1
-                sd: 1
-                Complete Treatment:
-                  type: terminal
-                  p: 0.75
-                  distn: gamma
-                  mean: 1
-                  sd: 1
-                Not Complete Treatment:
-                  type: terminal
-                  p: 0.75
-                  distn: gamma
-                  mean: 1
-                  sd: 1
-    No Screening:
-      p: 0.25
-      distn: gamma
-      mean: 1
-      sd: 1
-      type: chance
-      LTBI:
-        type: terminal
-        p: 0.4
-        distn: gamma
-        mean: 1
-        sd: 1
-      non-LTBI:
-        p: 0.6
-        type: terminal
-        distn: gamma
-        mean: 1
-        sd: 1
-    ", fill=TRUE)
-sink()
-```
-
-
-We save this to a .yaml text file and then read it in as a yaml file to a data.tree object using the yaml and data.tree packages. This is then represented as a list in R.
+We save this to a .yaml text file and then give it as a yaml file to a data.tree object using the yaml and data.tree packages. This is then represented as a list in R.
 
 ```{r}
 # osList <- yaml.load(yaml)
-osList <- yaml.load_file("raw data/LTBI_dtree-cost-distns.yaml")
 osNode <- as.Node(osList)
 osNode
 ```
 
-Better still, use the treeSimR package function to do this, checking for tree integrity and defining an additional costeffectiveness.tree class.
+Better still, use the \code{treeSimR} package function to do this, checking for tree integrity and defining an additional costeffectiveness.tree class.
 
 ```{r}
 osNode <- treeSimR::costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
