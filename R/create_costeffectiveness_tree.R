@@ -19,10 +19,10 @@
 #' osNode <- calc.expectedValues(osNode)
 #' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 #'
-costeffectiveness_tree <- function(yaml_tree, details=NULL){
+costeffectiveness_tree <- function(yaml_tree, details=""){
 
   stopifnot(is.character(yaml_tree))
-  stopifnot(is.string(details))
+  stopifnot(is.character(details))
 
   if (grep(pattern = ".yaml$", x = yaml_tree))
     osList <- yaml::yaml.load_file(yaml_tree)

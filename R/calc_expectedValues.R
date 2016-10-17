@@ -1,6 +1,28 @@
-
+#' Calculate Expected Values for Each Node of Decision Tree
+#'
+#' Takes an object of class costeffectiveness_tree.
+#'
+#' @param osNode
+#'
+#' @return osNode
+#' @export
+#'
+#' @seealso \link{costeffectiveness_tree}, \link{payoff}
+#'
 calc_expectedValues <- function(osNode) UseMethod("calc_expectedValues")
 
+
+#' Calculate Expected Values for Each Node of Decision Tree
+#'
+#' Takes an object of class costeffectiveness_tree.
+#'
+#' @param osNode
+#'
+#' @return osNode
+#' @export
+#'
+#' @seealso \link{costeffectiveness_tree}, \link{payoff}
+#'
 calc_expectedValues.default <- function(osNode) print("Error: inappropriate object")
 
 
@@ -38,12 +60,37 @@ calc_expectedValues.costeffectiveness_tree <- function(osNode){
 }
 
 
-
+#' Monte Carlo Forward Simulation of Decision Tree
+#'
+#' Results are returned for the nodes labelled logical in decision tree.
+#' Require at least one logical node.
+#'
+#' @param osNode A data.tree object with class costeffectiveness_tree
+#' @param n Number of simulations
+#'
+#' @return list containing array of n sets of expected values and sampled nodes full names
+#' @export
+#' @seealso calc_expectedValues
+#'
 MonteCarlo_expectedValues <- function(osNode, n){
   UseMethod("MonteCarlo_expectedValues", osNode)
 }
 
+
+#' Monte Carlo Forward Simulation of Decision Tree
+#'
+#' Results are returned for the nodes labelled logical in decision tree.
+#' Require at least one logical node.
+#'
+#' @param osNode A data.tree object with class costeffectiveness_tree
+#' @param n Number of simulations
+#'
+#' @return list containing array of n sets of expected values and sampled nodes full names
+#' @export
+#' @seealso calc_expectedValues
+#'
 MonteCarlo_expectedValues.default <- function(osNode, ...) print("Error: inappropriate object")
+
 
 #' Monte Carlo Forward Simulation of Decision Tree
 #'

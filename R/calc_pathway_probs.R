@@ -1,6 +1,35 @@
 
+#' Calculate Total Pathway Probabilities of Decision Tree
+#'
+#' Sequential event operations.
+#' The probabilities are calculate with \code{FUN="product"}
+#' and the values are calculated with \code{FUN="sum"}.
+#'
+#' @param osNode object of class costeffectiveness_tree
+#' @param FUN sum or product
+#'
+#' @return vector of values
+#' @export
+#'
+#' @seealso \link{calc_riskprofile}
+#'
 calc_pathway_probs <- function(osNode, FUN) UseMethod("calc_pathway_probs", osNode)
 
+
+#' Calculate Total Pathway Probabilities of Decision Tree
+#'
+#' Sequential event operations.
+#' The probabilities are calculate with \code{FUN="product"}
+#' and the values are calculated with \code{FUN="sum"}.
+#'
+#' @param osNode object of class costeffectiveness_tree
+#' @param FUN sum or product
+#'
+#' @return vector of values
+#' @export
+#'
+#' @seealso \link{calc_riskprofile}
+#'
 calc_pathway_probs.default <- function(osNode, ...) print("Error: inappropriate object")
 
 
@@ -56,9 +85,35 @@ calc_pathway_probs.costeffectiveness_tree <- function(osNode, FUN = "product"){
 }
 
 
-
+#' Calculate Risk Profile
+#'
+#' This function can be used to calculate the Risk Profile.
+#' That is, the distribution of outcome values.
+#'
+#' @param osNode
+#'
+#' @return
+#' @export
+#'
+#' @seealso \link{calc_pathway_probs}
+#' @examples
+#'
 calc_riskprofile <- function(osNode) UseMethod("calc_riskprofile")
 
+
+#' Calculate Risk Profile
+#'
+#' This function can be used to calculate the Risk Profile.
+#' That is, the distribution of outcome values.
+#'
+#' @param osNode
+#'
+#' @return
+#' @export
+#'
+#' @seealso \link{calc_pathway_probs}
+#' @examples
+#'
 calc_riskprofile.default <- function(osNode, ...) print("Error: inappropriate object")
 
 
