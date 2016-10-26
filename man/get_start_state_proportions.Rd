@@ -7,9 +7,21 @@
 get_start_state_proportions(path_probs, startstateid, samplesize, numsamples)
 }
 \arguments{
-\item{numsamples}{}
+\item{path_probs}{Probabilitites along each branch, from root to leaf usinghj \link{calc_pathway_probs}}
+
+\item{startstateid}{How to group terminal nodes}
+
+\item{samplesize}{Total population size}
+
+\item{numsamples}{Number of realisations}
+}
+\value{
+list
 }
 \description{
-Get Start State Proportions
+Population sizes of individuals in each starting state as input for the competing risks model.
+}
+\examples{
+
 }
 

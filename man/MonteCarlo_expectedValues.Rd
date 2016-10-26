@@ -4,7 +4,7 @@
 \alias{MonteCarlo_expectedValues}
 \title{Monte Carlo Forward Simulation of Decision Tree}
 \usage{
-MonteCarlo_expectedValues(osNode, n = 100)
+MonteCarlo_expectedValues(osNode, n)
 }
 \arguments{
 \item{osNode}{A data.tree object with class costeffectiveness_tree}
@@ -17,19 +17,6 @@ list containing array of n sets of expected values and sampled nodes full names
 \description{
 Results are returned for the nodes labelled logical in decision tree.
 Require at least one logical node.
-}
-\examples{
-## read-in decision tree
-osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
-print(osNode, "type", "p", "distn", "mean", "sd")
-
-## calculate a single realisation expected values
-osNode <- calc_expectedValues(osNode)
-print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
-
-## calculate multiple realisation for specific nodes
-MonteCarlo_expectedValues(osNode, n=100)
-
 }
 \seealso{
 calc_expectedValues

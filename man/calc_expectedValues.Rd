@@ -15,20 +15,7 @@ osNode
 \description{
 Takes an object of class costeffectiveness_tree.
 }
-\examples{
-## read-in decision tree
-osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
-print(osNode, "type", "p", "distn", "mean", "sd")
-
-## calculate a single realisation expected values
-osNode <- calc_expectedValues(osNode)
-print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
-
-## calculate multiple realisation for specific nodes
-MonteCarlo_expectedValues(osNode, n=100)
-
-}
 \seealso{
-costeffectiveness_tree, payoff
+\link{costeffectiveness_tree}, \link{payoff}
 }
 

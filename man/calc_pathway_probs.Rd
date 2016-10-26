@@ -4,7 +4,7 @@
 \alias{calc_pathway_probs}
 \title{Calculate Total Pathway Probabilities of Decision Tree}
 \usage{
-calc_pathway_probs(osNode, FUN = "product")
+calc_pathway_probs(osNode, FUN)
 }
 \arguments{
 \item{osNode}{object of class costeffectiveness_tree}
@@ -18,9 +18,6 @@ vector of values
 Sequential event operations.
 The probabilities are calculate with \code{FUN="product"}
 and the values are calculated with \code{FUN="sum"}.
-}
-\examples{
-
 }
 \seealso{
 \link{calc_riskprofile}

@@ -4,7 +4,7 @@
 \alias{costeffectiveness_tree}
 \title{Constructor for a Cost-Effectiveness Tree Object}
 \usage{
-costeffectiveness_tree(yaml_tree, details = NULL)
+costeffectiveness_tree(yaml_tree, details = "")
 }
 \arguments{
 \item{yaml_tree}{YAML file or location address}

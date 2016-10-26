@@ -6,33 +6,63 @@
 #' @param param.distns List of distribution names and their respective parameter values
 #'
 #' @return vector of sample points
+#'
 #' @examples
+#' sample_distributions(param.distns = list(distn = "unif", params = c(min=0, max=1)))
+#' sample_distributions(param.distns = list(distn = "lognormal", params = c(mean=10, sd=1)))
+#' sample_distributions(param.distns = list(distn = "beta", params = c(mean=0.1, sd=0.1)))
+#' sample_distributions(param.distns = list(distn = "beta", params = c(a=0.1, b=0.1)))
+#'
+#'
 #' @export
 
 sample_distributions <- function(param.distns){
 
   try(library(triangle), silent = TRUE)
+  stopifnot(is.list(param.distns))
 
   out <- data.frame(matrix(NA, nrow = 1, ncol = length(param.distns)))
-  for (i in 1:length(param.distns)){
 
-    distn <- match.arg(param.distns[[i]]$distn, c("gamma", "unif", "triangle", "none"))
+  param.distns <- if(plotrix::listDepth(param.distns)==1){list(param.distns)}
+  n.distns <- length(param.distns)
+
+  for (i in seq_len(n.distns)){
+
+    distn <- match.arg(param.distns[[i]]$distn, c("lognormal", "beta", "gamma", "unif", "triangle", "none"))
 
     out[i] <- switch(distn,
                      gamma = {
                        mom <- MoM_gamma(mean=param.distns[[i]]$params["mean"],
                                         var=param.distns[[i]]$params["sd"]^2)
-                       gamma = rgamma(1, shape = mom$shape, scale = mom$scale)
+                       gamma = rgamma(1, shape = mom$shape,
+                                         scale = mom$scale)
                      },
+
                      unif = runif(1, param.distns[[i]]$params["min"],
                                      param.distns[[i]]$params["max"]),
+
+                     lognormal = rlnorm(1, param.distns[[i]]$params["mean"],
+                                           param.distns[[i]]$params["sd"]),
+
+                     beta = {
+                       if(!is.na(param.distns[[i]]$params["mean"]) &
+                          !is.na(param.distns[[i]]$params["sd"])){
+
+                         mom <- MoM_beta(xbar = param.distns[[i]]$params["mean"],
+                                         vbar = param.distns[[i]]$params["sd"]^2)
+
+                         beta = rbeta(1, shape1 = mom$a, shape2 = mom$b)
+                       }else{
+                         beta = rbeta(1, shape1 = param.distns[[i]]$params["a"],
+                                         shape2 = param.distns[[i]]$params["b"])
+                       }
+                     },
+
                      triangle = rtriangle(1, param.distns[[i]]$params["min"],
                                              param.distns[[i]]$params["max"]),
+
                      none = param.distns[[i]]$params["mean"])
   }
-
-  # names(out) <- names(param.distns)
-  # return(out)
 
   return(setNames(out, names(param.distns)))
 }
