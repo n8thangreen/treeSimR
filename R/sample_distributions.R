@@ -8,10 +8,12 @@
 #' @return vector of sample points
 #'
 #' @examples
+#'
 #' sample_distributions(param.distns = list(distn = "unif", params = c(min=0, max=1)))
 #' sample_distributions(param.distns = list(distn = "lognormal", params = c(mean=10, sd=1)))
 #' sample_distributions(param.distns = list(distn = "beta", params = c(mean=0.1, sd=0.1)))
 #' sample_distributions(param.distns = list(distn = "beta", params = c(a=0.1, b=0.1)))
+#' sample_distributions(param.distns = list(list(distn = "beta", params = c(a=0.1, b=0.1)), list(distn = "beta", params = c(a=0.1, b=0.1))))
 #'
 #'
 #' @export
@@ -21,14 +23,16 @@ sample_distributions <- function(param.distns){
   try(library(triangle), silent = TRUE)
   stopifnot(is.list(param.distns))
 
-  out <- data.frame(matrix(NA, nrow = 1, ncol = length(param.distns)))
-
-  param.distns <- if(plotrix::listDepth(param.distns)==1){list(param.distns)}
+if(plotrix::listDepth(param.distns)==1){param.distns <- list(param.distns)}
   n.distns <- length(param.distns)
+
+  out <- data.frame(matrix(NA, nrow = 1, ncol = n.distns))
+  names(out) <- NULL
 
   for (i in seq_len(n.distns)){
 
-    distn <- match.arg(param.distns[[i]]$distn, c("lognormal", "beta", "gamma", "unif", "triangle", "none"))
+    distn <- match.arg(param.distns[[i]]$distn,
+                       c("lognormal", "beta", "gamma", "unif", "triangle", "none"))
 
     out[i] <- switch(distn,
                      gamma = {
@@ -76,12 +80,16 @@ sample_distributions <- function(param.distns){
 #' @export
 #' @seealso  \link{sample_distributions}
 #' @examples
+#'
+#' rpayoff <- osNode$Get(sampleNode)
+#'
 sampleNode <- function(node) {
+
   DISTN <- list(distn = node$distn,
-                params = c(mean=node$mean, sd=node$sd, min=node$min, max=node$max))
-  # DISTN <- switch(node$distn,
-  #                 gamma = list(distn=node$distn, params=c(mean=node$mean, sd=node$sd)),
-  #                 unif = list(distn=node$distn,  params=c(min=node$min, max=node$max)))
+                params = c(mean = node$mean, sd = node$sd,
+                           min = node$min, max = node$max,
+                           a = node$a, b = node$b))
+
   sample_distributions(list(DISTN))
 }
 
@@ -169,7 +177,7 @@ MoM_gamma <- function(mean, var){
 #' @return sampled value
 #' @export
 #'
-rpert <- function( n, x.min, x.max, x.mode, lambda = 4 ){
+rpert <- function(n, x.min, x.max, x.mode, lambda = 4){
 
   if( x.min > x.max || x.mode > x.max || x.mode < x.min ) stop( "invalid parameters" )
 
