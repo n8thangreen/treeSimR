@@ -31,8 +31,8 @@ costeffectiveness_tree <- function(yaml_tree, details=""){
 
   osNode <- data.tree::as.Node(osList)
 
-  if(!all(osNode$Get("distn")%in%c("unif","gamma","triangle")))
-                  stop("Error: Need to provide distributions for all branches")
+  if(!all(osNode$Get("distn")%in%c("lognormal", "beta", "gamma", "unif", "triangle", "none")))
+                  stop("Error: Need to provide valid distribution for all branches")
 
   stopifnot(all(osNode$Get("type", filterFun = isLeaf) == "terminal"))
 
