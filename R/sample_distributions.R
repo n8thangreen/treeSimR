@@ -36,10 +36,17 @@ sample_distributions <- function(param.distns){
 
     out[i] <- switch(distn,
                      gamma = {
-                       mom <- MoM_gamma(mean=param.distns[[i]]$params["mean"],
-                                        var=param.distns[[i]]$params["sd"]^2)
-                       gamma = rgamma(1, shape = mom$shape,
-                                         scale = mom$scale)
+                       if(!is.na(param.distns[[i]]$params["mean"]) &
+                          !is.na(param.distns[[i]]$params["sd"])){
+
+                         mom <- MoM_gamma(mean = param.distns[[i]]$params["mean"],
+                                          var = param.distns[[i]]$params["sd"]^2)
+                         gamma = rgamma(1, shape = mom$shape,
+                                           scale = mom$scale)
+                       }else{
+                         gamma = rgamma(1, shape = param.distns[[i]]$params["shape"],
+                                           scale = param.distns[[i]]$params["scale"])
+                       }
                      },
 
                      unif = runif(1, param.distns[[i]]$params["min"],
@@ -88,6 +95,7 @@ sampleNode <- function(node) {
   DISTN <- list(distn = node$distn,
                 params = c(mean = node$mean, sd = node$sd,
                            min = node$min, max = node$max,
+                           shape = node$shape, scale = node$scale,
                            a = node$a, b = node$b))
 
   sample_distributions(list(DISTN))
