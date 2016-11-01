@@ -23,7 +23,7 @@ sample_distributions <- function(param.distns){
   try(library(triangle), silent = TRUE)
   stopifnot(is.list(param.distns))
 
-if(plotrix::listDepth(param.distns)==1){param.distns <- list(param.distns)}
+  if(plotrix::listDepth(param.distns)==1){param.distns <- list(param.distns)}
   n.distns <- length(param.distns)
 
   out <- data.frame(matrix(NA, nrow = 1, ncol = n.distns))

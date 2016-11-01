@@ -54,7 +54,7 @@ calc_expectedValues.costeffectiveness_tree <- function(osNode){
   rpayoff <- osNode$Get(sampleNode)
   osNode$Set(payoff = rpayoff)
 
-  osNode$Do(payoff, traversal = "post-order")#, filterFun = isNotLeaf)
+  osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
 
   osNode
 }
