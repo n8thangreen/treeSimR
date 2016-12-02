@@ -13,10 +13,10 @@ payoff(node)
 jl$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
 }
 \description{
-Calculates sum of probability times values (e.g. cost) for all branches in decision tree.
+Calculates sum of probabilities multiplied by values (e.g. cost) for all branches in decision tree.
 }
 \details{
-(previously: Gives maximum payoff, given optimal decisions)
-[This is the original example using data.tree](https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html)
+(previous version: Gives maximum payoff, given optimal decisions)
+\href{https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html}{This is the original example using data.tree}
 }
 

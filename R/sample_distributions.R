@@ -1,7 +1,8 @@
 
 #' Sample from Standard Distributions
 #'
-#' Supply a list of defined distributions and one sample realisation is taken of each.
+#' Supply a list of defined distributions (log-normal, beta, gamma, uniform, triangle)
+#' and one sample realisation is taken of each.
 #'
 #' @param param.distns List of distribution names and their respective parameter values
 #'

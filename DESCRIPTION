@@ -15,7 +15,8 @@ Imports:
     ggplot2,
     Hmisc,
     igraph,
-    yaml
+    yaml,
+	plotrix
 Suggests:
     ggtree,
     triangle

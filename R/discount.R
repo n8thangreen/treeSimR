@@ -4,7 +4,7 @@
 #' E.g. a QALY in the future is worth less to us now because of 'interest'
 #' or conversely we'd need more QALYs now to have a QALY further in the future.
 #'
-#' @param d discount factor, default at 3.5%
+#' @param d discount factor, default at 3.5\%
 #' @param t Time period (positive integer) to discount over starting from 1
 #'
 #' @return Dscounted value for each time point

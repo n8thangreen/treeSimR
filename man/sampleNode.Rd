@@ -12,6 +12,11 @@ sampleNode(node)
 \description{
 Sample a data.tree Node
 }
+\examples{
+
+rpayoff <- osNode$Get(sampleNode)
+
+}
 \seealso{
 \link{sample_distributions}
 }
