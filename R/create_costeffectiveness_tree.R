@@ -7,7 +7,8 @@
 #'
 #' @param yaml_tree YAML file or location address
 #' @param details General details of decision tree
-#' @param data Cost and health data
+#' @param data_prob Branching probability data
+#' @param data_val Cost or health data
 #' @param ... Any other arguments to be passed
 #'
 #' @return data.tree object of class costeffectiveness_tree
@@ -23,7 +24,8 @@
 #'
 costeffectiveness_tree <- function(yaml_tree,
                                    details = "",
-                                   data = NA, ...){
+                                   data_prob = NA,
+                                   data_val = NA, ...){
 
   stopifnot(is.character(yaml_tree))
   stopifnot(is.character(details))
@@ -48,10 +50,34 @@ costeffectiveness_tree <- function(yaml_tree,
   # check that probabilities sum to 1
   # if not then give a warning
 
-  ##TODO##
-  # check that the names in the data are the same as in the tree
-  # data in long tidy format
+  if(!is.na(data_prob)){
 
+    # tidy format
+    if(!"node"%in%names(data_prob)){
+
+      data_prob <- reshape2::melt(data = data_prob,
+                                  id.vars = "scenario", variable.name = "node", value.name = "p")
+    }
+
+    data_node_names <- unique(data_prob$nodes)
+    CE_tree_node_names <- unique(names(osNode$Get("level")))
+
+    if(!all(data_node_names%in%CE_tree_node_names)){
+      stop("Node labels in probability data do not match node labels on cost-effectiveness decision tree.")
+    }
+  }
+
+  if(!is.na(data_val)){
+
+    if(!"node"%in%names(data_val)) stop("node label column missing from cost-effectiveness data.")
+
+    data_node_names <- unique(data_val$nodes)
+    CE_tree_node_names <- unique(names(osNode$Get("level")))
+
+    if(!all(data_node_names%in%CE_tree_node_names)){
+      stop("Node labels in cost-effectiveness value data do not match node labels on cost-effectiveness decision tree.")
+    }
+  }
 
   class(osNode) <- c("costeffectiveness_tree", class(osNode))
 
