@@ -6,23 +6,29 @@
 #' All branches must end in a terminal node.
 #'
 #' @param yaml_tree YAML file or location address
-#' @param details general details of decision tree
+#' @param details General details of decision tree
+#' @param data Cost and health data
+#' @param ... Any other arguments to be passed
 #'
 #' @return data.tree object of class costeffectiveness_tree
 #' @export
 #'
 #' @seealso calc.expectedValues
 #' @examples
-#' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+#' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")$osNode
 #' print(osNode, "type", "p", "distn", "mean", "sd")
 #'
 #' osNode <- calc.expectedValues(osNode)
 #' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
 #'
-costeffectiveness_tree <- function(yaml_tree, details=""){
+costeffectiveness_tree <- function(yaml_tree,
+                                   details = "",
+                                   data = NA, ...){
 
   stopifnot(is.character(yaml_tree))
   stopifnot(is.character(details))
+
+  args <- list(...)
 
   if (grep(pattern = ".yaml$", x = yaml_tree))
     osList <- yaml::yaml.load_file(yaml_tree)
@@ -42,8 +48,15 @@ costeffectiveness_tree <- function(yaml_tree, details=""){
   # check that probabilities sum to 1
   # if not then give a warning
 
-  class(osNode) <- c("costeffectiveness_tree", class(osNode))
-  attr(osNode, "details") <- details
+  ##TODO##
+  # check that the names in the data are the same as in the tree
+  # data in long tidy format
 
-  osNode
+
+  class(osNode) <- c("costeffectiveness_tree", class(osNode))
+
+  costeff <- list(osNode = osNode, data = data)
+  attr(costeff, "details") <- details
+
+  invisible(costeff)
 }
