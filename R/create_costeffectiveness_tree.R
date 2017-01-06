@@ -1,3 +1,4 @@
+
 #' Constructor for a Cost-Effectiveness Tree Object
 #'
 #' The resulting object is used in the main package functions.
@@ -9,13 +10,15 @@
 #' @param details General details of decision tree
 #' @param data_prob Branching probability data
 #' @param data_val Cost or health data
-#' @param ... Any other arguments to be passed
+#' @param ... Additional arguments to be passed
 #'
-#' @return data.tree object of class costeffectiveness_tree
+#' @return list of class costeffectiveness_object
 #' @export
 #'
-#' @seealso calc.expectedValues
+#' @seealso \code{\link{calc.expectedValues}}
+#'
 #' @examples
+#'
 #' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")$osNode
 #' print(osNode, "type", "p", "distn", "mean", "sd")
 #'
@@ -81,8 +84,10 @@ costeffectiveness_tree <- function(yaml_tree,
 
   class(osNode) <- c("costeffectiveness_tree", class(osNode))
 
-  costeff <- list(osNode = osNode, data = data)
+  costeff <- list(osNode = osNode,
+                  data = list(data_prob = data_prob, data_val = data_val))
   attr(costeff, "details") <- details
+  class(costeff) <- c("costeffectiveness_object", class(costeff))
 
   invisible(costeff)
 }
