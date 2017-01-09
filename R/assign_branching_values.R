@@ -1,7 +1,7 @@
 
 #' Assign Branching Values to Decision Tree
 #'
-#' Used in sensitivity analysis.
+#' Used in deterministic sensitivity analysis.
 #' ##TODO## at present no need for parameter_health
 #'
 #' @param osNode.cost data.tree object
@@ -15,8 +15,8 @@
 #' @examples
 assign_branch_values <- function(osNode.cost,
                                  osNode.health,
-                                 parameter_p,
-                                 parameter_cost) {
+                                 parameter_p = NA,
+                                 parameter_cost = NA) {
 
   # ##TODO##
   # #args
@@ -27,11 +27,20 @@ assign_branch_values <- function(osNode.cost,
 
 
 
-  if(class(osNode.cost)!="costeffectiveness_tree")   stop("Cost decision tree is not a costeffectiveness_tree object")
-  if(class(osNode.health)!="costeffectiveness_tree") stop("Health decision tree is not a costeffectiveness_tree object")
+  if(all(class(osNode.cost)!="costeffectiveness_tree"))   stop("Cost decision tree is not a costeffectiveness_tree object")
+  if(all(class(osNode.health)!="costeffectiveness_tree")) stop("Health decision tree is not a costeffectiveness_tree object")
 
-  names.cost <- unique(parameter_cost$node)
-  names.p <- unique(parameter_p.melt$node)
+  if(all(is.na(parameter_p)) & all(is.na(parameter_cost))) stop("No scenario parameter values")
+
+
+  # if missing then use empty loop
+  names.cost <- if(all(is.na(parameter_cost))){
+                  NULL
+                }else{unique(parameter_cost$node)}
+
+  names.p <- if(all(is.na(parameter_p))){
+                  NULL
+                }else{unique(parameter_p$node)}
 
   # assign branching _probabilities_
   for (node_p in names.p){
@@ -50,7 +59,7 @@ assign_branch_values <- function(osNode.cost,
 
     vals <- subset(x = parameter_cost, subset = node==node_cost)
 
-    osNode.cost$Set(distn = vals$distn,
+    osNode.cost$Set(distn = as.character(vals$distn),
                     filterFun = function(x) x$name==node_cost)
 
     osNode.cost$Set(min = vals$min,

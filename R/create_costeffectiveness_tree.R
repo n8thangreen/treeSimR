@@ -33,6 +33,10 @@ costeffectiveness_tree <- function(yaml_tree,
   stopifnot(is.character(yaml_tree))
   stopifnot(is.character(details))
 
+  if(all(!is.na(data_val)) & !is.data.frame(data_val)) stop("data_val must be a data frame")
+  if(all(!is.na(data_prob)) & !is.data.frame(data_prob)) stop("data_prob must be a data frame")
+
+
   args <- list(...)
 
   if (grep(pattern = ".yaml$", x = yaml_tree))
@@ -53,9 +57,9 @@ costeffectiveness_tree <- function(yaml_tree,
   # check that probabilities sum to 1
   # if not then give a warning
 
-  if(!is.na(data_prob)){
+  if(all(!is.na(data_prob))){
 
-    # tidy format
+    # transform to tidy format
     if(!"node"%in%names(data_prob)){
 
       data_prob <- reshape2::melt(data = data_prob,
@@ -70,7 +74,7 @@ costeffectiveness_tree <- function(yaml_tree,
     }
   }
 
-  if(!is.na(data_val)){
+  if(all(!is.na(data_val))){
 
     if(!"node"%in%names(data_val)) stop("node label column missing from cost-effectiveness data.")
 

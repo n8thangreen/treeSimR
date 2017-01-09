@@ -1,0 +1,4 @@
+scenario,distn,min,max,node
+1,unif,20,20,Agree to Screen
+2,unif,50,50,Agree to Screen
+3,unif,100,100,Agree to Screen
