@@ -19,11 +19,11 @@
 #'
 #' @examples
 #'
-#' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")$osNode
-#' print(osNode, "type", "p", "distn", "mean", "sd")
+#' CEtree <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+#' print(CEtree)
 #'
-#' osNode <- calc.expectedValues(osNode)
-#' print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+#' CEtree$osNode <- calc.expectedValues(CEtree$osNode)
+#' print(CEtree)
 #'
 costeffectiveness_tree <- function(yaml_tree,
                                    details = "",

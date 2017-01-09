@@ -1,9 +1,9 @@
 `treeSimR`
 ==========
 
-An R package for easy forward simulating probability decision trees,
-calculating cost-effectiveness and probability sensitivity analysis
-(PSA).
+An R package for easy, robust forward simulating probability decision
+trees, calculating cost-effectiveness and probability sensitivity
+analysis (PSA).
 
 Currently contains functions to:
 
@@ -238,36 +238,39 @@ represented as a list in R.
 Better still, use the package function to do this, checking for tree
 integrity and defining an additional costeffectiveness.tree class.
 
-    CEtree <- treeSimR::costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost_SIMPLE.yaml")
-    osNode <- CEtree$osNode
-    print(osNode, "type", "p", "distn", "mean", "sd")
+    scenarios_cost <- read.csv("raw data/scenario-parameter-values_cost.csv")
 
-    ##                                             levelName     type    p distn mean sd
-    ## 1  LTBI screening cost                                 logical   NA  unif   NA NA
-    ## 2   ¦--LTBI                                             chance 0.30  unif   NA NA
-    ## 3   ¦   ¦--Not Agree to Screen                        terminal 0.65  unif   NA NA
-    ## 4   ¦   °--Agree to Screen                              chance 0.35  unif   NA NA
-    ## 5   ¦       ¦--Test Negative                          terminal 0.05  unif   NA NA
-    ## 6   ¦       °--Test Positive                            chance 0.95  unif   NA NA
-    ## 7   ¦           ¦--Not Start Treatment                terminal 0.50  unif   NA NA
-    ## 8   ¦           °--Start Treatment                      chance 0.50  unif   NA NA
-    ## 9   ¦               °--Symptoms hepatotoxicity          chance 1.00  unif   NA NA
-    ## 10  ¦                   °--Symptoms nausea              chance 1.00  unif   NA NA
-    ## 11  ¦                       ¦--Complete Treatment       chance 0.90  unif   NA NA
-    ## 12  ¦                       ¦   ¦--Effective          terminal 0.90  unif   NA NA
-    ## 13  ¦                       ¦   °--Not Effective      terminal 0.10  unif   NA NA
-    ## 14  ¦                       °--Not Complete Treatment terminal 0.10  unif   NA NA
-    ## 15  °--non-LTBI                                         chance 0.70  unif   NA NA
-    ## 16      ¦--Not Agree to Screen                        terminal 0.65  unif   NA NA
-    ## 17      °--Agree to Screen                              chance 0.35  unif   NA NA
-    ## 18          ¦--Test Negative                          terminal 0.95  unif   NA NA
-    ## 19          °--Test Positive                            chance 0.05  unif   NA NA
-    ## 20              ¦--Not Start Treatment                terminal 0.50  unif   NA NA
-    ## 21              °--Start Treatment                      chance 0.50  unif   NA NA
-    ## 22                  °--Symptoms hepatotoxicity          chance 1.00  unif   NA NA
-    ## 23                      °--Symptoms nausea              chance 1.00  unif   NA NA
-    ## 24                          ¦--Complete Treatment     terminal 0.90  unif   NA NA
-    ## 25                          °--Not Complete Treatment terminal 0.10  unif   NA NA
+    CEtree <- treeSimR::costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost_SIMPLE.yaml",
+                                               data_val = scenarios_cost)
+    osNode <- CEtree$osNode
+    print(osNode)
+
+    ##                                             levelName distn max min     type    p
+    ## 1  LTBI screening cost                                 unif   0   0  logical   NA
+    ## 2   ¦--LTBI                                            unif   0   0   chance 0.30
+    ## 3   ¦   ¦--Not Agree to Screen                         unif   0   0 terminal 0.65
+    ## 4   ¦   °--Agree to Screen                             unif  30  30   chance 0.35
+    ## 5   ¦       ¦--Test Negative                           unif   0   0 terminal 0.05
+    ## 6   ¦       °--Test Positive                           unif   0   0   chance 0.95
+    ## 7   ¦           ¦--Not Start Treatment                 unif   0   0 terminal 0.50
+    ## 8   ¦           °--Start Treatment                     unif 200 200   chance 0.50
+    ## 9   ¦               °--Symptoms hepatotoxicity         unif   0   0   chance 1.00
+    ## 10  ¦                   °--Symptoms nausea             unif   0   0   chance 1.00
+    ## 11  ¦                       ¦--Complete Treatment      unif   0   0   chance 0.90
+    ## 12  ¦                       ¦   ¦--Effective           unif   0   0 terminal 0.90
+    ## 13  ¦                       ¦   °--Not Effective       unif   0   0 terminal 0.10
+    ## 14  ¦                       °--Not Complete Treatment  unif   0   0 terminal 0.10
+    ## 15  °--non-LTBI                                        unif   0   0   chance 0.70
+    ## 16      ¦--Not Agree to Screen                         unif   0   0 terminal 0.65
+    ## 17      °--Agree to Screen                             unif  30  30   chance 0.35
+    ## 18          ¦--Test Negative                           unif   0   0 terminal 0.95
+    ## 19          °--Test Positive                           unif   0   0   chance 0.05
+    ## 20              ¦--Not Start Treatment                 unif   0   0 terminal 0.50
+    ## 21              °--Start Treatment                     unif 200 200   chance 0.50
+    ## 22                  °--Symptoms hepatotoxicity         unif   0   0   chance 1.00
+    ## 23                      °--Symptoms nausea             unif   0   0   chance 1.00
+    ## 24                          ¦--Complete Treatment      unif   0   0 terminal 0.90
+    ## 25                          °--Not Complete Treatment  unif   0   0 terminal 0.10
 
 A neat way of exploring the tree is with the `listviewer` package
 widget.
@@ -284,101 +287,100 @@ defined for each. This could be the cost or health detriment.
 
     rpayoff <- osNode$Get(sampleNode)
     osNode$Set(payoff = rpayoff)
-    print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+    print(osNode)
 
-    ##                                             levelName     type    p distn mean sd payoff
-    ## 1  LTBI screening cost                                 logical   NA  unif   NA NA      0
-    ## 2   ¦--LTBI                                             chance 0.30  unif   NA NA      0
-    ## 3   ¦   ¦--Not Agree to Screen                        terminal 0.65  unif   NA NA      0
-    ## 4   ¦   °--Agree to Screen                              chance 0.35  unif   NA NA     30
-    ## 5   ¦       ¦--Test Negative                          terminal 0.05  unif   NA NA      0
-    ## 6   ¦       °--Test Positive                            chance 0.95  unif   NA NA      0
-    ## 7   ¦           ¦--Not Start Treatment                terminal 0.50  unif   NA NA      0
-    ## 8   ¦           °--Start Treatment                      chance 0.50  unif   NA NA    200
-    ## 9   ¦               °--Symptoms hepatotoxicity          chance 1.00  unif   NA NA      0
-    ## 10  ¦                   °--Symptoms nausea              chance 1.00  unif   NA NA      0
-    ## 11  ¦                       ¦--Complete Treatment       chance 0.90  unif   NA NA      0
-    ## 12  ¦                       ¦   ¦--Effective          terminal 0.90  unif   NA NA      0
-    ## 13  ¦                       ¦   °--Not Effective      terminal 0.10  unif   NA NA      0
-    ## 14  ¦                       °--Not Complete Treatment terminal 0.10  unif   NA NA      0
-    ## 15  °--non-LTBI                                         chance 0.70  unif   NA NA      0
-    ## 16      ¦--Not Agree to Screen                        terminal 0.65  unif   NA NA      0
-    ## 17      °--Agree to Screen                              chance 0.35  unif   NA NA     30
-    ## 18          ¦--Test Negative                          terminal 0.95  unif   NA NA      0
-    ## 19          °--Test Positive                            chance 0.05  unif   NA NA      0
-    ## 20              ¦--Not Start Treatment                terminal 0.50  unif   NA NA      0
-    ## 21              °--Start Treatment                      chance 0.50  unif   NA NA    200
-    ## 22                  °--Symptoms hepatotoxicity          chance 1.00  unif   NA NA      0
-    ## 23                      °--Symptoms nausea              chance 1.00  unif   NA NA      0
-    ## 24                          ¦--Complete Treatment     terminal 0.90  unif   NA NA      0
-    ## 25                          °--Not Complete Treatment terminal 0.10  unif   NA NA      0
+    ##                                             levelName distn max min payoff     type    p
+    ## 1  LTBI screening cost                                 unif   0   0      0  logical   NA
+    ## 2   ¦--LTBI                                            unif   0   0      0   chance 0.30
+    ## 3   ¦   ¦--Not Agree to Screen                         unif   0   0      0 terminal 0.65
+    ## 4   ¦   °--Agree to Screen                             unif  30  30     30   chance 0.35
+    ## 5   ¦       ¦--Test Negative                           unif   0   0      0 terminal 0.05
+    ## 6   ¦       °--Test Positive                           unif   0   0      0   chance 0.95
+    ## 7   ¦           ¦--Not Start Treatment                 unif   0   0      0 terminal 0.50
+    ## 8   ¦           °--Start Treatment                     unif 200 200    200   chance 0.50
+    ## 9   ¦               °--Symptoms hepatotoxicity         unif   0   0      0   chance 1.00
+    ## 10  ¦                   °--Symptoms nausea             unif   0   0      0   chance 1.00
+    ## 11  ¦                       ¦--Complete Treatment      unif   0   0      0   chance 0.90
+    ## 12  ¦                       ¦   ¦--Effective           unif   0   0      0 terminal 0.90
+    ## 13  ¦                       ¦   °--Not Effective       unif   0   0      0 terminal 0.10
+    ## 14  ¦                       °--Not Complete Treatment  unif   0   0      0 terminal 0.10
+    ## 15  °--non-LTBI                                        unif   0   0      0   chance 0.70
+    ## 16      ¦--Not Agree to Screen                         unif   0   0      0 terminal 0.65
+    ## 17      °--Agree to Screen                             unif  30  30     30   chance 0.35
+    ## 18          ¦--Test Negative                           unif   0   0      0 terminal 0.95
+    ## 19          °--Test Positive                           unif   0   0      0   chance 0.05
+    ## 20              ¦--Not Start Treatment                 unif   0   0      0 terminal 0.50
+    ## 21              °--Start Treatment                     unif 200 200    200   chance 0.50
+    ## 22                  °--Symptoms hepatotoxicity         unif   0   0      0   chance 1.00
+    ## 23                      °--Symptoms nausea             unif   0   0      0   chance 1.00
+    ## 24                          ¦--Complete Treatment      unif   0   0      0 terminal 0.90
+    ## 25                          °--Not Complete Treatment  unif   0   0      0 terminal 0.10
 
 Now given the sampled values, e.g. cost, and the probabilities, we can
 calculate the expected values at each node, from leaf to root.
 
     osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
+    print(osNode)
 
-    print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
-
-    ##                                             levelName     type    p distn mean sd payoff
-    ## 1  LTBI screening cost                                 logical   NA  unif   NA NA  21.70
-    ## 2   ¦--LTBI                                             chance 0.30  unif   NA NA  43.75
-    ## 3   ¦   ¦--Not Agree to Screen                        terminal 0.65  unif   NA NA   0.00
-    ## 4   ¦   °--Agree to Screen                              chance 0.35  unif   NA NA 125.00
-    ## 5   ¦       ¦--Test Negative                          terminal 0.05  unif   NA NA   0.00
-    ## 6   ¦       °--Test Positive                            chance 0.95  unif   NA NA 100.00
-    ## 7   ¦           ¦--Not Start Treatment                terminal 0.50  unif   NA NA   0.00
-    ## 8   ¦           °--Start Treatment                      chance 0.50  unif   NA NA 200.00
-    ## 9   ¦               °--Symptoms hepatotoxicity          chance 1.00  unif   NA NA   0.00
-    ## 10  ¦                   °--Symptoms nausea              chance 1.00  unif   NA NA   0.00
-    ## 11  ¦                       ¦--Complete Treatment       chance 0.90  unif   NA NA   0.00
-    ## 12  ¦                       ¦   ¦--Effective          terminal 0.90  unif   NA NA   0.00
-    ## 13  ¦                       ¦   °--Not Effective      terminal 0.10  unif   NA NA   0.00
-    ## 14  ¦                       °--Not Complete Treatment terminal 0.10  unif   NA NA   0.00
-    ## 15  °--non-LTBI                                         chance 0.70  unif   NA NA  12.25
-    ## 16      ¦--Not Agree to Screen                        terminal 0.65  unif   NA NA   0.00
-    ## 17      °--Agree to Screen                              chance 0.35  unif   NA NA  35.00
-    ## 18          ¦--Test Negative                          terminal 0.95  unif   NA NA   0.00
-    ## 19          °--Test Positive                            chance 0.05  unif   NA NA 100.00
-    ## 20              ¦--Not Start Treatment                terminal 0.50  unif   NA NA   0.00
-    ## 21              °--Start Treatment                      chance 0.50  unif   NA NA 200.00
-    ## 22                  °--Symptoms hepatotoxicity          chance 1.00  unif   NA NA   0.00
-    ## 23                      °--Symptoms nausea              chance 1.00  unif   NA NA   0.00
-    ## 24                          ¦--Complete Treatment     terminal 0.90  unif   NA NA   0.00
-    ## 25                          °--Not Complete Treatment terminal 0.10  unif   NA NA   0.00
+    ##                                             levelName distn max min payoff     type    p
+    ## 1  LTBI screening cost                                 unif   0   0  21.70  logical   NA
+    ## 2   ¦--LTBI                                            unif   0   0  43.75   chance 0.30
+    ## 3   ¦   ¦--Not Agree to Screen                         unif   0   0   0.00 terminal 0.65
+    ## 4   ¦   °--Agree to Screen                             unif  30  30 125.00   chance 0.35
+    ## 5   ¦       ¦--Test Negative                           unif   0   0   0.00 terminal 0.05
+    ## 6   ¦       °--Test Positive                           unif   0   0 100.00   chance 0.95
+    ## 7   ¦           ¦--Not Start Treatment                 unif   0   0   0.00 terminal 0.50
+    ## 8   ¦           °--Start Treatment                     unif 200 200 200.00   chance 0.50
+    ## 9   ¦               °--Symptoms hepatotoxicity         unif   0   0   0.00   chance 1.00
+    ## 10  ¦                   °--Symptoms nausea             unif   0   0   0.00   chance 1.00
+    ## 11  ¦                       ¦--Complete Treatment      unif   0   0   0.00   chance 0.90
+    ## 12  ¦                       ¦   ¦--Effective           unif   0   0   0.00 terminal 0.90
+    ## 13  ¦                       ¦   °--Not Effective       unif   0   0   0.00 terminal 0.10
+    ## 14  ¦                       °--Not Complete Treatment  unif   0   0   0.00 terminal 0.10
+    ## 15  °--non-LTBI                                        unif   0   0  12.25   chance 0.70
+    ## 16      ¦--Not Agree to Screen                         unif   0   0   0.00 terminal 0.65
+    ## 17      °--Agree to Screen                             unif  30  30  35.00   chance 0.35
+    ## 18          ¦--Test Negative                           unif   0   0   0.00 terminal 0.95
+    ## 19          °--Test Positive                           unif   0   0 100.00   chance 0.05
+    ## 20              ¦--Not Start Treatment                 unif   0   0   0.00 terminal 0.50
+    ## 21              °--Start Treatment                     unif 200 200 200.00   chance 0.50
+    ## 22                  °--Symptoms hepatotoxicity         unif   0   0   0.00   chance 1.00
+    ## 23                      °--Symptoms nausea             unif   0   0   0.00   chance 1.00
+    ## 24                          ¦--Complete Treatment      unif   0   0   0.00 terminal 0.90
+    ## 25                          °--Not Complete Treatment  unif   0   0   0.00 terminal 0.10
 
 Similarly to above, we have created a better wrapper function to perform
 these steps:
 
     osNode <- calc_expectedValues(osNode)
-    print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+    print(osNode)
 
-    ##                                             levelName     type    p distn mean sd payoff
-    ## 1  LTBI screening cost                                 logical   NA  unif   NA NA  21.70
-    ## 2   ¦--LTBI                                             chance 0.30  unif   NA NA  43.75
-    ## 3   ¦   ¦--Not Agree to Screen                        terminal 0.65  unif   NA NA   0.00
-    ## 4   ¦   °--Agree to Screen                              chance 0.35  unif   NA NA 125.00
-    ## 5   ¦       ¦--Test Negative                          terminal 0.05  unif   NA NA   0.00
-    ## 6   ¦       °--Test Positive                            chance 0.95  unif   NA NA 100.00
-    ## 7   ¦           ¦--Not Start Treatment                terminal 0.50  unif   NA NA   0.00
-    ## 8   ¦           °--Start Treatment                      chance 0.50  unif   NA NA 200.00
-    ## 9   ¦               °--Symptoms hepatotoxicity          chance 1.00  unif   NA NA   0.00
-    ## 10  ¦                   °--Symptoms nausea              chance 1.00  unif   NA NA   0.00
-    ## 11  ¦                       ¦--Complete Treatment       chance 0.90  unif   NA NA   0.00
-    ## 12  ¦                       ¦   ¦--Effective          terminal 0.90  unif   NA NA   0.00
-    ## 13  ¦                       ¦   °--Not Effective      terminal 0.10  unif   NA NA   0.00
-    ## 14  ¦                       °--Not Complete Treatment terminal 0.10  unif   NA NA   0.00
-    ## 15  °--non-LTBI                                         chance 0.70  unif   NA NA  12.25
-    ## 16      ¦--Not Agree to Screen                        terminal 0.65  unif   NA NA   0.00
-    ## 17      °--Agree to Screen                              chance 0.35  unif   NA NA  35.00
-    ## 18          ¦--Test Negative                          terminal 0.95  unif   NA NA   0.00
-    ## 19          °--Test Positive                            chance 0.05  unif   NA NA 100.00
-    ## 20              ¦--Not Start Treatment                terminal 0.50  unif   NA NA   0.00
-    ## 21              °--Start Treatment                      chance 0.50  unif   NA NA 200.00
-    ## 22                  °--Symptoms hepatotoxicity          chance 1.00  unif   NA NA   0.00
-    ## 23                      °--Symptoms nausea              chance 1.00  unif   NA NA   0.00
-    ## 24                          ¦--Complete Treatment     terminal 0.90  unif   NA NA   0.00
-    ## 25                          °--Not Complete Treatment terminal 0.10  unif   NA NA   0.00
+    ##                                             levelName distn max min payoff sampled     type    p
+    ## 1  LTBI screening cost                                 unif   0   0  21.70       0  logical   NA
+    ## 2   ¦--LTBI                                            unif   0   0  43.75       0   chance 0.30
+    ## 3   ¦   ¦--Not Agree to Screen                         unif   0   0   0.00       0 terminal 0.65
+    ## 4   ¦   °--Agree to Screen                             unif  30  30 125.00      30   chance 0.35
+    ## 5   ¦       ¦--Test Negative                           unif   0   0   0.00       0 terminal 0.05
+    ## 6   ¦       °--Test Positive                           unif   0   0 100.00       0   chance 0.95
+    ## 7   ¦           ¦--Not Start Treatment                 unif   0   0   0.00       0 terminal 0.50
+    ## 8   ¦           °--Start Treatment                     unif 200 200 200.00     200   chance 0.50
+    ## 9   ¦               °--Symptoms hepatotoxicity         unif   0   0   0.00       0   chance 1.00
+    ## 10  ¦                   °--Symptoms nausea             unif   0   0   0.00       0   chance 1.00
+    ## 11  ¦                       ¦--Complete Treatment      unif   0   0   0.00       0   chance 0.90
+    ## 12  ¦                       ¦   ¦--Effective           unif   0   0   0.00       0 terminal 0.90
+    ## 13  ¦                       ¦   °--Not Effective       unif   0   0   0.00       0 terminal 0.10
+    ## 14  ¦                       °--Not Complete Treatment  unif   0   0   0.00       0 terminal 0.10
+    ## 15  °--non-LTBI                                        unif   0   0  12.25       0   chance 0.70
+    ## 16      ¦--Not Agree to Screen                         unif   0   0   0.00       0 terminal 0.65
+    ## 17      °--Agree to Screen                             unif  30  30  35.00      30   chance 0.35
+    ## 18          ¦--Test Negative                           unif   0   0   0.00       0 terminal 0.95
+    ## 19          °--Test Positive                           unif   0   0 100.00       0   chance 0.05
+    ## 20              ¦--Not Start Treatment                 unif   0   0   0.00       0 terminal 0.50
+    ## 21              °--Start Treatment                     unif 200 200 200.00     200   chance 0.50
+    ## 22                  °--Symptoms hepatotoxicity         unif   0   0   0.00       0   chance 1.00
+    ## 23                      °--Symptoms nausea             unif   0   0   0.00       0   chance 1.00
+    ## 24                          ¦--Complete Treatment      unif   0   0   0.00       0 terminal 0.90
+    ## 25                          °--Not Complete Treatment  unif   0   0   0.00       0 terminal 0.10
 
 Monte Carlo forward simulation
 ------------------------------
@@ -387,7 +389,7 @@ We are now in a position to do a probability sensitivity analysis (PSA)
 and calculate multiple realisations for specific nodes e.g. those at
 which a decision is to be made.
 
-    MonteCarlo_expectedValues(osNode, n=100)
+    MonteCarlo_expectedValues(osNode, n = 100)
 
     ## $`expected values`
     ##        [,1]
@@ -566,64 +568,64 @@ the variability due to the cohort size.
     head(sample.mat)
 
     ##         [,1]    [,2]    [,3]    [,4]    [,5]    [,6]    [,7]    [,8]    [,9]   [,10]
-    ## [1,] 0.19297 0.19543 0.19542 0.19602 0.19390 0.19570 0.19294 0.19709 0.19428 0.19332
-    ## [2,] 0.00549 0.00546 0.00530 0.00536 0.00551 0.00503 0.00523 0.00524 0.00514 0.00525
-    ## [3,] 0.05041 0.04981 0.04897 0.04980 0.04960 0.04982 0.05049 0.04918 0.04911 0.04994
-    ## [4,] 0.04059 0.04092 0.03956 0.04143 0.03996 0.04032 0.04094 0.03969 0.04072 0.04080
-    ## [5,] 0.00455 0.00439 0.00459 0.00483 0.00419 0.00448 0.00467 0.00475 0.00486 0.00489
-    ## [6,] 0.00492 0.00514 0.00498 0.00511 0.00542 0.00483 0.00510 0.00492 0.00521 0.00505
+    ## [1,] 0.19582 0.19419 0.19525 0.19621 0.19377 0.19317 0.19512 0.19656 0.19472 0.19559
+    ## [2,] 0.00537 0.00557 0.00541 0.00557 0.00513 0.00510 0.00480 0.00501 0.00551 0.00516
+    ## [3,] 0.04976 0.04960 0.04861 0.05134 0.04926 0.04970 0.04968 0.04912 0.05019 0.05089
+    ## [4,] 0.03998 0.04020 0.04114 0.04034 0.04091 0.04016 0.04077 0.03972 0.04006 0.04046
+    ## [5,] 0.00443 0.00455 0.00478 0.00428 0.00420 0.00442 0.00460 0.00444 0.00477 0.00436
+    ## [6,] 0.00493 0.00482 0.00520 0.00511 0.00472 0.00511 0.00530 0.00491 0.00503 0.00501
 
     apply(sample.mat, 2, function(x) aggregate(x, by=list(healthstatus), FUN=sum))
 
     ## [[1]]
     ##   Group.1       x
-    ## 1    LTBI 0.94894
-    ## 2 nonLTBI 0.05106
+    ## 1    LTBI 0.95011
+    ## 2 nonLTBI 0.04989
     ## 
     ## [[2]]
-    ##   Group.1      x
-    ## 1    LTBI 0.9489
-    ## 2 nonLTBI 0.0511
+    ##   Group.1       x
+    ## 1    LTBI 0.94946
+    ## 2 nonLTBI 0.05054
     ## 
     ## [[3]]
     ##   Group.1       x
-    ## 1    LTBI 0.95062
-    ## 2 nonLTBI 0.04938
+    ## 1    LTBI 0.94815
+    ## 2 nonLTBI 0.05185
     ## 
     ## [[4]]
     ##   Group.1       x
-    ## 1    LTBI 0.94811
-    ## 2 nonLTBI 0.05189
+    ## 1    LTBI 0.94963
+    ## 2 nonLTBI 0.05037
     ## 
     ## [[5]]
     ##   Group.1       x
-    ## 1    LTBI 0.95008
-    ## 2 nonLTBI 0.04992
+    ## 1    LTBI 0.94935
+    ## 2 nonLTBI 0.05065
     ## 
     ## [[6]]
-    ##   Group.1      x
-    ## 1    LTBI 0.9498
-    ## 2 nonLTBI 0.0502
+    ##   Group.1       x
+    ## 1    LTBI 0.94971
+    ## 2 nonLTBI 0.05029
     ## 
     ## [[7]]
     ##   Group.1       x
-    ## 1    LTBI 0.94902
-    ## 2 nonLTBI 0.05098
+    ## 1    LTBI 0.94942
+    ## 2 nonLTBI 0.05058
     ## 
     ## [[8]]
     ##   Group.1       x
-    ## 1    LTBI 0.94994
-    ## 2 nonLTBI 0.05006
+    ## 1    LTBI 0.95041
+    ## 2 nonLTBI 0.04959
     ## 
     ## [[9]]
     ##   Group.1       x
-    ## 1    LTBI 0.94875
-    ## 2 nonLTBI 0.05125
+    ## 1    LTBI 0.94957
+    ## 2 nonLTBI 0.05043
     ## 
     ## [[10]]
     ##   Group.1       x
-    ## 1    LTBI 0.94839
-    ## 2 nonLTBI 0.05161
+    ## 1    LTBI 0.94991
+    ## 2 nonLTBI 0.05009
 
 The function to do this is
 
@@ -639,32 +641,32 @@ profile of the decision tree.
     osNode <- calc_riskprofile(osNode)
     print(osNode, "type", "path_prob", "path_payoff")
 
-    ##                                             levelName     type  path_prob path_payoff
-    ## 1  LTBI screening cost                                 logical 1.00000000       21.70
-    ## 2   ¦--LTBI                                             chance 0.30000000       65.45
-    ## 3   ¦   ¦--Not Agree to Screen                        terminal 0.19500000       65.45
-    ## 4   ¦   °--Agree to Screen                              chance 0.10500000      190.45
-    ## 5   ¦       ¦--Test Negative                          terminal 0.00525000      190.45
-    ## 6   ¦       °--Test Positive                            chance 0.09975000      290.45
-    ## 7   ¦           ¦--Not Start Treatment                terminal 0.04987500      290.45
-    ## 8   ¦           °--Start Treatment                      chance 0.04987500      490.45
-    ## 9   ¦               °--Symptoms hepatotoxicity          chance 0.04987500      490.45
-    ## 10  ¦                   °--Symptoms nausea              chance 0.04987500      490.45
-    ## 11  ¦                       ¦--Complete Treatment       chance 0.04488750      490.45
-    ## 12  ¦                       ¦   ¦--Effective          terminal 0.04039875      490.45
-    ## 13  ¦                       ¦   °--Not Effective      terminal 0.00448875      490.45
-    ## 14  ¦                       °--Not Complete Treatment terminal 0.00498750      490.45
-    ## 15  °--non-LTBI                                         chance 0.70000000       33.95
-    ## 16      ¦--Not Agree to Screen                        terminal 0.45500000       33.95
-    ## 17      °--Agree to Screen                              chance 0.24500000       68.95
-    ## 18          ¦--Test Negative                          terminal 0.23275000       68.95
-    ## 19          °--Test Positive                            chance 0.01225000      168.95
-    ## 20              ¦--Not Start Treatment                terminal 0.00612500      168.95
-    ## 21              °--Start Treatment                      chance 0.00612500      368.95
-    ## 22                  °--Symptoms hepatotoxicity          chance 0.00612500      368.95
-    ## 23                      °--Symptoms nausea              chance 0.00612500      368.95
-    ## 24                          ¦--Complete Treatment     terminal 0.00551250      368.95
-    ## 25                          °--Not Complete Treatment terminal 0.00061250      368.95
+    ##                                             levelName distn max min path_payoff  path_prob path_probs payoff sampled     type    p
+    ## 1  LTBI screening cost                                 unif   0   0       21.70 1.00000000 1.00000000  21.70       0  logical   NA
+    ## 2   ¦--LTBI                                            unif   0   0       65.45 0.30000000 0.30000000  43.75       0   chance 0.30
+    ## 3   ¦   ¦--Not Agree to Screen                         unif   0   0       65.45 0.19500000 0.19500000   0.00       0 terminal 0.65
+    ## 4   ¦   °--Agree to Screen                             unif  30  30      190.45 0.10500000 0.10500000 125.00      30   chance 0.35
+    ## 5   ¦       ¦--Test Negative                           unif   0   0      190.45 0.00525000 0.00525000   0.00       0 terminal 0.05
+    ## 6   ¦       °--Test Positive                           unif   0   0      290.45 0.09975000 0.09975000 100.00       0   chance 0.95
+    ## 7   ¦           ¦--Not Start Treatment                 unif   0   0      290.45 0.04987500 0.04987500   0.00       0 terminal 0.50
+    ## 8   ¦           °--Start Treatment                     unif 200 200      490.45 0.04987500 0.04987500 200.00     200   chance 0.50
+    ## 9   ¦               °--Symptoms hepatotoxicity         unif   0   0      490.45 0.04987500 0.04987500   0.00       0   chance 1.00
+    ## 10  ¦                   °--Symptoms nausea             unif   0   0      490.45 0.04987500 0.04987500   0.00       0   chance 1.00
+    ## 11  ¦                       ¦--Complete Treatment      unif   0   0      490.45 0.04488750 0.04488750   0.00       0   chance 0.90
+    ## 12  ¦                       ¦   ¦--Effective           unif   0   0      490.45 0.04039875 0.04039875   0.00       0 terminal 0.90
+    ## 13  ¦                       ¦   °--Not Effective       unif   0   0      490.45 0.00448875 0.00448875   0.00       0 terminal 0.10
+    ## 14  ¦                       °--Not Complete Treatment  unif   0   0      490.45 0.00498750 0.00498750   0.00       0 terminal 0.10
+    ## 15  °--non-LTBI                                        unif   0   0       33.95 0.70000000 0.70000000  12.25       0   chance 0.70
+    ## 16      ¦--Not Agree to Screen                         unif   0   0       33.95 0.45500000 0.45500000   0.00       0 terminal 0.65
+    ## 17      °--Agree to Screen                             unif  30  30       68.95 0.24500000 0.24500000  35.00      30   chance 0.35
+    ## 18          ¦--Test Negative                           unif   0   0       68.95 0.23275000 0.23275000   0.00       0 terminal 0.95
+    ## 19          °--Test Positive                           unif   0   0      168.95 0.01225000 0.01225000 100.00       0   chance 0.05
+    ## 20              ¦--Not Start Treatment                 unif   0   0      168.95 0.00612500 0.00612500   0.00       0 terminal 0.50
+    ## 21              °--Start Treatment                     unif 200 200      368.95 0.00612500 0.00612500 200.00     200   chance 0.50
+    ## 22                  °--Symptoms hepatotoxicity         unif   0   0      368.95 0.00612500 0.00612500   0.00       0   chance 1.00
+    ## 23                      °--Symptoms nausea             unif   0   0      368.95 0.00612500 0.00612500   0.00       0   chance 1.00
+    ## 24                          ¦--Complete Treatment      unif   0   0      368.95 0.00551250 0.00551250   0.00       0 terminal 0.90
+    ## 25                          °--Not Complete Treatment  unif   0   0      368.95 0.00061250 0.00061250   0.00       0 terminal 0.10
 
     plot(data.frame(osNode$Get('path_payoff', filterFun = isLeaf),
                osNode$Get('path_prob', filterFun = isLeaf)), type="h",
@@ -672,8 +674,102 @@ profile of the decision tree.
 
 ![](README_files/figure-markdown_strict/unnamed-chunk-15-1.png)
 
+Deterministic sensitivity analysis
+----------------------------------
+
+The above methods employ probability sensitivity analysis. We can also
+do deterministic (or scenario) based sensitivity analysis. That is we
+simulate the model over a grid of pre-specified parameter values. We
+have already included these above in the construction of the
+costeffectiveness\_object.
+
+    print(CEtree)
+
+    ## $osNode
+    ##                                             levelName distn max min path_payoff  path_prob path_probs payoff sampled     type    p
+    ## 1  LTBI screening cost                                 unif   0   0       21.70 1.00000000 1.00000000  21.70       0  logical   NA
+    ## 2   ¦--LTBI                                            unif   0   0       65.45 0.30000000 0.30000000  43.75       0   chance 0.30
+    ## 3   ¦   ¦--Not Agree to Screen                         unif   0   0       65.45 0.19500000 0.19500000   0.00       0 terminal 0.65
+    ## 4   ¦   °--Agree to Screen                             unif  30  30      190.45 0.10500000 0.10500000 125.00      30   chance 0.35
+    ## 5   ¦       ¦--Test Negative                           unif   0   0      190.45 0.00525000 0.00525000   0.00       0 terminal 0.05
+    ## 6   ¦       °--Test Positive                           unif   0   0      290.45 0.09975000 0.09975000 100.00       0   chance 0.95
+    ## 7   ¦           ¦--Not Start Treatment                 unif   0   0      290.45 0.04987500 0.04987500   0.00       0 terminal 0.50
+    ## 8   ¦           °--Start Treatment                     unif 200 200      490.45 0.04987500 0.04987500 200.00     200   chance 0.50
+    ## 9   ¦               °--Symptoms hepatotoxicity         unif   0   0      490.45 0.04987500 0.04987500   0.00       0   chance 1.00
+    ## 10  ¦                   °--Symptoms nausea             unif   0   0      490.45 0.04987500 0.04987500   0.00       0   chance 1.00
+    ## 11  ¦                       ¦--Complete Treatment      unif   0   0      490.45 0.04488750 0.04488750   0.00       0   chance 0.90
+    ## 12  ¦                       ¦   ¦--Effective           unif   0   0      490.45 0.04039875 0.04039875   0.00       0 terminal 0.90
+    ## 13  ¦                       ¦   °--Not Effective       unif   0   0      490.45 0.00448875 0.00448875   0.00       0 terminal 0.10
+    ## 14  ¦                       °--Not Complete Treatment  unif   0   0      490.45 0.00498750 0.00498750   0.00       0 terminal 0.10
+    ## 15  °--non-LTBI                                        unif   0   0       33.95 0.70000000 0.70000000  12.25       0   chance 0.70
+    ## 16      ¦--Not Agree to Screen                         unif   0   0       33.95 0.45500000 0.45500000   0.00       0 terminal 0.65
+    ## 17      °--Agree to Screen                             unif  30  30       68.95 0.24500000 0.24500000  35.00      30   chance 0.35
+    ## 18          ¦--Test Negative                           unif   0   0       68.95 0.23275000 0.23275000   0.00       0 terminal 0.95
+    ## 19          °--Test Positive                           unif   0   0      168.95 0.01225000 0.01225000 100.00       0   chance 0.05
+    ## 20              ¦--Not Start Treatment                 unif   0   0      168.95 0.00612500 0.00612500   0.00       0 terminal 0.50
+    ## 21              °--Start Treatment                     unif 200 200      368.95 0.00612500 0.00612500 200.00     200   chance 0.50
+    ## 22                  °--Symptoms hepatotoxicity         unif   0   0      368.95 0.00612500 0.00612500   0.00       0   chance 1.00
+    ## 23                      °--Symptoms nausea             unif   0   0      368.95 0.00612500 0.00612500   0.00       0   chance 1.00
+    ## 24                          ¦--Complete Treatment      unif   0   0      368.95 0.00551250 0.00551250   0.00       0 terminal 0.90
+    ## 25                          °--Not Complete Treatment  unif   0   0      368.95 0.00061250 0.00061250   0.00       0 terminal 0.10
+    ## 
+    ## $data
+    ## $data$data_prob
+    ## [1] NA
+    ## 
+    ## $data$data_val
+    ##   scenario distn min max            node
+    ## 1        1  unif  20  20 Agree to Screen
+    ## 2        2  unif  50  50 Agree to Screen
+    ## 3        3  unif 100 100 Agree to Screen
+    ## 
+    ## 
+    ## attr(,"details")
+    ## [1] ""
+    ## attr(,"class")
+    ## [1] "costeffectiveness_object" "list"
+
+    # transform to tidy format
+    # scenario_parameter_p.melt <- reshape2::melt(data = CEtree$data$data_prob,
+    #                                             id.vars = "scenario", variable.name = "node", value.name = "p")
+
+    assign_branch_values(osNode.cost = osNode,
+                         osNode.health = osNode,
+                         # parameter_p = subset(scenario_parameter_p.melt, scenario == 1),
+                         parameter_cost = subset(CEtree$data$data_val, scenario == 1)) 
+    print(CEtree$osNode)
+
+    ##                                             levelName distn max min path_payoff  path_prob path_probs payoff sampled     type    p
+    ## 1  LTBI screening cost                                 unif   0   0       21.70 1.00000000 1.00000000  21.70       0  logical   NA
+    ## 2   ¦--LTBI                                            unif   0   0       65.45 0.30000000 0.30000000  43.75       0   chance 0.30
+    ## 3   ¦   ¦--Not Agree to Screen                         unif   0   0       65.45 0.19500000 0.19500000   0.00       0 terminal 0.65
+    ## 4   ¦   °--Agree to Screen                             unif  20  20      190.45 0.10500000 0.10500000 125.00      30   chance 0.35
+    ## 5   ¦       ¦--Test Negative                           unif   0   0      190.45 0.00525000 0.00525000   0.00       0 terminal 0.05
+    ## 6   ¦       °--Test Positive                           unif   0   0      290.45 0.09975000 0.09975000 100.00       0   chance 0.95
+    ## 7   ¦           ¦--Not Start Treatment                 unif   0   0      290.45 0.04987500 0.04987500   0.00       0 terminal 0.50
+    ## 8   ¦           °--Start Treatment                     unif 200 200      490.45 0.04987500 0.04987500 200.00     200   chance 0.50
+    ## 9   ¦               °--Symptoms hepatotoxicity         unif   0   0      490.45 0.04987500 0.04987500   0.00       0   chance 1.00
+    ## 10  ¦                   °--Symptoms nausea             unif   0   0      490.45 0.04987500 0.04987500   0.00       0   chance 1.00
+    ## 11  ¦                       ¦--Complete Treatment      unif   0   0      490.45 0.04488750 0.04488750   0.00       0   chance 0.90
+    ## 12  ¦                       ¦   ¦--Effective           unif   0   0      490.45 0.04039875 0.04039875   0.00       0 terminal 0.90
+    ## 13  ¦                       ¦   °--Not Effective       unif   0   0      490.45 0.00448875 0.00448875   0.00       0 terminal 0.10
+    ## 14  ¦                       °--Not Complete Treatment  unif   0   0      490.45 0.00498750 0.00498750   0.00       0 terminal 0.10
+    ## 15  °--non-LTBI                                        unif   0   0       33.95 0.70000000 0.70000000  12.25       0   chance 0.70
+    ## 16      ¦--Not Agree to Screen                         unif   0   0       33.95 0.45500000 0.45500000   0.00       0 terminal 0.65
+    ## 17      °--Agree to Screen                             unif  20  20       68.95 0.24500000 0.24500000  35.00      30   chance 0.35
+    ## 18          ¦--Test Negative                           unif   0   0       68.95 0.23275000 0.23275000   0.00       0 terminal 0.95
+    ## 19          °--Test Positive                           unif   0   0      168.95 0.01225000 0.01225000 100.00       0   chance 0.05
+    ## 20              ¦--Not Start Treatment                 unif   0   0      168.95 0.00612500 0.00612500   0.00       0 terminal 0.50
+    ## 21              °--Start Treatment                     unif 200 200      368.95 0.00612500 0.00612500 200.00     200   chance 0.50
+    ## 22                  °--Symptoms hepatotoxicity         unif   0   0      368.95 0.00612500 0.00612500   0.00       0   chance 1.00
+    ## 23                      °--Symptoms nausea             unif   0   0      368.95 0.00612500 0.00612500   0.00       0   chance 1.00
+    ## 24                          ¦--Complete Treatment      unif   0   0      368.95 0.00551250 0.00551250   0.00       0 terminal 0.90
+    ## 25                          °--Not Complete Treatment  unif   0   0      368.95 0.00061250 0.00061250   0.00       0 terminal 0.10
+
 Optimal decisions
 -----------------
+
+TODO
 
 We can get the software to calculate the optimal decision for us, rather
 than returning the expections to compare. This can be done from right to
