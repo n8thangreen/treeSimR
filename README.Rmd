@@ -144,7 +144,7 @@ print(osNode)
 We are now in a position to do a probability sensitivity analysis (PSA) and calculate multiple realisations for specific nodes e.g. those at which a decision is to be made.
 
 ```{r}
-MonteCarlo_expectedValues(osNode, n = 100)
+MonteCarlo_expectedValues(osNode, n = 10)
 ```
 
 
@@ -233,11 +233,13 @@ plot(data.frame(osNode$Get('path_payoff', filterFun = isLeaf),
 
 The above methods employ probability sensitivity analysis.
 We can also do deterministic (or scenario) based sensitivity analysis. That is we simulate the model over a grid of pre-specified parameter values.
-We have already included these above in the construction of the costeffectiveness_object.
+We have already included these above in the construction of the costeffectiveness_object in `data$data_prob` and `data$data_val`.
 
 ```{r}
 print(CEtree)
 ```
+
+Select a scenatio number and run:
 
 ```{r assign branch probs}
 
@@ -251,7 +253,6 @@ assign_branch_values(osNode.cost = osNode,
                      parameter_cost = subset(CEtree$data$data_val, scenario == 1)) 
 print(CEtree$osNode)
 ```
-
 
 
 
