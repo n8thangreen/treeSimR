@@ -9,6 +9,8 @@ options(width = 1000)
 ```
 
 ``` {r setup, echo=FALSE, results="hide"}
+# define YAML and R code chunk header and footer
+
 lang_output <- function(x, lang) {
   cat(c(sprintf("```%s", lang), x, "```"), sep="\n")
 }
@@ -24,7 +26,7 @@ knitr::opts_chunk$set(
 
 # `treeSimR`
 
-An R package for easy forward simulating probability decision trees, calculating cost-effectiveness and PSA.
+An R package for easy forward simulating probability decision trees, calculating cost-effectiveness and probability sensitivity analysis (PSA).
 
 Currently contains functions to:
 
@@ -59,17 +61,20 @@ library("treeSimR")
 ```
 
 
-## Read-in trees
+## Initiate trees
 
 ```{r load packages, echo=FALSE, warning=FALSE}
 library(yaml)
 library(data.tree)
+
 devtools::load_all(".")
 ```
 
+Load a tree template from the \code{treeSimR} package.
 
 ```{r load_yaml}
-path_dtree <- system.file("raw data/LTBI_dtree-cost-distns.yaml", package = "treeSimR")
+# path_dtree <- system.file("raw data/LTBI_dtree-cost-distns.yaml", package = "treeSimR")
+path_dtree <- system.file("raw data/LTBI_dtree-cost_SIMPLE.yaml", package = "treeSimR")
 osList <- yaml.load_file(path_dtree)
 ```
 
@@ -78,7 +83,6 @@ The raw decision tree file is a tab-spaced file such as the following:
 ```{r echo=FALSE, results="asis"}
 yaml_output(readLines(path_dtree))
 ```
-
 
 We save this to a .yaml text file and then give it as a yaml file to a data.tree object using the yaml and data.tree packages. This is then represented as a list in R.
 
@@ -90,14 +94,15 @@ osNode
 
 Better still, use the \code{treeSimR} package function to do this, checking for tree integrity and defining an additional costeffectiveness.tree class.
 
-```{r}
-osNode <- treeSimR::costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+```{r treeSimR constructor}
+CEtree <- treeSimR::costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost_SIMPLE.yaml")
+osNode <- CEtree$osNode
 print(osNode, "type", "p", "distn", "mean", "sd")
 ```
 
 A neat way of exploring the tree is with the `listviewer` package widget.
 
-```{r eval=FALSE}
+```{r listviewer, eval=FALSE}
 library(listviewer)
 l <- ToListSimple(osNode)
 jsonedit(l)
