@@ -19,4 +19,7 @@ Imports:
 	  plotrix
 Suggests:
     ggtree,
-    triangle
+    triangle,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

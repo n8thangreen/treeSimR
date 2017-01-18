@@ -18,7 +18,7 @@ assign_branch_values <- function(osNode.cost,
                                  parameter_p = NA,
                                  parameter_cost = NA) {
 
-  # ##TODO##
+  ##TODO: take costeffectivness_objects as arguments
   # #args
   # osNode.cost <- costeff.cost$osNode
   # osNode.health <- costeff.health$osNode
@@ -33,7 +33,7 @@ assign_branch_values <- function(osNode.cost,
   if(all(is.na(parameter_p)) & all(is.na(parameter_cost))) stop("No scenario parameter values")
 
 
-  # if missing then use empty loop
+  # if missing then use empty (NULL) loop
   names.cost <- if(all(is.na(parameter_cost))){
                   NULL
                 }else{unique(parameter_cost$node)}
