@@ -1,12 +1,13 @@
+
     name: test tree
     distn: unif
     p: 0.1
-    min: 1
+    min: 0
     max: 1
-    type: decision
+    type: logical
     Enhanced:
       distn: unif
-      min: 1
+      min: 0
       max: 1
       p: 0.1
       type: chance
@@ -14,17 +15,17 @@
         type: terminal
         p: 0
         distn: unif
-        min: 1
+        min: 0
         max: 1
       Not TB:
         type: terminal
         p: 1
         distn: unif
-        min: 1
+        min: 0
         max: 1
     Standard:
       distn: unif
-      min: 1
+      min: 0
       max: 1
       p: 0.1
       type: chance
@@ -32,11 +33,11 @@
         type: terminal
         p: 1
         distn: unif
-        min: 1
+        min: 0
         max: 1
       Not TB:
         type: terminal
         p: 0
         distn: unif
-        min: 1
+        min: 0
         max: 1

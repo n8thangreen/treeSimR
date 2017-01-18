@@ -1,10 +1,14 @@
+
+library(treeSimR)
+library(yaml)
+
 context("sampleNode")
 
 test_that("different distributions and parameter values", {
 
   osList <- yaml.load_file("../testdata/test1.yaml")
   osNode <- data.tree::as.Node(osList)
-  # print(osNode, "type", "p", "distn", "min", "max", "mean", "sd")
+  # treeSimR:::print.costeffectiveness_tree(osNode)
 
   sample <- unlist(osNode$Get(sampleNode))
   names(sample) <- NULL
