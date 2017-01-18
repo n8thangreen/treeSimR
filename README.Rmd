@@ -25,7 +25,6 @@ _TODO_
 - [ ] iteratively collapse expected outcome (from right to left)
 - [ ] iteratively collapse chance nodes (from right to left)
 - [ ] optimal decision function (iterative from right to left)
-- [ ] plotting functions: C-E plane, C-E curve, risk profile (with uncertainty), tornado, spider, ...
 
 
 The package leans heavily on the `data.tree` package,
@@ -47,4 +46,6 @@ library("treeSimR")
 ```
 
 See package Vignette for more details and examples.
+
+For plotting functions (e.g. C-E plane, C-E curve, risk profile (with uncertainty), tornado, spider, ...) see the [plotCostEffectiveness package](https://github.com/n8thangreen/plotCostEffectiveness).
 
