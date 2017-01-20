@@ -7,6 +7,7 @@
 #' @param param.distns List of distribution names and their respective parameter values
 #'
 #' @return vector of sample points
+#' @export
 #'
 #' @examples
 #'
@@ -15,9 +16,6 @@
 #' sample_distributions(param.distns = list(distn = "beta", params = c(mean=0.1, sd=0.1)))
 #' sample_distributions(param.distns = list(distn = "beta", params = c(a=0.1, b=0.1)))
 #' sample_distributions(param.distns = list(list(distn = "beta", params = c(a=0.1, b=0.1)), list(distn = "beta", params = c(a=0.1, b=0.1))))
-#'
-#'
-#' @export
 
 sample_distributions <- function(param.distns){
 
@@ -33,7 +31,7 @@ sample_distributions <- function(param.distns){
   for (i in seq_len(n.distns)){
 
     distn <- match.arg(param.distns[[i]]$distn,
-                       c("lognormal", "beta", "gamma", "unif", "triangle", "none"))
+                       c("lognormal", "pert", "beta", "gamma", "unif", "triangle", "none"))
 
     out[i] <- switch(distn,
                      gamma = {
@@ -72,6 +70,10 @@ sample_distributions <- function(param.distns){
 
                      triangle = rtriangle(1, param.distns[[i]]$params["min"],
                                              param.distns[[i]]$params["max"]),
+
+                     pert = rpert(1, x.min = param.distns[[i]]$params["min"],
+                                     x.max = param.distns[[i]]$params["max"],
+                                     x.mode = param.distns[[i]]$params["mode"]),
 
                      none = param.distns[[i]]$params["mean"])
   }
@@ -173,9 +175,9 @@ MoM_gamma <- function(mean, var){
 }
 
 
-#' Beta-PERT
+#' Sample from Beta-PERT Distribution
 #'
-#' \link{https://reference.wolfram.com/language/ref/PERTDistribution.html}
+#' see https://reference.wolfram.com/language/ref/PERTDistribution.html
 #'
 #' @param n Sample size
 #' @param x.min Lower limit

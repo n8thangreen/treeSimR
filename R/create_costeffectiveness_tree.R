@@ -46,7 +46,8 @@ costeffectiveness_tree <- function(yaml_tree,
 
   osNode <- data.tree::as.Node(osList)
 
-  if(!all(osNode$Get("distn")%in%c("lognormal", "beta", "gamma", "unif", "triangle", "none")))
+  ##TODO: how to link this with true list in sample_distribution() switch statement so always uptodate?
+  if(!all(osNode$Get("distn")%in%c("lognormal", "pert", "beta", "gamma", "unif", "triangle", "none")))
                   stop("Error: Need to provide valid distribution for all branches")
 
   stopifnot(all(osNode$Get("type", filterFun = isLeaf) == "terminal"))
