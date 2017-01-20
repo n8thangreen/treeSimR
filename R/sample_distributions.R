@@ -98,6 +98,7 @@ sampleNode <- function(node) {
   DISTN <- list(distn = node$distn,
                 params = c(mean = node$mean, sd = node$sd,
                            min = node$min, max = node$max,
+                           mode = node$mode,
                            shape = node$shape, scale = node$scale,
                            a = node$a, b = node$b))
 
