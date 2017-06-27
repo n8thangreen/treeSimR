@@ -2,7 +2,7 @@
 % Please edit documentation in R/sample_distributions.R
 \name{rpert}
 \alias{rpert}
-\title{Beta-PERT}
+\title{Sample from Beta-PERT Distribution}
 \usage{
 rpert(n, x.min, x.max, x.mode, lambda = 4)
 }
@@ -21,6 +21,6 @@ rpert(n, x.min, x.max, x.mode, lambda = 4)
 sampled value
 }
 \description{
-\link{https://reference.wolfram.com/language/ref/PERTDistribution.html}
+see https://reference.wolfram.com/language/ref/PERTDistribution.html
 }
 

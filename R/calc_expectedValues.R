@@ -117,7 +117,8 @@ MonteCarlo_expectedValues.default <- function(osNode, ...) print("Error: inappro
 #' ## calculate multiple realisation for specific nodes
 #' MonteCarlo_expectedValues(osNode, n=100)
 #'
-MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode, n=100){
+MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode,
+                                                             n = 100){
 
   if(n<=0)
     stop("n must be positive")
@@ -126,14 +127,17 @@ MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode, n=100){
   if(!any(osNode$Get("type") == "logical"))
     stop("Error: Need at least one node labeled 'logical'")
 
-  NodeNames <- osNode$Get("pathString", filterFun = function(x) x$type=="logical")
+  NodeNames <- osNode$Get("pathString",
+                          filterFun = function(x) x$type == "logical")
   names(NodeNames) <- NULL
 
-  out <-  matrix(data = NA, nrow = n, ncol = length(NodeNames))
+  out <-  matrix(data = NA,
+                 nrow = n, ncol = length(NodeNames))
   for (i in 1:n){
 
     osNode2 <- calc_expectedValues(osNode)
-    res <- osNode$Get("payoff", filterFun = function(x) x$type=="logical")
+    res <- osNode$Get("payoff",
+                      filterFun = function(x) x$type == "logical")
     out[i,] <- res
   }
 

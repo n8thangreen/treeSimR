@@ -4,15 +4,22 @@
 \alias{costeffectiveness_tree}
 \title{Constructor for a Cost-Effectiveness Tree Object}
 \usage{
-costeffectiveness_tree(yaml_tree, details = "")
+costeffectiveness_tree(yaml_tree, details = "", data_prob = NA,
+  data_val = NA, ...)
 }
 \arguments{
 \item{yaml_tree}{YAML file or location address}
 
-\item{details}{general details of decision tree}
+\item{details}{General details of decision tree}
+
+\item{data_prob}{Branching probability data}
+
+\item{data_val}{Cost or health data}
+
+\item{...}{Additional arguments to be passed}
 }
 \value{
-data.tree object of class costeffectiveness_tree
+list of class costeffectiveness_object
 }
 \description{
 The resulting object is used in the main package functions.
@@ -21,14 +28,15 @@ All branches require some distribution.
 All branches must end in a terminal node.
 }
 \examples{
-osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
-print(osNode, "type", "p", "distn", "mean", "sd")
 
-osNode <- calc.expectedValues(osNode)
-print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+CEtree <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+print(CEtree)
+
+CEtree$osNode <- calc.expectedValues(CEtree$osNode)
+print(CEtree)
 
 }
 \seealso{
-calc.expectedValues
+\code{\link{calc.expectedValues}}
 }
 

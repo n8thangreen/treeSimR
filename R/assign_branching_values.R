@@ -2,7 +2,7 @@
 #' Assign Branching Values to Decision Tree
 #'
 #' Used in deterministic sensitivity analysis.
-#' ##TODO## at present no need for parameter_health
+#' ##TODO: at present no need for parameter_health
 #'
 #' @param osNode.cost data.tree object
 #' @param osNode.health data.tree object
@@ -45,27 +45,30 @@ assign_branch_values <- function(osNode.cost,
   # assign branching _probabilities_
   for (node_p in names.p){
 
-    vals <- subset(parameter_p, node==node_p, select = p)
+    vals <- subset(parameter_p,
+                   node == node_p,
+                   select = p)
 
     osNode.cost$Set(p = vals,
-                    filterFun = function(x) x$name==node_p)
+                    filterFun = function(x) x$name == node_p)
 
     osNode.health$Set(p = vals,
-                      filterFun = function(x) x$name==node_p)
+                      filterFun = function(x) x$name == node_p)
   }
 
   # assign branching _costs_
   for (node_cost in names.cost){
 
-    vals <- subset(x = parameter_cost, subset = node==node_cost)
+    vals <- subset(x = parameter_cost,
+                   subset = node == node_cost)
 
     osNode.cost$Set(distn = as.character(vals$distn),
-                    filterFun = function(x) x$name==node_cost)
+                    filterFun = function(x) x$name == node_cost)
 
     osNode.cost$Set(min = vals$min,
-                    filterFun = function(x) x$name==node_cost)
+                    filterFun = function(x) x$name == node_cost)
 
     osNode.cost$Set(max = vals$max,
-                    filterFun = function(x) x$name==node_cost)
+                    filterFun = function(x) x$name == node_cost)
   }
 }

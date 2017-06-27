@@ -22,7 +22,7 @@ print(osNode, "type", "p", "distn", "mean", "sd")
 
 ## calculate a single realisation expected values
 osNode <- calc_expectedValues(osNode)
-print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+print(osNode, "type", "p", "distn", "mean", "sd", "payoff", "sampled")
 
 ## calculate multiple realisation for specific nodes
 MonteCarlo_expectedValues(osNode, n=100)

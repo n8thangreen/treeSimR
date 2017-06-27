@@ -13,7 +13,8 @@ sample_distributions(param.distns)
 vector of sample points
 }
 \description{
-Supply a list of defined distributions and one sample realisation is taken of each.
+Supply a list of defined distributions (log-normal, beta, gamma, uniform, triangle)
+and one sample realisation is taken of each.
 }
 \examples{
 
@@ -22,7 +23,5 @@ sample_distributions(param.distns = list(distn = "lognormal", params = c(mean=10
 sample_distributions(param.distns = list(distn = "beta", params = c(mean=0.1, sd=0.1)))
 sample_distributions(param.distns = list(distn = "beta", params = c(a=0.1, b=0.1)))
 sample_distributions(param.distns = list(list(distn = "beta", params = c(a=0.1, b=0.1)), list(distn = "beta", params = c(a=0.1, b=0.1))))
-
-
 }
 
