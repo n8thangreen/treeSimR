@@ -4,10 +4,10 @@ Title: treeSimR
 Version: 0.1.0
 Author: Nathan Green
 Maintainer: <nathan.green@imperial.ac.uk>
-Description: More about what it does (maybe more than one line)
+Description: Cost-effectiveness decision tree calculation
 License: MIT
 LazyData: TRUE
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1
 Imports:
     ape,
     data.tree,
