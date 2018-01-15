@@ -24,4 +24,3 @@ sample_distributions(param.distns = list(distn = "beta", params = c(mean=0.1, sd
 sample_distributions(param.distns = list(distn = "beta", params = c(a=0.1, b=0.1)))
 sample_distributions(param.distns = list(list(distn = "beta", params = c(a=0.1, b=0.1)), list(distn = "beta", params = c(a=0.1, b=0.1))))
 }
-

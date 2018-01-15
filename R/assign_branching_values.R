@@ -26,21 +26,22 @@ assign_branch_values <- function(osNode.cost,
   # parameter_p <- costeff.cost$data_p
 
 
+  if (all(class(osNode.cost) != "costeffectiveness_tree"))   stop("Cost decision tree is not a costeffectiveness_tree object")
+  if (all(class(osNode.health) != "costeffectiveness_tree")) stop("Health decision tree is not a costeffectiveness_tree object")
 
-  if(all(class(osNode.cost)!="costeffectiveness_tree"))   stop("Cost decision tree is not a costeffectiveness_tree object")
-  if(all(class(osNode.health)!="costeffectiveness_tree")) stop("Health decision tree is not a costeffectiveness_tree object")
-
-  if(all(is.na(parameter_p)) & all(is.na(parameter_cost))) stop("No scenario parameter values")
+  if (all(is.na(parameter_p)) & all(is.na(parameter_cost))) stop("No scenario parameter values")
 
 
   # if missing then use empty (NULL) loop
-  names.cost <- if(all(is.na(parameter_cost))){
-                  NULL
-                }else{unique(parameter_cost$node)}
+  names.cost <-
+    if (all(is.na(parameter_cost))) {
+      NULL
+    }else{unique(parameter_cost$node)}
 
-  names.p <- if(all(is.na(parameter_p))){
-                  NULL
-                }else{unique(parameter_p$node)}
+  names.p <-
+    if (all(is.na(parameter_p))) {
+      NULL
+    }else{unique(parameter_p$node)}
 
   # assign branching _probabilities_
   for (node_p in names.p){

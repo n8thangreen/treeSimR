@@ -19,4 +19,3 @@ Calculates sum of probabilities multiplied by values (e.g. cost) for all branche
 (previous version: Gives maximum payoff, given optimal decisions)
 \href{https://cran.r-project.org/web/packages/data.tree/vignettes/applications.html}{This is the original example using data.tree}
 }
-

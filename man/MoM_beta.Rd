@@ -20,4 +20,3 @@ Could alternatively use the beta-PERT \code{\link{rpert}} with maximum and minim
 \seealso{
 \link{rpert}
 }
-

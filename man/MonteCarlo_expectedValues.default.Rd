@@ -21,4 +21,3 @@ Require at least one logical node.
 \seealso{
 calc_expectedValues
 }
-

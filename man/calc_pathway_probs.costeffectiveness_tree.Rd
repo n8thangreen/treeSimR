@@ -25,4 +25,3 @@ and the values are calculated with \code{FUN="sum"}.
 \seealso{
 \link{calc_riskprofile}
 }
-

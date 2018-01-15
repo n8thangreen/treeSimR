@@ -18,4 +18,3 @@ Takes an object of class costeffectiveness_tree.
 \seealso{
 \link{costeffectiveness_tree}, \link{payoff}
 }
-

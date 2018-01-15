@@ -34,4 +34,3 @@ MonteCarlo_expectedValues(osNode, n=100)
 \seealso{
 calc_expectedValues
 }
-

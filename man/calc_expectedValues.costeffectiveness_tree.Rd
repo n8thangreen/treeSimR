@@ -31,4 +31,3 @@ MonteCarlo_expectedValues(osNode, n=100)
 \seealso{
 \link{costeffectiveness_tree}, \link{payoff}
 }
-

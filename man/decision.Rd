@@ -12,4 +12,3 @@ decision(x)
 \description{
 Depends on how we calculate the payoff function.
 }
-

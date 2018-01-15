@@ -39,4 +39,3 @@ print(CEtree)
 \seealso{
 \code{\link{calc.expectedValues}}
 }
-

@@ -21,4 +21,3 @@ sd
 \description{
 \link{http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and}
 }
-

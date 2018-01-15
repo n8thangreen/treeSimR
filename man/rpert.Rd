@@ -23,4 +23,3 @@ sampled value
 \description{
 see https://reference.wolfram.com/language/ref/PERTDistribution.html
 }
-

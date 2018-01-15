@@ -12,4 +12,3 @@ Nodelabel(node)
 \description{
 Node label
 }
-

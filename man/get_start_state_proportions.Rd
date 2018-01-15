@@ -24,4 +24,3 @@ Population sizes of individuals in each starting state as input for the competin
 \examples{
 
 }
-
