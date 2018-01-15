@@ -22,7 +22,7 @@ sample_distributions <- function(param.distns){
   try(library(triangle), silent = TRUE)
   stopifnot(is.list(param.distns))
 
-  if(plotrix::listDepth(param.distns)==1){param.distns <- list(param.distns)}
+  if(plotrix::listDepth(param.distns)==1) {param.distns <- list(param.distns)}
   n.distns <- length(param.distns)
 
   out <- data.frame(matrix(NA, nrow = 1, ncol = n.distns))
@@ -101,9 +101,39 @@ sampleNode <- function(node) {
                            mode = node$mode,
                            shape = node$shape, scale = node$scale,
                            a = node$a, b = node$b))
+  suppressWarnings(
+    DISTN$params <-
+      DISTN$params %>%
+      map_dbl(function(x) as.numeric(as.character(x))))
 
   sample_distributions(list(DISTN))
 }
+
+
+#' Sample a data.tree uniform node
+#'
+#' @param node data.tree node
+#'
+#' @return
+#' @export
+#' @seealso  \link{sample_distributions}
+#' @examples
+#'
+#' rprob <- osNode$Get(sampleNodeUniform)
+#'
+sampleNodeUniform <- function(node) {
+
+  DISTN <- list(distn = "unif",
+                params = c(min = node$pmin,
+                           max = node$pmax))
+  suppressWarnings(
+    DISTN$params <-
+      DISTN$params %>%
+      map_dbl(function(x) as.numeric(as.character(x))))
+
+  sample_distributions(list(DISTN))
+}
+
 
 
 #' Get Standard Deviation from Normal Confidence Interval

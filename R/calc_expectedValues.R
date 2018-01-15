@@ -55,6 +55,12 @@ calc_expectedValues.costeffectiveness_tree <- function(osNode){
   osNode$Set(payoff = rpayoff)
   osNode$Set(sampled = rpayoff)
 
+  if (all(c("pmin", "pmax") %in% osNode$fields)) {
+
+    rprob <- osNode$Get(sampleNodeUniform)
+    osNode$Set(p = rprob)
+  }
+
   osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
 
   osNode
@@ -120,11 +126,11 @@ MonteCarlo_expectedValues.default <- function(osNode, ...) print("Error: inappro
 MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode,
                                                              n = 100){
 
-  if(n<=0)
+  if (n <= 0)
     stop("n must be positive")
-  if(n%%1!=0)
+  if (n %% 1 != 0)
     stop("n must be a whole number")
-  if(!any(osNode$Get("type") == "logical"))
+  if (!any(osNode$Get("type") == "logical"))
     stop("Error: Need at least one node labeled 'logical'")
 
   NodeNames <- osNode$Get("pathString",
@@ -133,9 +139,11 @@ MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode,
 
   out <-  matrix(data = NA,
                  nrow = n, ncol = length(NodeNames))
-  for (i in 1:n){
+  for (i in 1:n) {
 
-    osNode2 <- calc_expectedValues(osNode)
+    # osNode2 <- calc_expectedValues(osNode)
+    osNode <- calc_expectedValues(osNode)
+
     res <- osNode$Get("payoff",
                       filterFun = function(x) x$type == "logical")
     out[i,] <- res

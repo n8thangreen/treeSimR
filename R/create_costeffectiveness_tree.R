@@ -33,9 +33,8 @@ costeffectiveness_tree <- function(yaml_tree,
   stopifnot(is.character(yaml_tree))
   stopifnot(is.character(details))
 
-  if(all(!is.na(data_val)) & !is.data.frame(data_val)) stop("data_val must be a data frame")
-  if(all(!is.na(data_prob)) & !is.data.frame(data_prob)) stop("data_prob must be a data frame")
-
+  if (all(!is.na(data_val)) & !is.data.frame(data_val)) stop("data_val must be a data frame")
+  if (all(!is.na(data_prob)) & !is.data.frame(data_prob)) stop("data_prob must be a data frame")
 
   args <- list(...)
 
@@ -47,21 +46,45 @@ costeffectiveness_tree <- function(yaml_tree,
   osNode <- data.tree::as.Node(osList)
 
   ##TODO: how to link this with true list in sample_distribution() switch statement so always uptodate?
-  if(!all(osNode$Get("distn")%in%c("lognormal", "pert", "beta", "gamma", "unif", "triangle", "none")))
+  if (!all(osNode$Get("distn") %in% c("lognormal", "pert", "beta", "gamma", "unif", "triangle", "none")))
                   stop("Error: Need to provide valid distribution for all branches")
 
   stopifnot(all(osNode$Get("type", filterFun = isLeaf) == "terminal"))
 
+  ##TODO: coerce to numeric
+  fields <- osNode$fields[osNode$fields %in% c('p','pmin','pmax','min','max','scale','shape')]
+  attr_is.numeric <- purrr::map_lgl(.x = fields, .f = function(x) is.numeric(osNode$Get(x)))
+  if (!all(attr_is.numeric)) warning('Check type of attributes. Should they be numeric rather than character?')
+
+
   ##TODO##
   # check for missing values
   # if missing probabilities then fill-in where possible, otherwise throw error
-  # check that probabilities sum to 1
-  # if not then give a warning
+  # check that probabilities sum to 1, if not then give a warning
 
-  if(all(!is.na(data_prob))){
+  if ("p" %in% osNode$fields) {
+
+    osNode$Set(fill_in_missing_tree_probs(osNode, "p"))
+  }else if (all(c("pmin", "pmax") %in% osNode$fields)) {
+
+    osNode$Set(pmin = fill_in_missing_tree_probs(osNode, "pmin"))
+    osNode$Set(pmax = fill_in_missing_tree_probs(osNode, "pmax"))
+
+    ##TODO: use the inbuilt data.tree functions instead
+    midpoint <- osNode$Get("pmin") + (osNode$Get("pmax") - osNode$Get("pmin"))/2
+    osNode$Set(p = midpoint)
+
+  }else {
+    stop("Missing branch probabilities")
+  }
+
+
+  # DSA data ----------------------------------------------------------------
+
+  if (all(!is.na(data_prob))) {
 
     # transform to tidy format
-    if(!"node"%in%names(data_prob)){
+    if (!"node" %in% names(data_prob)) {
 
       data_prob <- reshape2::melt(data = data_prob,
                                   id.vars = "scenario", variable.name = "node", value.name = "p")
@@ -70,22 +93,25 @@ costeffectiveness_tree <- function(yaml_tree,
     data_node_names <- unique(data_prob$nodes)
     CE_tree_node_names <- unique(names(osNode$Get("level")))
 
-    if(!all(data_node_names%in%CE_tree_node_names)){
+    if (!all(data_node_names %in% CE_tree_node_names)) {
       stop("Node labels in probability data do not match node labels on cost-effectiveness decision tree.")
     }
   }
 
-  if(all(!is.na(data_val))){
+  if (all(!is.na(data_val))) {
 
-    if(!"node"%in%names(data_val)) stop("node label column missing from cost-effectiveness data.")
+    if (!"node" %in% names(data_val)) stop("Node label column missing from cost-effectiveness data.")
 
     data_node_names <- unique(data_val$nodes)
     CE_tree_node_names <- unique(names(osNode$Get("level")))
 
-    if(!all(data_node_names%in%CE_tree_node_names)){
+    if (!all(data_node_names %in% CE_tree_node_names)) {
       stop("Node labels in cost-effectiveness value data do not match node labels on cost-effectiveness decision tree.")
     }
   }
+
+
+  # return object -----------------------------------------------------------
 
   class(osNode) <- c("costeffectiveness_tree", class(osNode))
 
