@@ -84,6 +84,9 @@ sample_distributions <- function(param.distns){
 
 #' Sample a data.tree Node
 #'
+#' TODO: could use NextMethod()
+#' i.e. write sample_distribution.node function
+#'
 #' @param node data.tree node
 #'
 #' @return
