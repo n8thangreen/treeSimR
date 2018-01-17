@@ -1,0 +1,53 @@
+---
+title: "treeSimR: Going Further"
+author: "Nathan Green"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r save in vignette folder}
+# devtools::document(roclets = "vignette")
+```
+
+```{r set-options, echo=FALSE, cache=FALSE}
+options(width = 1000)
+```
+
+``` {r setup, echo=FALSE, results="hide"}
+# define YAML and R code chunk header and footer
+
+lang_output <- function(x, lang) {
+  cat(c(sprintf("```%s", lang), x, "```"), sep="\n")
+}
+
+r_output <- function(x) lang_output(x, "r")
+yaml_output <- function(x) lang_output(x, "yaml")
+
+knitr::opts_chunk$set(
+  fig.width=7,
+  fig.height=5)
+```
+
+
+## Initiate trees
+
+```{r load packages, echo=FALSE, warning=FALSE}
+library(yaml)
+library(data.tree)
+library(magrittr)
+library(rprojroot)
+
+devtools::load_all(".", quiet = TRUE)
+```
+
+Load a tree template from the \code{treeSimR} package.
+
+```{r load_yaml}
+path_dtree <- system.file("raw data/LTBI_dtree-cost_SIMPLE.yaml", package = "treeSimR")
+osList <- yaml.load_file(path_dtree)
+```
+

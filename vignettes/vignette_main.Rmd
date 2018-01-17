@@ -1,5 +1,5 @@
 ---
-title: "treeSimR Vignette"
+title: "treeSimR: Basics"
 author: "Nathan Green"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,6 +9,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r save in vignette folder}
+# devtools::document(roclets = "vignette")
+```
 
 ```{r set-options, echo=FALSE, cache=FALSE}
 options(width = 1000)
@@ -65,23 +68,23 @@ osNode
 Better still, use the \code{treeSimR} package function to do this, checking for tree integrity and defining an additional costeffectiveness.tree class.
 
 ```{r treeSimR constructor}
-scenarios_cost <- find_package_root_file("raw data",
-                                         "scenario-parameter-values_cost.csv") %>% 
-                    read.csv()
-# scenarios_cost <- read.csv("raw data/scenario-parameter-values_cost.csv")
-
-CEtree <- treeSimR::costeffectiveness_tree(yaml_tree = path_dtree,
-                                           data_val = scenarios_cost)
-osNode <- CEtree$osNode
-print(osNode)
+# scenarios_cost <- find_package_root_file("raw data",
+#                                          "scenario-parameter-values_cost.csv") %>% 
+#                     read.csv()
+# # scenarios_cost <- read.csv("raw data/scenario-parameter-values_cost.csv")
+# 
+# CEtree <- treeSimR::costeffectiveness_tree(yaml_tree = path_dtree,
+#                                            data_val = scenarios_cost)
+# osNode <- CEtree$osNode
+# print(osNode)
 ```
 
 A neat way of exploring the tree is with the `listviewer` package widget.
 
 ```{r listviewer, eval=FALSE}
-library(listviewer)
-l <- ToListSimple(osNode)
-jsonedit(l)
+# library(listviewer)
+# l <- ToListSimple(osNode)
+# jsonedit(l)
 ```
 
 
@@ -91,23 +94,23 @@ We can now sample values for each branch, given the distributions defined for ea
 This could be the cost or health detriment.
 
 ```{r}
-rpayoff <- osNode$Get(sampleNode)
-osNode$Set(payoff = rpayoff)
-print(osNode)
+# rpayoff <- osNode$Get(sampleNode)
+# osNode$Set(payoff = rpayoff)
+# print(osNode)
 ```
 
 Now given the sampled values, e.g. cost, and the probabilities, we can calculate the expected values at each node, from leaf to root.
 
 ```{r}
-osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
-print(osNode)
+# osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
+# print(osNode)
 ```
 
 Similarly to above, we have created a better wrapper function to perform these steps:
 
 ```{r}
-osNode <- calc_expectedValues(osNode)
-print(osNode)
+# osNode <- calc_expectedValues(osNode)
+# print(osNode)
 ```
 
 
@@ -117,7 +120,7 @@ print(osNode)
 We are now in a position to do a probability sensitivity analysis (PSA) and calculate multiple realisations for specific nodes e.g. those at which a decision is to be made.
 
 ```{r}
-MonteCarlo_expectedValues(osNode, n = 10)
+# MonteCarlo_expectedValues(osNode, n = 10)
 ```
 
 
@@ -130,12 +133,12 @@ These are calculated by taking the product of the probabilities along each pathw
 Once again, we've written a function to do this, which we can append to the the tree. Below we give the terminal states in a dataframe.
 
 ```{r}
-path_probs <- calc_pathway_probs(osNode)
-osNode$Set(path_probs = path_probs)
-
-terminal_states <- data.frame(pathname = osNode$Get('pathString', filterFun = isLeaf),
-                              path_probs = osNode$Get('path_probs', filterFun = isLeaf))
-terminal_states
+# path_probs <- calc_pathway_probs(osNode)
+# osNode$Set(path_probs = path_probs)
+# 
+# terminal_states <- data.frame(pathname = osNode$Get('pathString', filterFun = isLeaf),
+#                               path_probs = osNode$Get('path_probs', filterFun = isLeaf))
+# terminal_states
 ```
 
 
@@ -145,42 +148,42 @@ We can simply sum over these in an ad-hoc way.
 The non-LTBI individuals either never had LTBI or where successfully treated.
 
 ```{r}
-startstate.nonLTBI <- grepl("/Complete Treatment", x = terminal_states$pathname) | grepl("nonLTBI", x = terminal_states$pathname)
-startstate.LTBI <- !startstate.nonLTBI
+# startstate.nonLTBI <- grepl("/Complete Treatment", x = terminal_states$pathname) | grepl("nonLTBI", x = terminal_states$pathname)
+# startstate.LTBI <- !startstate.nonLTBI
 ```
 
 The expected proportion of individuals in LTBI and non-LTBI after screening is thus,
 
 ```{r}
-healthstatus <- NA
-healthstatus[startstate.nonLTBI] <- "nonLTBI"
-healthstatus[startstate.LTBI] <- "LTBI"
-
-aggregate(terminal_states$path_probs, by=list(healthstatus), FUN=sum)
+# healthstatus <- NA
+# healthstatus[startstate.nonLTBI] <- "nonLTBI"
+# healthstatus[startstate.LTBI] <- "LTBI"
+# 
+# aggregate(terminal_states$path_probs, by=list(healthstatus), FUN=sum)
 ```
 
 Further, we can sample from the terminal state probabilities to give a sample of compartmental model start state proportions.
 This can capture the variability due to the cohort size.
 
 ```{r}
-samplesize <- 100000
-numsamples <- 10
-
-sample.mat <- matrix(NA, nrow = nrow(terminal_states), ncol = numsamples)
-for (i in 1:numsamples){
-  
-  sample.mat[,i] <- table(sample(x = 1:nrow(terminal_states), size = samplesize, prob = terminal_states$path_probs, replace = TRUE))/samplesize
-}
-
-head(sample.mat)
-apply(sample.mat, 2, function(x) aggregate(x, by=list(healthstatus), FUN=sum))
+# samplesize <- 100000
+# numsamples <- 10
+# 
+# sample.mat <- matrix(NA, nrow = nrow(terminal_states), ncol = numsamples)
+# for (i in 1:numsamples){
+#   
+#   sample.mat[,i] <- table(sample(x = 1:nrow(terminal_states), size = samplesize, prob = terminal_states$path_probs, replace = TRUE))/samplesize
+# }
+# 
+# head(sample.mat)
+# apply(sample.mat, 2, function(x) aggregate(x, by=list(healthstatus), FUN=sum))
 ```
 
 
 The \code{treeSimR} function to do this is
 
 ```{r eval=FALSE}
-get_start_state_proportions(terminal_states$path_probs, healthstatus, samplesize, numsamples)
+# get_start_state_proportions(terminal_states$path_probs, healthstatus, samplesize, numsamples)
 ```
 
 
@@ -190,14 +193,14 @@ Further, the pathway probabilities can be used to give the distribution of the t
 This is called the risk profile of the decision tree.
 
 ```{r}
-osNode <- calc_riskprofile(osNode)
-print(osNode, "type", "path_prob", "path_payoff")
+# osNode <- calc_riskprofile(osNode)
+# print(osNode, "type", "path_prob", "path_payoff")
 ```
 
 ```{r}
-plot(data.frame(osNode$Get('path_payoff', filterFun = isLeaf),
-           osNode$Get('path_prob', filterFun = isLeaf)), type="h",
-     xlab="payoff", ylab="probability")
+# plot(data.frame(osNode$Get('path_payoff', filterFun = isLeaf),
+#            osNode$Get('path_prob', filterFun = isLeaf)), type="h",
+#      xlab="payoff", ylab="probability")
 ```
 
 
@@ -209,7 +212,7 @@ We can also do deterministic (or scenario) based sensitivity analysis. That is w
 We have already included these above in the construction of the costeffectiveness_object in `data$data_prob` and `data$data_val`.
 
 ```{r}
-print(CEtree)
+# print(CEtree)
 ```
 
 Select a scenario number and run:
@@ -220,11 +223,11 @@ Select a scenario number and run:
 # scenario_parameter_p.melt <- reshape2::melt(data = CEtree$data$data_prob,
 #                                             id.vars = "scenario", variable.name = "node", value.name = "p")
 
-assign_branch_values(osNode.cost = osNode,
-                     osNode.health = osNode,
-                     # parameter_p = subset(scenario_parameter_p.melt, scenario == 1),
-                     parameter_cost = subset(CEtree$data$data_val, scenario == 1)) 
-print(CEtree$osNode)
+# assign_branch_values(osNode.cost = osNode,
+#                      osNode.health = osNode,
+#                      # parameter_p = subset(scenario_parameter_p.melt, scenario == 1),
+#                      parameter_cost = subset(CEtree$data$data_val, scenario == 1)) 
+# print(CEtree$osNode)
 ```
 
 
@@ -238,21 +241,21 @@ This can be done from right to left, iteratively.
 
 
 ```{r eval=FALSE}
-##TODO##
-osNode$Do(decision, filterFun = function(x) x$type == 'decision')
-osNode$Get('decision')[1]
+# ##TODO##
+# osNode$Do(decision, filterFun = function(x) x$type == 'decision')
+# osNode$Get('decision')[1]
 ```
 
 
 ```{r eval=FALSE}
 ##TODO##
 ## probabilty of successfully & correctly treating LTBI
-dummy <- rep(0, osNode$totalCount)
-dummy[12] <- 1
-osNode$Set(payoff = dummy)
-print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
-osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
-print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
-osNode$Get('payoff')[1]
+# dummy <- rep(0, osNode$totalCount)
+# dummy[12] <- 1
+# osNode$Set(payoff = dummy)
+# print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+# osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)
+# print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+# osNode$Get('payoff')[1]
 ```
 
