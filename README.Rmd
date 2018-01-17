@@ -2,7 +2,8 @@
 title: "README"
 author: "Nathan Green"
 date: "`r Sys.Date()`"
-output: md_document
+output:
+    github_document
 ---
 
 ```{r set-options, echo=FALSE, cache=FALSE}
