@@ -1,0 +1,15 @@
+Package: treeSimR
+Type: Package
+Title: treeSimR
+Version: 0.1.0
+Author: Who wrote it
+Maintainer: Who to complain to <yourfault@somewhere.net>
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+LazyData: TRUE
+RoxygenNote: 5.0.1
+Imports: ape, data.tree, diagram, ggplot2, Hmisc, igraph, yaml
+Suggests: ggtree, triangle
+NeedsCompilation: no
+Packaged: 2016-09-19 10:02:45 UTC; ngreen1
+Built: R 3.3.0; ; 2016-09-19 10:03:03 UTC; windows

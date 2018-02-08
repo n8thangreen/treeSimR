@@ -1,0 +1,30 @@
+CEplane_yaml            Cost-effectiveness plane
+MoM_beta                Method of Moments Beta Distribution Parameter
+                        Transformation
+MoM_gamma               Method of Moments Gamma Distribution Parameter
+                        Transformation
+MonteCarlo_expectedValues.costeffectiveness_tree
+                        Monte Carlo Forward Simulation of Decision Tree
+Nodelabel               Node label
+calcCostHealthGrid      calcCostHealthGrid
+calc_expectedValues.costeffectiveness_tree
+                        Calculate Expected Values for Each Node of
+                        Decision Tree
+calc_pathway_probs.costeffectiveness_tree
+                        Calculate Total Pathway Probabilities of
+                        Decision Tree
+calc_riskprofile.costeffectiveness_tree
+                        Calculate Risk Profile
+costeffectiveness_tree
+                        Constructor for a Cost-Effectiveness Tree
+                        Object
+createParamGrid         createParamGrid
+decision                Calculate Optimal Decision
+get_sd_from_normalCI    Get Standard Deviation from Normal Confidence
+                        Interval
+get_start_state_proportions
+                        Get Start State Proportions
+payoff                  Calculate Weighted Expectations
+rpert                   Beta-PERT
+sampleNode              Sample a data.tree Node
+sample_distributions    Sample from Standard Distributions
