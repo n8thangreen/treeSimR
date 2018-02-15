@@ -49,7 +49,8 @@ costeffectiveness_tree <- function(yaml_tree,
   if (!all(osNode$Get("distn") %in% c("lognormal", "pert", "beta", "gamma", "unif", "triangle", "none")))
                   stop("Error: Need to provide valid distribution for all branches")
 
-  stopifnot(all(osNode$Get("type", filterFun = isLeaf) == "terminal"))
+  if (any(osNode$Get("type", filterFun = data.tree::isLeaf) != "terminal"))
+    stop("Error: All leaf nodes must be terminal nodes")
 
   ##TODO: coerce to numeric
   fields <- osNode$fields[osNode$fields %in% c('p','pmin','pmax','min','max','scale','shape')]
@@ -64,7 +65,7 @@ costeffectiveness_tree <- function(yaml_tree,
 
   if ("p" %in% osNode$fields) {
 
-    osNode$Set(fill_in_missing_tree_probs(osNode, "p"))
+    osNode$Set(p = fill_in_missing_tree_probs(osNode, "p"))
   }else if (all(c("pmin", "pmax") %in% osNode$fields)) {
 
     osNode$Set(pmin = fill_in_missing_tree_probs(osNode, "pmin"))
