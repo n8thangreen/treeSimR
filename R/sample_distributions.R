@@ -141,7 +141,8 @@ sampleNodeUniform <- function(node) {
 
 #' Get Standard Deviation from Normal Confidence Interval
 #'
-#' \link{http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and}
+#' Formula taken from
+#' \href{http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and}{Stack Exchange}
 #'
 #' @param n Sample size
 #' @param x_bar Mean
@@ -153,11 +154,11 @@ sampleNodeUniform <- function(node) {
 #'
 get_sd_from_normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
 
-  if(!is.na(lowerCI) & !is.na(x_bar)){
+  if (!is.na(lowerCI) & !is.na(x_bar)) {
     sd <- sqrt(n) * (x_bar - lowerCI)/1.96
-  }else if(!is.na(upperCI) & !is.na(x_bar)){
+  } else if (!is.na(upperCI) & !is.na(x_bar)) {
     sd <- sqrt(n) * (upperCI - x_bar)/1.96
-  }else if (!is.na(lowerCI) & !is.na(upperCI)){
+  } else if (!is.na(lowerCI) & !is.na(upperCI)) {
     sd <- sqrt(n) * (upperCI - lowerCI)/(2*1.96)
   }
   return(sd)
