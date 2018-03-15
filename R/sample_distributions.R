@@ -19,63 +19,72 @@
 
 sample_distributions <- function(param.distns){
 
-  try(library(triangle), silent = TRUE)
-  stopifnot(is.list(param.distns))
+  if (!is.list(param.distns)) stop("Distributions not specified in a list.")
 
-  if(plotrix::listDepth(param.distns)==1) {param.distns <- list(param.distns)}
+  if (plotrix::listDepth(param.distns) == 1)
+    param.distns <- list(param.distns)
+
   n.distns <- length(param.distns)
 
   out <- data.frame(matrix(NA, nrow = 1, ncol = n.distns))
   names(out) <- NULL
 
-  for (i in seq_len(n.distns)){
+  DISTN_NAMES <- c("lognormal", "pert", "beta", "gamma", "unif", "triangle", "none")
 
-    distn <- match.arg(param.distns[[i]]$distn,
-                       c("lognormal", "pert", "beta", "gamma", "unif", "triangle", "none"))
+  for (i in seq_len(n.distns)) {
+
+    param_vals <- as.list(param.distn[[i]])
+
+    distn <- match.arg(param.distns[[i]]$distn, DISTN_NAMES)
+
+    use_mean_sd <- !is.na(param_vals$mean) & !is.na(param_vals$sd)
 
     out[i] <- switch(distn,
                      gamma = {
-                       if(!is.na(param.distns[[i]]$params["mean"]) &
-                          !is.na(param.distns[[i]]$params["sd"])){
+                       if (use_mean_sd) {
 
-                         mom <- MoM_gamma(mean = param.distns[[i]]$params["mean"],
-                                          var = param.distns[[i]]$params["sd"]^2)
-                         gamma = rgamma(1, shape = mom$shape,
-                                           scale = mom$scale)
+                         gamma = rgamma_more_params(1,
+                                                    mean = param_vals$mean,
+                                                    sd = param_vals$sd)
+
                        }else{
-                         gamma = rgamma(1, shape = param.distns[[i]]$params["shape"],
-                                           scale = param.distns[[i]]$params["scale"])
+                         gamma = rgamma_more_params(1,
+                                                    shape = param_vals$shape,
+                                                    scale = param_vals$scale)
                        }
                      },
 
-                     unif = runif(1, param.distns[[i]]$params["min"],
-                                     param.distns[[i]]$params["max"]),
+                     unif = runif(1,
+                                  param_vals$min,
+                                  param_vals$max),
 
-                     lognormal = rlnorm(1, param.distns[[i]]$params["mean"],
-                                           param.distns[[i]]$params["sd"]),
+                     lognormal = rlnorm(1,
+                                        param_vals$mean,
+                                        param_vals$sd),
 
                      beta = {
-                       if(!is.na(param.distns[[i]]$params["mean"]) &
-                          !is.na(param.distns[[i]]$params["sd"])){
+                       if (use_mean_sd) {
 
-                         mom <- MoM_beta(xbar = param.distns[[i]]$params["mean"],
-                                         vbar = param.distns[[i]]$params["sd"]^2)
-
-                         beta = rbeta(1, shape1 = mom$a, shape2 = mom$b)
+                         beta = rbeta_more_params(1,
+                                                  mean = param_vals$mean,
+                                                  sd = param_vals$sd)
                        }else{
-                         beta = rbeta(1, shape1 = param.distns[[i]]$params["a"],
-                                         shape2 = param.distns[[i]]$params["b"])
+                         beta = rbeta_more_params(1,
+                                                  a = param_vals$a,
+                                                  b = param_vals$b)
                        }
                      },
 
-                     triangle = rtriangle(1, param.distns[[i]]$params["min"],
-                                             param.distns[[i]]$params["max"]),
+                     triangle = triangle::rtriangle(1,
+                                                    param_vals$min,
+                                                    param_vals$max),
 
-                     pert = rpert(1, x.min = param.distns[[i]]$params["min"],
-                                     x.max = param.distns[[i]]$params["max"],
-                                     x.mode = param.distns[[i]]$params["mode"]),
+                     pert = rpert(1,
+                                  x.min = param_vals$min,
+                                  x.max = param_vals$max,
+                                  x.mode = param_vals$mode),
 
-                     none = param.distns[[i]]$params["mean"])
+                     none = param_vals$mean)
   }
 
   return(setNames(out, names(param.distns)))
@@ -98,12 +107,13 @@ sample_distributions <- function(param.distns){
 #'
 sampleNode <- function(node) {
 
-  DISTN <- list(distn = node$distn,
-                params = c(mean = node$mean, sd = node$sd,
-                           min = node$min, max = node$max,
-                           mode = node$mode,
-                           shape = node$shape, scale = node$scale,
-                           a = node$a, b = node$b))
+  PARAM_NAMES <- c('mean', 'sd', 'min', 'max', 'mode', 'shape', 'scale', 'a', 'b')
+
+  DISTN <-
+    list(distn = node$distn,
+         params = unlist(node[PARAM_NAMES])
+    )
+
   suppressWarnings(
     DISTN$params <-
       DISTN$params %>%

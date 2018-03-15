@@ -36,8 +36,6 @@ costeffectiveness_tree <- function(yaml_tree,
   if (all(!is.na(data_val)) & !is.data.frame(data_val)) stop("data_val must be a data frame")
   if (all(!is.na(data_prob)) & !is.data.frame(data_prob)) stop("data_prob must be a data frame")
 
-  args <- list(...)
-
   if (grep(pattern = ".yaml$", x = yaml_tree))
     osList <- yaml::yaml.load_file(yaml_tree)
   else{
@@ -66,6 +64,7 @@ costeffectiveness_tree <- function(yaml_tree,
   if ("p" %in% osNode$fields) {
 
     osNode$Set(p = fill_in_missing_tree_probs(osNode, "p"))
+
   }else if (all(c("pmin", "pmax") %in% osNode$fields)) {
 
     osNode$Set(pmin = fill_in_missing_tree_probs(osNode, "pmin"))
@@ -88,7 +87,9 @@ costeffectiveness_tree <- function(yaml_tree,
     if (!"node" %in% names(data_prob)) {
 
       data_prob <- reshape2::melt(data = data_prob,
-                                  id.vars = "scenario", variable.name = "node", value.name = "p")
+                                  id.vars = "scenario",
+                                  variable.name = "node",
+                                  value.name = "p")
     }
 
     data_node_names <- unique(data_prob$nodes)
@@ -101,7 +102,8 @@ costeffectiveness_tree <- function(yaml_tree,
 
   if (all(!is.na(data_val))) {
 
-    if (!"node" %in% names(data_val)) stop("Node label column missing from cost-effectiveness data.")
+    if (!"node" %in% names(data_val))
+      stop("Node label column missing from cost-effectiveness data.")
 
     data_node_names <- unique(data_val$nodes)
     CE_tree_node_names <- unique(names(osNode$Get("level")))
@@ -117,7 +119,8 @@ costeffectiveness_tree <- function(yaml_tree,
   class(osNode) <- c("costeffectiveness_tree", class(osNode))
 
   costeff <- list(osNode = osNode,
-                  data = list(data_prob = data_prob, data_val = data_val))
+                  data = list(data_prob = data_prob,
+                              data_val = data_val))
   attr(costeff, "details") <- details
   class(costeff) <- c("costeffectiveness_object", class(costeff))
 

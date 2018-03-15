@@ -30,7 +30,7 @@ calc_pathway_probs <- function(osNode, FUN) UseMethod("calc_pathway_probs", osNo
 #'
 #' @seealso \link{calc_riskprofile}
 #'
-calc_pathway_probs.default <- function(osNode, ...) print("Error: inappropriate object")
+calc_pathway_probs.default <- function(osNode, ...) stop("Error: inappropriate object")
 
 
 #' Calculate Total Pathway Probabilities of Decision Tree

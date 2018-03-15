@@ -2,6 +2,7 @@
 
 S3method(MonteCarlo_expectedValues,costeffectiveness_tree)
 S3method(MonteCarlo_expectedValues,default)
+S3method(assign_branch_vals,costeffectiveness_tree)
 S3method(calc_expectedValues,costeffectiveness_tree)
 S3method(calc_expectedValues,default)
 S3method(calc_pathway_probs,costeffectiveness_tree)

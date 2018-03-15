@@ -1,9 +1,10 @@
 
-#' fill_in_missing_tree_probs
+#' Fill-in Missing Tree Probabilities
 #'
 #' For binary tree only i.e. event/no event
 #'
 #' @param osNode
+#' @param pname
 #'
 #' @return fill filled-in probabilities
 #' @export
@@ -19,7 +20,9 @@ fill_in_missing_tree_probs <- function(osNode,
   df <-
     suppressWarnings(
       data.frame(level = osNode$Get("level"),
-                 p = as.numeric(as.character(osNode$Get(pname)))))
+                 p = as.numeric(as.character(osNode$Get(pname)))
+      )
+    )
 
   df$id <- seq_len(nrow(df))
 
