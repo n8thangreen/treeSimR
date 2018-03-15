@@ -11,7 +11,7 @@ rgamma_more_params <- function(...) {
 
   params <- list(...)
 
-  if (all(c("mean", "sd") %in% params)) {
+  if (all(c("mean", "sd") %in% names(params))) {
 
     params <- c(params,
                 MoM_gamma(mean = params$mean,
@@ -36,7 +36,7 @@ rbeta_more_params <- function(...) {
 
   params <- list(...)
 
-  if (all(c("mean", "sd") %in% params)) {
+  if (all(c("mean", "sd") %in% names(params))) {
 
     params <- c(params,
                 MoM_beta(xbar = params$mean,

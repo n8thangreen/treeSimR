@@ -33,51 +33,29 @@ sample_distributions <- function(param.distns){
 
   for (i in seq_len(n.distns)) {
 
-    param_vals <- as.list(param.distn[[i]])
+    param_vals <- as.list(param.distns[[i]]$params)
 
     distn <- match.arg(param.distns[[i]]$distn, DISTN_NAMES)
 
-    use_mean_sd <- !is.na(param_vals$mean) & !is.na(param_vals$sd)
-
     out[i] <- switch(distn,
-                     gamma = {
-                       if (use_mean_sd) {
 
-                         gamma = rgamma_more_params(1,
-                                                    mean = param_vals$mean,
-                                                    sd = param_vals$sd)
-
-                       }else{
-                         gamma = rgamma_more_params(1,
-                                                    shape = param_vals$shape,
-                                                    scale = param_vals$scale)
-                       }
-                     },
+                     gamma = do.call(rgamma_more_params,
+                                     args = param_vals),
 
                      unif = runif(1,
-                                  param_vals$min,
-                                  param_vals$max),
+                                  min = param_vals$min,
+                                  max = param_vals$max),
 
                      lognormal = rlnorm(1,
                                         param_vals$mean,
                                         param_vals$sd),
 
-                     beta = {
-                       if (use_mean_sd) {
-
-                         beta = rbeta_more_params(1,
-                                                  mean = param_vals$mean,
-                                                  sd = param_vals$sd)
-                       }else{
-                         beta = rbeta_more_params(1,
-                                                  a = param_vals$a,
-                                                  b = param_vals$b)
-                       }
-                     },
+                     beta = do.call(rbeta_more_params,
+                                    args = param_vals),
 
                      triangle = triangle::rtriangle(1,
-                                                    param_vals$min,
-                                                    param_vals$max),
+                                                    a = param_vals$min,
+                                                    b = param_vals$max),
 
                      pert = rpert(1,
                                   x.min = param_vals$min,
@@ -186,18 +164,17 @@ get_sd_from_normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
 #' @seealso \link{rpert}
 #' @export
 #'
-MoM_beta <- function(xbar, vbar){
-
-  if(vbar==0){stop("zero variance not allowed")
-  }else if(xbar*(1-xbar)<vbar){
+MoM_beta <- function(xbar, vbar) {
+  if (vbar == 0) {
+    stop("zero variance not allowed")
+  } else if (xbar * (1 - xbar) < vbar) {
     stop("mean or var inappropriate")
-  }else{
-    a <- xbar * (((xbar*(1-xbar))/vbar)-1)
-    b <- (1-xbar) * (((xbar*(1-xbar))/vbar)-1)
+  } else{
+    a <- xbar * (((xbar * (1 - xbar)) / vbar) - 1)
+    b <- (1 - xbar) * (((xbar * (1 - xbar)) / vbar) - 1)
   }
-  list(a=a, b=b)
+  list(a = a, b = b)
 }
-
 
 #' Method of Moments Gamma Distribution Parameter Transformation
 #'
@@ -208,15 +185,14 @@ MoM_beta <- function(xbar, vbar){
 #' @seealso \link{MoM_beta}
 #' @export
 #'
-MoM_gamma <- function(mean, var){
-
-  stopifnot(var>=0)
-  stopifnot(mean>=0)
+MoM_gamma <- function(mean, var) {
+  stopifnot(var >= 0)
+  stopifnot(mean >= 0)
   names(mean) <- NULL
   names(var)  <- NULL
 
-  list(shape = mean^2/var,
-       scale = var/mean)
+  list(shape = mean ^ 2 / var,
+       scale = var / mean)
 }
 
 
@@ -233,25 +209,33 @@ MoM_gamma <- function(mean, var){
 #' @return sampled value
 #' @export
 #'
-rpert <- function(n, x.min, x.max, x.mode, lambda = 4){
+rpert <- function(n,
+                  x.min,
+                  x.max,
+                  x.mode,
+                  lambda = 4) {
 
-  if( x.min > x.max || x.mode > x.max || x.mode < x.min ) stop( "invalid parameters" )
+  if (x.min > x.max ||
+      x.mode > x.max || x.mode < x.min)
+    stop("invalid parameters")
 
   x.range <- x.max - x.min
-  if( x.range == 0 ) return( rep( x.min, n ))
 
-  mu <- ( x.min + x.max + lambda * x.mode ) / ( lambda + 2 )
+  if (x.range == 0)
+    return(rep(x.min, n))
+
+  mu <- (x.min + x.max + lambda * x.mode) / (lambda + 2)
 
   # special case if mu == mode
-  if( mu == x.mode ){
-    v <- ( lambda / 2 ) + 1
+  if (mu == x.mode) {
+    v <- (lambda / 2) + 1
   }
   else {
-    v <- (( mu - x.min ) * ( 2 * x.mode - x.min - x.max )) /
-      (( x.mode - mu ) * ( x.max - x.min ));
+    v <- ((mu - x.min) * (2 * x.mode - x.min - x.max)) /
+      ((x.mode - mu) * (x.max - x.min))
   }
 
-  w <- ( v * ( x.max - mu )) / ( mu - x.min )
-  return ( rbeta( n, v, w ) * x.range + x.min )
-}
+  w <- (v * (x.max - mu)) / (mu - x.min)
 
+  return(rbeta(n, v, w) * x.range + x.min)
+}
