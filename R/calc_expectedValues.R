@@ -38,6 +38,7 @@ calc_expectedValues.default <- function(osNode) print("Error: inappropriate obje
 #' @seealso \link{costeffectiveness_tree}, \link{payoff}
 #'
 #' @examples
+#' \dontrun{
 #' ## read-in decision tree
 #' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
 #' print(osNode, "type", "p", "distn", "mean", "sd")
@@ -48,6 +49,7 @@ calc_expectedValues.default <- function(osNode) print("Error: inappropriate obje
 #'
 #' ## calculate multiple realisation for specific nodes
 #' MonteCarlo_expectedValues(osNode, n=100)
+#' }
 #'
 calc_expectedValues.costeffectiveness_tree <- function(osNode){
 
@@ -112,6 +114,7 @@ MonteCarlo_expectedValues.default <- function(osNode, ...) print("Error: inappro
 #' @seealso calc_expectedValues
 #'
 #' @examples
+#' \dontrun{
 #' ## read-in decision tree
 #' osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
 #' print(osNode, "type", "p", "distn", "mean", "sd")
@@ -122,6 +125,7 @@ MonteCarlo_expectedValues.default <- function(osNode, ...) print("Error: inappro
 #'
 #' ## calculate multiple realisation for specific nodes
 #' MonteCarlo_expectedValues(osNode, n=100)
+#' }
 #'
 MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode,
                                                              n = 100){

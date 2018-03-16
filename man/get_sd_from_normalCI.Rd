@@ -19,5 +19,6 @@ get_sd_from_normalCI(n, x_bar = NA, upperCI = NA, lowerCI = NA)
 sd
 }
 \description{
-\link{http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and}
+Formula taken from
+\href{http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and}{Stack Exchange}
 }

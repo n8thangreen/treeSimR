@@ -10,11 +10,13 @@ sampleNode(node)
 \item{node}{data.tree node}
 }
 \description{
-Sample a data.tree Node
+TODO: could use NextMethod()
+i.e. write sample_distribution.node function
 }
 \examples{
 
-rpayoff <- osNode$Get(sampleNode)
+osNode
+osNode$Get(sampleNode)
 
 }
 \seealso{

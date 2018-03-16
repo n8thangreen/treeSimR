@@ -2,12 +2,12 @@
 % Please edit documentation in R/fill_in_missing_tree_probs.R
 \name{fill_in_missing_tree_probs}
 \alias{fill_in_missing_tree_probs}
-\title{fill_in_missing_tree_probs}
+\title{Fill-in Missing Tree Probabilities}
 \usage{
 fill_in_missing_tree_probs(osNode, pname)
 }
 \arguments{
-\item{osNode}{}
+\item{pname}{}
 }
 \value{
 fill filled-in probabilities
