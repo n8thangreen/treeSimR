@@ -73,6 +73,7 @@ sample_distributions <- function(param.distns){
 #'
 #' TODO: could use NextMethod()
 #' i.e. write sample_distribution.node function
+#' TODO: can we readin PARAM_NAMES?
 #'
 #' @param node data.tree node
 #'
@@ -105,6 +106,8 @@ sampleNode <- function(node) {
 
 #' Sample a data.tree uniform node
 #'
+#' TODO: at the moment only for probabilities
+#'
 #' @param node data.tree node
 #'
 #' @return
@@ -132,25 +135,32 @@ sampleNodeUniform <- function(node) {
 #' Get Standard Deviation from Normal Confidence Interval
 #'
 #' Formula taken from
-#' \href{http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and}{Stack Exchange}
+#' http://stats.stackexchange.com/questions/30402/how-to-calculate-mean-and-standard-deviation-in-r-given-confidence-interval-and
+#' Stack Exchange
 #'
 #' @param n Sample size
 #' @param x_bar Mean
-#' @param upperCI Upper 95% CI
-#' @param lowerCI Lower 95% CI
+#' @param upperCI Upper 95\% confidence interval
+#' @param lowerCI Lower 95\% confidence interval
 #'
 #' @return sd
 #' @export
 #'
-get_sd_from_normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
+get_sd_from_normalCI <- function(n,
+                                 x_bar = NA,
+                                 upperCI = NA,
+                                 lowerCI = NA) {
 
   if (!is.na(lowerCI) & !is.na(x_bar)) {
-    sd <- sqrt(n) * (x_bar - lowerCI)/1.96
+    sd <- sqrt(n) * (x_bar - lowerCI) / 1.96
+
   } else if (!is.na(upperCI) & !is.na(x_bar)) {
-    sd <- sqrt(n) * (upperCI - x_bar)/1.96
+    sd <- sqrt(n) * (upperCI - x_bar) / 1.96
+
   } else if (!is.na(lowerCI) & !is.na(upperCI)) {
-    sd <- sqrt(n) * (upperCI - lowerCI)/(2*1.96)
+    sd <- sqrt(n) * (upperCI - lowerCI) / (2 * 1.96)
   }
+
   return(sd)
 }
 
