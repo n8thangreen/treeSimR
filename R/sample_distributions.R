@@ -81,15 +81,17 @@ sample_distributions <- function(param.distns){
 #' @seealso  \link{sample_distributions}
 #' @examples
 #'
-#' rpayoff <- osNode$Get(sampleNode)
+#' osNode
+#' osNode$Get(sampleNode)
 #'
 sampleNode <- function(node) {
 
   PARAM_NAMES <- c('mean', 'sd', 'min', 'max', 'mode', 'shape', 'scale', 'a', 'b')
+  params <- node$fields[node$fields %in% PARAM_NAMES]
 
   DISTN <-
     list(distn = node$distn,
-         params = unlist(node[PARAM_NAMES])
+         params = unlist(mget(x = params, envir = node))
     )
 
   suppressWarnings(

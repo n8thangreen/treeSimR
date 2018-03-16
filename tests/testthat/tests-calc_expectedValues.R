@@ -1,9 +1,10 @@
 
+context("Calculate expected values of decision tree")
+
 library(treeSimR)
 library(data.tree)
 library(purrr)
-
-context("Calculate expected values of decision tree")
+library(yaml)
 
 
 osList <- yaml.load_file("../testdata/test2.yaml")
@@ -14,8 +15,10 @@ class(osNode) <- c("costeffectiveness_tree", class(osNode))
 
 test_that("upper and lower bounds", {
 
-  expect_gt(MonteCarlo_expectedValues(osNode = osNode, n = 1)[[1]], 0)
-  expect_lt(MonteCarlo_expectedValues(osNode = osNode, n = 1)[[1]], 2)
+  mc_res <- MonteCarlo_expectedValues(osNode = osNode, n = 1)[[1]]
+
+  expect_gt(mc_res, 0)
+  expect_lt(mc_res, 2)
 
 })
 

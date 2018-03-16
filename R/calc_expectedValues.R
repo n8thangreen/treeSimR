@@ -128,8 +128,10 @@ MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode,
 
   if (n <= 0)
     stop("n must be positive")
+
   if (n %% 1 != 0)
     stop("n must be a whole number")
+
   if (!any(osNode$Get("type") == "logical"))
     stop("Error: Need at least one node labeled 'logical'")
 
