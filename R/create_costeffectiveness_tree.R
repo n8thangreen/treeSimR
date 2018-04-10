@@ -67,12 +67,15 @@ costeffectiveness_tree <- function(yaml_tree,
 
   }else if (all(c("pmin", "pmax") %in% osNode$fields)) {
 
-    osNode$Set(pmin = fill_in_missing_tree_probs(osNode, "pmin"))
-    osNode$Set(pmax = fill_in_missing_tree_probs(osNode, "pmax"))
+    ##TODO: dont want to fillin because dont want to sample from _both_ branches
+    # osNode$Set(pmin = fill_in_missing_tree_probs(osNode, "pmax"))
+    # osNode$Set(pmax = fill_in_missing_tree_probs(osNode, "pmin"))
 
     ##TODO: use the inbuilt data.tree functions instead
     midpoint <- osNode$Get("pmin") + (osNode$Get("pmax") - osNode$Get("pmin"))/2
     osNode$Set(p = midpoint)
+
+    osNode$Set(p = fill_in_missing_tree_probs(osNode, "p"))
 
   }else {
     stop("Missing branch probabilities")

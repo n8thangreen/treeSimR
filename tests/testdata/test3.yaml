@@ -1,0 +1,50 @@
+
+    name: test tree
+    distn: unif
+    pmin: 1
+    pmax: 1
+    min: 0
+    max: 1
+    type: logical
+    Enhanced:
+      distn: unif
+      min: 0
+      max: 1
+      pmin: 0.1
+      pmax: 0.2
+      type: chance
+      TB:
+        type: terminal
+        pmin: 0.1
+        pmax: 0.2
+        distn: unif
+        min: 0
+        max: 1
+      Not TB:
+        type: terminal
+        pmin: NA
+        pmax: NA
+        distn: unif
+        min: 0
+        max: 1
+    Standard:
+      distn: unif
+      min: 0
+      max: 1
+      pmin: 0.1
+      pmax: 0.2
+      type: chance
+      TB:
+        type: terminal
+        pmin: 0.2
+        pmax: 0.9
+        distn: unif
+        min: 0
+        max: 1
+      Not TB:
+        type: terminal
+        pmin: NA
+        pmax: NA
+        distn: unif
+        min: 0
+        max: 1

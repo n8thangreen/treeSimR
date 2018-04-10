@@ -59,8 +59,11 @@ calc_expectedValues.costeffectiveness_tree <- function(osNode){
 
   if (all(c("pmin", "pmax") %in% osNode$fields)) {
 
+
+    osNode$Set(p = osNode$Get("pmin")) #assume that its NA
     rprob <- osNode$Get(sampleNodeUniform)
     osNode$Set(p = rprob)
+    osNode$Set(p = fill_in_missing_tree_probs(osNode, "p"))
   }
 
   osNode$Do(payoff, traversal = "post-order", filterFun = isNotLeaf)

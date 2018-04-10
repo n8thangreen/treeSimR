@@ -2,7 +2,7 @@
 #' Sample from Standard Distributions
 #'
 #' Supply a list of defined distributions (log-normal, beta, gamma, uniform, triangle)
-#' and one sample realisation is taken of each.
+#' and one realisation is taken of each.
 #'
 #' @param param.distns List of distribution names and their respective parameter values
 #'
@@ -15,7 +15,8 @@
 #' sample_distributions(param.distns = list(distn = "lognormal", params = c(mean=10, sd=1)))
 #' sample_distributions(param.distns = list(distn = "beta", params = c(mean=0.1, sd=0.1)))
 #' sample_distributions(param.distns = list(distn = "beta", params = c(a=0.1, b=0.1)))
-#' sample_distributions(param.distns = list(list(distn = "beta", params = c(a=0.1, b=0.1)), list(distn = "beta", params = c(a=0.1, b=0.1))))
+#' sample_distributions(param.distns = list(list(distn = "beta", params = c(a=0.1, b=0.1)),
+#'                                          list(distn = "beta", params = c(a=0.1, b=0.1))))
 
 sample_distributions <- function(param.distns){
 
@@ -142,14 +143,17 @@ sampleNodeUniform <- function(node) {
 #' @return sd
 #' @export
 #'
-get_sd_from_normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
+get_sd_from_normalCI <- function(n,
+                                 x_bar = NA,
+                                 upperCI = NA,
+                                 lowerCI = NA) {
 
   if (!is.na(lowerCI) & !is.na(x_bar)) {
-    sd <- sqrt(n) * (x_bar - lowerCI)/1.96
+    sd <- sqrt(n) * (x_bar - lowerCI) / 1.96
   } else if (!is.na(upperCI) & !is.na(x_bar)) {
-    sd <- sqrt(n) * (upperCI - x_bar)/1.96
+    sd <- sqrt(n) * (upperCI - x_bar) / 1.96
   } else if (!is.na(lowerCI) & !is.na(upperCI)) {
-    sd <- sqrt(n) * (upperCI - lowerCI)/(2*1.96)
+    sd <- sqrt(n) * (upperCI - lowerCI) / (2 * 1.96)
   }
   return(sd)
 }
@@ -166,7 +170,8 @@ get_sd_from_normalCI <- function(n, x_bar=NA, upperCI=NA, lowerCI=NA){
 #' @seealso \link{rpert}
 #' @export
 #'
-MoM_beta <- function(xbar, vbar) {
+MoM_beta <- function(xbar,
+                     vbar) {
   if (vbar == 0) {
     stop("zero variance not allowed")
   } else if (xbar * (1 - xbar) < vbar) {
@@ -187,7 +192,8 @@ MoM_beta <- function(xbar, vbar) {
 #' @seealso \link{MoM_beta}
 #' @export
 #'
-MoM_gamma <- function(mean, var) {
+MoM_gamma <- function(mean,
+                      var) {
   stopifnot(var >= 0)
   stopifnot(mean >= 0)
   names(mean) <- NULL
