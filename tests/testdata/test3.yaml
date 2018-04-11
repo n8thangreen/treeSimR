@@ -31,8 +31,8 @@
       distn: unif
       min: 0
       max: 1
-      pmin: 0.1
-      pmax: 0.2
+      pmin: NA
+      pmax: NA
       type: chance
       TB:
         type: terminal

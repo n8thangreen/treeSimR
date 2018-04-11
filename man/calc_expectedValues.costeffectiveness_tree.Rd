@@ -10,7 +10,7 @@
 \item{osNode}{}
 }
 \value{
-osNode
+osNode with extra \code{samples}, \code{payoff} and \code{p} columns
 }
 \description{
 Takes an object of class costeffectiveness_tree.

@@ -22,7 +22,11 @@ assign_branch_vals.costeffectiveness_tree <- function(osNode,
                                                       parameter_p = NA,
                                                       parameter_val = NA) {
 
-  if (all(is.na(parameter_p)) & all(is.na(parameter_val))) stop("Error: No scenario parameter values")
+  if (all(is.na(parameter_p)) & all(is.na(parameter_val))) {
+
+    message("No scenario parameter values")
+    return()
+  }
 
   # if missing then use empty (NULL) loop
   names_val <-

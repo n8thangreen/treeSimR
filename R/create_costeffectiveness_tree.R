@@ -50,7 +50,6 @@ costeffectiveness_tree <- function(yaml_tree,
   if (any(osNode$Get("type", filterFun = data.tree::isLeaf) != "terminal"))
     stop("Error: All leaf nodes must be terminal nodes")
 
-  ##TODO: coerce to numeric
   fields <- osNode$fields[osNode$fields %in% c('p','pmin','pmax','min','max','scale','shape')]
   attr_is.numeric <- purrr::map_lgl(.x = fields, .f = function(x) is.numeric(osNode$Get(x)))
   if (!all(attr_is.numeric)) warning('Check type of attributes. Should they be numeric rather than character?')
@@ -67,9 +66,8 @@ costeffectiveness_tree <- function(yaml_tree,
 
   }else if (all(c("pmin", "pmax") %in% osNode$fields)) {
 
-    ##TODO: dont want to fillin because dont want to sample from _both_ branches
-    # osNode$Set(pmin = fill_in_missing_tree_probs(osNode, "pmax"))
-    # osNode$Set(pmax = fill_in_missing_tree_probs(osNode, "pmin"))
+    osNode$Set(pmin = as.numeric(osNode$Get("pmin")))
+    osNode$Set(pmax = as.numeric(osNode$Get("pmax")))
 
     ##TODO: use the inbuilt data.tree functions instead
     midpoint <- osNode$Get("pmin") + (osNode$Get("pmax") - osNode$Get("pmin"))/2

@@ -32,7 +32,7 @@ calc_expectedValues.default <- function(osNode) print("Error: inappropriate obje
 #'
 #' @param osNode
 #'
-#' @return osNode
+#' @return osNode with extra \code{samples}, \code{payoff} and \code{p} columns
 #' @export
 #'
 #' @seealso \link{costeffectiveness_tree}, \link{payoff}
