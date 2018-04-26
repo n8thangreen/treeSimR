@@ -28,7 +28,7 @@ calc_riskprofile <- function(osNode) UseMethod("calc_riskprofile")
 #' @seealso \link{calc_pathway_probs}
 #' @examples
 #'
-calc_riskprofile.default <- function(osNode, ...) print("Error: inappropriate object")
+calc_riskprofile.default <- function(osNode, ...) stop("Error: inappropriate object")
 
 
 #' Calculate Risk Profile

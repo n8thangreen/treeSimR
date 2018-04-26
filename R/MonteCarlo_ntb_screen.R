@@ -1,15 +1,15 @@
 
-#' MonteCarlo_n.tb_screen
+#' Monte Carlo samples of number of TB cases after screening
 #'
 #' frequency of active tb and disease-free (screened)
 #' TODO: generalise or remove from treeSimR::
 #'
-#' @param p_complete_Tx
-#' @param n.uk_tb
-#' @param n.all_tb
-#' @param n
+#' @param p_complete_Tx Probability complete treatment
+#' @param n.uk_tb Number TB cases in UK status-quo
+#' @param n.all_tb Number of TB case in total status-quo
+#' @param n Total sample size
 #'
-#' @return
+#' @return list
 #' @export
 #'
 #' @examples

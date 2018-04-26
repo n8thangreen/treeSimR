@@ -117,6 +117,9 @@ sampleNode <- function(node) {
 #'
 sampleNodeUniform <- function(node) {
 
+  if (any(is.na(node$pmin) || is.na(node$pmax)))
+    return(NA)
+
   DISTN <- list(distn = "unif",
                 params = c(min = node$pmin,
                            max = node$pmax))
@@ -128,6 +131,72 @@ sampleNodeUniform <- function(node) {
   sample_distributions(list(DISTN))
 }
 
+
+#' Mean of a data.tree uniform node
+#'
+#' @param node data.tree node
+#'
+#' @return
+#' @export
+#' @seealso  \link{mean_distributions}
+#' @examples
+#'
+meanNodeUniform <- function(node) {
+
+  if (any(is.na(node$pmin) || is.na(node$pmax)))
+    return(NA)
+
+  DISTN <- list(distn = "unif",
+                params = c(min = node$pmin,
+                           max = node$pmax))
+  suppressWarnings(
+    DISTN$params <-
+      DISTN$params %>%
+      map_dbl(function(x) as.numeric(as.character(x))))
+
+  means_distributions(list(DISTN))
+}
+
+
+#' f_NodeUniform
+#'
+#' TODO: this is probably better than repeating
+#' most of the function body for each.
+#'
+#' @param f function name
+#'
+#' @return
+#' @export
+#' @seealso  \link{mean_distributions} \link{sample_distributions}
+#' @examples
+#'
+# unif_distn <- list(distn = "unif",
+#                    params = c(min = 0, max = 1))
+#'
+#' meanNodeUnif <- f_NodeUniform(mean_distributions)
+#' meanNodeUnif(unif_distn)
+#'
+#' sampleNodeUnif <- f_NodeUniform(sample_distributions)
+#' sampleNodeUnif(unif_distn)
+#'
+f_NodeUniform <- function(f) {
+
+  function(node) {
+
+  if (any(is.na(node$pmin) || is.na(node$pmax)))
+    return(NA)
+
+  DISTN <- list(distn = "unif",
+                params = c(min = node$pmin,
+                           max = node$pmax))
+  suppressWarnings(
+    DISTN$params <-
+      DISTN$params %>%
+      map_dbl(function(x) as.numeric(as.character(x))))
+
+    f(list(DISTN))
+  }
+}
 
 
 #' Get Standard Deviation from Normal Confidence Interval

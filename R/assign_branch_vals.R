@@ -22,7 +22,7 @@ assign_branch_vals.costeffectiveness_tree <- function(osNode,
                                                       parameter_p = NA,
                                                       parameter_val = NA) {
 
-  if (all(is.na(parameter_p)) & all(is.na(parameter_val))) {
+  if (all(is.na(parameter_p)) && all(is.na(parameter_val))) {
 
     message("No scenario parameter values")
     return()
@@ -48,6 +48,15 @@ assign_branch_vals.costeffectiveness_tree <- function(osNode,
 
     osNode$Set(p = vals,
                filterFun = function(x) x$name == node_p)
+
+    if (all(c("pmin", "pmax") %in% osNode$fields)) {
+
+      osNode$Set(pmin = vals,
+                 filterFun = function(x) x$name == node_p)
+
+      osNode$Set(pmax = vals,
+                 filterFun = function(x) x$name == node_p)
+    }
   }
 
   # assign branching _values_

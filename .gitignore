@@ -2,6 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-treeSimR_0.1.0.tar.gz
-treeSimR_0.1.0.zip
-.gitignore
+*.tar.gz
+*.zip
+*.gitignore
+NAMESPACE

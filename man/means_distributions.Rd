@@ -2,17 +2,22 @@
 % Please edit documentation in R/means_distributions.R
 \name{means_distributions}
 \alias{means_distributions}
-\title{means_distributions}
+\title{Means values from distributions}
 \usage{
 means_distributions(param.distns)
 }
 \arguments{
-\item{param.distns}{}
+\item{param.distns}{list of distribution name and hyper-parameters}
+}
+\value{
+double
 }
 \description{
-means_distributions
+Means values from distributions
 }
 \examples{
-means_distributions(unit_cost$aTB_TxDx)
+
+param.distns <- list(distn = "unif", params = c(min = 0, max = 1))
+means_distributions(param.distns)
 
 }

@@ -53,12 +53,25 @@ calc_pathway_probs.costeffectiveness_tree <- function(osNode,
 
   FUN <- match.arg(FUN, c("sum", "product"))
 
-  if (FUN == "product"){
+  ##TODO:
+  #check p's are uptodate and consistent
+  if (all(c("pmin", "pmax") %in% osNode$fields)) {
+
+    osNode$Set(p = osNode$Get("pmin")) #assume that its NA
+    rprob <- osNode$Get(meanNodeUniform)
+    osNode$Set(p = rprob)
+    osNode$Set(p = fill_in_missing_tree_probs(osNode, "p"))
+  }
+
+  if (FUN == "product") {
+
     probs <- osNode$Get("p")
     x <- rep(x = probs[1],
              osNode$totalCount)
     x[is.na(x)] <- 1
-  }else if (FUN == "sum"){
+
+  } else if (FUN == "sum") {
+
     probs <- osNode$Get("payoff")
     x <- rep(x = probs[1],
              osNode$totalCount)
@@ -68,17 +81,19 @@ calc_pathway_probs.costeffectiveness_tree <- function(osNode,
   t <- Traverse(osNode, traversal = "pre-order")
   traversalCount <- Get(t, "totalCount")
 
-  for(i in 2:osNode$totalCount){
+  for (i in 2:osNode$totalCount) {
 
     currentCount <- traversalCount[i]
     pos <- i + currentCount - 1
 
-    if (FUN == "product"){
+    if (FUN == "product") {
       x[i:pos] <- x[i:pos] * rep(x = probs[i], currentCount)
-    }else if (FUN == "sum"){
+
+    } else if (FUN == "sum") {
+
       x[i:pos] <- x[i:pos] + rep(x = probs[i], currentCount)
-    }else{
-      stop("Error: unknown operator")
+    } else {
+      stop("Error: unknown operator in FUN")
     }
   }
 

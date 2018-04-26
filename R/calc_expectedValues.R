@@ -23,7 +23,7 @@ calc_expectedValues <- function(osNode) UseMethod("calc_expectedValues")
 #'
 #' @seealso \link{costeffectiveness_tree}, \link{payoff}
 #'
-calc_expectedValues.default <- function(osNode) print("Error: inappropriate object")
+calc_expectedValues.default <- function(osNode) stop("Inappropriate object")
 
 
 #' Calculate Expected Values for Each Node of Decision Tree
@@ -101,7 +101,7 @@ MonteCarlo_expectedValues <- function(osNode, n){
 #' @export
 #' @seealso calc_expectedValues
 #'
-MonteCarlo_expectedValues.default <- function(osNode, ...) print("Error: inappropriate object")
+MonteCarlo_expectedValues.default <- function(osNode, ...) stop("Error: inappropriate object")
 
 
 #' Monte Carlo Forward Simulation of Decision Tree
@@ -140,7 +140,7 @@ MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode,
     stop("n must be a whole number")
 
   if (!any(osNode$Get("type") == "logical"))
-    stop("Error: Need at least one node labeled 'logical'")
+    stop("Need at least one node labeled 'logical'")
 
   NodeNames <- osNode$Get("pathString",
                           filterFun = function(x) x$type == "logical")

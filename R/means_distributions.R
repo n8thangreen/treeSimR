@@ -1,13 +1,15 @@
 
-#' means_distributions
+#' Means values from distributions
 #'
-#' @param param.distns
+#' @param param.distns list of distribution name and hyper-parameters
 #'
-#' @return
+#' @return double
 #' @export
 #'
 #' @examples
-#' means_distributions(unit_cost$aTB_TxDx)
+#'
+#' param.distns <- list(distn = "unif", params = c(min = 0, max = 1))
+#' means_distributions(param.distns)
 #'
 means_distributions <- function(param.distns){
 
