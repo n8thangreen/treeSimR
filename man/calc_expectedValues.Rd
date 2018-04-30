@@ -2,9 +2,15 @@
 % Please edit documentation in R/calc_expectedValues.R
 \name{calc_expectedValues}
 \alias{calc_expectedValues}
+\alias{calc_expectedValues.default}
+\alias{calc_expectedValues.costeffectiveness_tree}
 \title{Calculate Expected Values for Each Node of Decision Tree}
 \usage{
 calc_expectedValues(osNode)
+
+\method{calc_expectedValues}{default}(osNode)
+
+\method{calc_expectedValues}{costeffectiveness_tree}(osNode)
 }
 \arguments{
 \item{osNode}{}
@@ -14,6 +20,21 @@ osNode
 }
 \description{
 Takes an object of class costeffectiveness_tree.
+}
+\examples{
+\dontrun{
+## read-in decision tree
+osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+print(osNode, "type", "p", "distn", "mean", "sd")
+
+## calculate a single realisation expected values
+osNode <- calc_expectedValues(osNode)
+print(osNode, "type", "p", "distn", "mean", "sd", "payoff", "sampled")
+
+## calculate multiple realisation for specific nodes
+MonteCarlo_expectedValues(osNode, n=100)
+}
+
 }
 \seealso{
 \link{costeffectiveness_tree}, \link{payoff}

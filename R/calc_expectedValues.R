@@ -12,30 +12,14 @@
 calc_expectedValues <- function(osNode) UseMethod("calc_expectedValues")
 
 
-#' Calculate Expected Values for Each Node of Decision Tree
-#'
-#' Takes an object of class costeffectiveness_tree.
-#'
-#' @param osNode
-#'
-#' @return osNode
+#' @rdname calc_expectedValues
 #' @export
-#'
-#' @seealso \link{costeffectiveness_tree}, \link{payoff}
 #'
 calc_expectedValues.default <- function(osNode) stop("Inappropriate object")
 
 
-#' Calculate Expected Values for Each Node of Decision Tree
-#'
-#' Takes an object of class costeffectiveness_tree.
-#'
-#' @param osNode
-#'
-#' @return osNode with extra \code{samples}, \code{payoff} and \code{p} columns
+#' @rdname calc_expectedValues
 #' @export
-#'
-#' @seealso \link{costeffectiveness_tree}, \link{payoff}
 #'
 #' @examples
 #' \dontrun{
@@ -82,39 +66,21 @@ calc_expectedValues.costeffectiveness_tree <- function(osNode){
 #'
 #' @return list containing array of n sets of expected values and sampled nodes full names
 #' @export
-#' @seealso calc_expectedValues
+#' @seealso \code{\link{calc_expectedValues}}
 #'
 MonteCarlo_expectedValues <- function(osNode, n){
   UseMethod("MonteCarlo_expectedValues", osNode)
 }
 
 
-#' Monte Carlo Forward Simulation of Decision Tree
-#'
-#' Results are returned for the nodes labelled logical in decision tree.
-#' Require at least one logical node.
-#'
-#' @param osNode A data.tree object with class costeffectiveness_tree
-#' @param n Number of simulations
-#'
-#' @return list containing array of n sets of expected values and sampled nodes full names
+#' @rdname MonteCarlo_expectedValues
 #' @export
-#' @seealso calc_expectedValues
 #'
 MonteCarlo_expectedValues.default <- function(osNode, ...) stop("Error: inappropriate object")
 
 
-#' Monte Carlo Forward Simulation of Decision Tree
-#'
-#' Results are returned for the nodes labelled logical in decision tree.
-#' Require at least one logical node.
-#'
-#' @param osNode A data.tree object with class costeffectiveness_tree
-#' @param n Number of simulations
-#'
-#' @return list containing array of n sets of expected values and sampled nodes full names
+#' @rdname MonteCarlo_expectedValues
 #' @export
-#' @seealso calc_expectedValues
 #'
 #' @examples
 #' \dontrun{

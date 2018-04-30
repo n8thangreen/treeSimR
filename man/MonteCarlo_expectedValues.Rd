@@ -2,9 +2,15 @@
 % Please edit documentation in R/calc_expectedValues.R
 \name{MonteCarlo_expectedValues}
 \alias{MonteCarlo_expectedValues}
+\alias{MonteCarlo_expectedValues.default}
+\alias{MonteCarlo_expectedValues.costeffectiveness_tree}
 \title{Monte Carlo Forward Simulation of Decision Tree}
 \usage{
 MonteCarlo_expectedValues(osNode, n)
+
+\method{MonteCarlo_expectedValues}{default}(osNode, ...)
+
+\method{MonteCarlo_expectedValues}{costeffectiveness_tree}(osNode, n = 100)
 }
 \arguments{
 \item{osNode}{A data.tree object with class costeffectiveness_tree}
@@ -18,6 +24,21 @@ list containing array of n sets of expected values and sampled nodes full names
 Results are returned for the nodes labelled logical in decision tree.
 Require at least one logical node.
 }
+\examples{
+\dontrun{
+## read-in decision tree
+osNode <- costeffectiveness_tree(yaml_tree = "raw data/LTBI_dtree-cost-distns.yaml")
+print(osNode, "type", "p", "distn", "mean", "sd")
+
+## calculate a single realisation expected values
+osNode <- calc_expectedValues(osNode)
+print(osNode, "type", "p", "distn", "mean", "sd", "payoff")
+
+## calculate multiple realisation for specific nodes
+MonteCarlo_expectedValues(osNode, n=100)
+}
+
+}
 \seealso{
-calc_expectedValues
+\code{\link{calc_expectedValues}}
 }

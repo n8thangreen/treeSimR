@@ -1,11 +1,4 @@
 
-assign_branch_vals <- function(osNode,
-                               parameter_p,
-                               parameter_val) {
-  UseMethod("assign_branch_vals")
-}
-
-
 #' Assign Branching Values to Decision Tree
 #'
 #' Used in deterministic sensitivity analysis.
@@ -18,6 +11,16 @@ assign_branch_vals <- function(osNode,
 #' @export
 #'
 #' @examples
+#'
+assign_branch_vals <- function(osNode,
+                               parameter_p,
+                               parameter_val) {
+  UseMethod("assign_branch_vals")
+}
+
+#' @rdname assign_branch_vals
+#' @export
+#'
 assign_branch_vals.costeffectiveness_tree <- function(osNode,
                                                       parameter_p = NA,
                                                       parameter_val = NA) {
