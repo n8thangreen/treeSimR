@@ -2,16 +2,22 @@
 % Please edit documentation in R/calc_riskprofile.R
 \name{calc_riskprofile}
 \alias{calc_riskprofile}
+\alias{calc_riskprofile.default}
+\alias{calc_riskprofile.costeffectiveness_tree}
 \title{Calculate Risk Profile}
 \usage{
 calc_riskprofile(osNode)
+
+\method{calc_riskprofile}{default}(osNode, ...)
+
+\method{calc_riskprofile}{costeffectiveness_tree}(osNode)
 }
 \arguments{
 \item{osNode}{}
 }
 \description{
-This function can be used to calculate the Risk Profile.
-That is, the distribution of outcome values.
+Calculate the distribution of outcome values.
+TODO: overlap with subset_pop_dectree()
 }
 \examples{
 

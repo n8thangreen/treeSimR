@@ -1,9 +1,9 @@
 
 #' p_complete_Tx
 #'
-# total prob successfully cured of LTBI for each WHO category
-# number of ways to effectively complete Tx per LTBI
-
+#' total prob successfully cured of LTBI for each WHO category
+#' number of ways to effectively complete Tx per LTBI
+#'
 #' @param osNode.cost
 #' @param who_levels
 #'
@@ -13,6 +13,8 @@
 #' @examples
 p_complete_Tx <- function(osNode.cost,
                           who_levels) {
+
+  .Deprecated("LTBIscreeningproject::subset_pop_dectree")
 
   incid_cat <- "(350,1e+05]" #top group
 
