@@ -7,58 +7,42 @@
 #'
 #' @param osNode object of class costeffectiveness_tree
 #' @param FUN sum or product
+#' @param sample_p Sample from distirbution or use mean values. default: FALSE
 #'
 #' @return vector of values
 #' @export
 #'
-#' @seealso \link{calc_riskprofile}
+#' @seealso \code{\link{calc_riskprofile}}
 #'
-calc_pathway_probs <- function(osNode, FUN) UseMethod("calc_pathway_probs", osNode)
+calc_pathway_probs <- function(osNode, FUN, sample_p = FALSE) UseMethod("calc_pathway_probs", osNode)
 
-
-#' Calculate Total Pathway Probabilities of Decision Tree
-#'
-#' Sequential event operations.
-#' The probabilities are calculate with \code{FUN="product"}
-#' and the values are calculated with \code{FUN="sum"}.
-#'
-#' @param osNode object of class costeffectiveness_tree
-#' @param FUN sum or product
-#'
-#' @return vector of values
+#' @rdname calc_pathway_probs
 #' @export
-#'
-#' @seealso \link{calc_riskprofile}
-#'
 calc_pathway_probs.default <- function(osNode, ...) stop("Error: inappropriate object")
 
 
-#' Calculate Total Pathway Probabilities of Decision Tree
-#'
-#' Sequential event operations.
-#' The probabilities are calculate with \code{FUN="product"}
-#' and the values are calculated with \code{FUN="sum"}.
-#'
-#' @param osNode object of class costeffectiveness_tree
-#' @param FUN sum or product
-#'
-#' @return vector of values
+#' @rdname calc_pathway_probs
 #' @export
-#'
-#' @seealso \link{calc_riskprofile}
-#' @examples
-#'
 calc_pathway_probs.costeffectiveness_tree <- function(osNode,
-                                                      FUN = "product"){
+                                                      FUN = "product",
+                                                      sample_p = FALSE){
 
   FUN <- match.arg(FUN, c("sum", "product"))
+  if (!FUN %in% c("sum", "product")) stop("Error: unknown operator in 'FUN'")
 
   ##TODO:
   #check p's are uptodate and consistent
   if (all(c("pmin", "pmax") %in% osNode$fields)) {
 
     osNode$Set(p = osNode$Get("pmin")) #assume that its NA
-    rprob <- osNode$Get(meanNodeUniform)
+
+    rprob <-
+      if (sample_p) {
+        osNode$Get(sampleNodeUniform)
+      } else {
+        osNode$Get(meanNodeUniform)
+      }
+
     osNode$Set(p = rprob)
     osNode$Set(p = fill_in_missing_tree_probs(osNode, "p"))
   }
@@ -70,7 +54,7 @@ calc_pathway_probs.costeffectiveness_tree <- function(osNode,
              osNode$totalCount)
     x[is.na(x)] <- 1
 
-  } else if (FUN == "sum") {
+  } else {
 
     probs <- osNode$Get("payoff")
     x <- rep(x = probs[1],
@@ -89,11 +73,8 @@ calc_pathway_probs.costeffectiveness_tree <- function(osNode,
     if (FUN == "product") {
       x[i:pos] <- x[i:pos] * rep(x = probs[i], currentCount)
 
-    } else if (FUN == "sum") {
-
-      x[i:pos] <- x[i:pos] + rep(x = probs[i], currentCount)
     } else {
-      stop("Error: unknown operator in FUN")
+      x[i:pos] <- x[i:pos] + rep(x = probs[i], currentCount)
     }
   }
 

@@ -2,14 +2,23 @@
 % Please edit documentation in R/calc_pathway_probs.R
 \name{calc_pathway_probs}
 \alias{calc_pathway_probs}
+\alias{calc_pathway_probs.default}
+\alias{calc_pathway_probs.costeffectiveness_tree}
 \title{Calculate Total Pathway Probabilities of Decision Tree}
 \usage{
-calc_pathway_probs(osNode, FUN)
+calc_pathway_probs(osNode, FUN, sample_p = FALSE)
+
+\method{calc_pathway_probs}{default}(osNode, ...)
+
+\method{calc_pathway_probs}{costeffectiveness_tree}(osNode, FUN = "product",
+  sample_p = FALSE)
 }
 \arguments{
 \item{osNode}{object of class costeffectiveness_tree}
 
 \item{FUN}{sum or product}
+
+\item{sample_p}{Sample from distirbution or use mean values. default: FALSE}
 }
 \value{
 vector of values
@@ -20,5 +29,5 @@ The probabilities are calculate with \code{FUN="product"}
 and the values are calculated with \code{FUN="sum"}.
 }
 \seealso{
-\link{calc_riskprofile}
+\code{\link{calc_riskprofile}}
 }
