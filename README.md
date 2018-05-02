@@ -38,6 +38,6 @@ Then, to load the package, use:
 library("treeSimR")
 ```
 
-See package [Vignettes](http://htmlpreview.github.io/?https://github.com/n8thangreen/treeSimR/blob/master/inst/doc/vignette_main.html) for more details and examples.
+See package [Vignettes](https://n8thangreen.github.io/treeSimR/articles/vignette_main.html) for more details and examples.
 
 For plotting functions (e.g. C-E plane, C-E curve, risk profile (with uncertainty), tornado, spider, ...) see the [plotCostEffectiveness](https://github.com/n8thangreen/plotCostEffectiveness) package.
