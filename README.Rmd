@@ -3,6 +3,8 @@ output:
     github_document
 ---
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
 ```{r set-options, echo=FALSE, cache=FALSE}
 options(width = 1000)
 
@@ -12,6 +14,7 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
+
 
 # treeSimR <img src="man/figures/hexSticker.png" width="120" height="120" align="right" />
 

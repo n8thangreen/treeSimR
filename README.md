@@ -1,4 +1,5 @@
 
+<!-- README.md is generated from README.Rmd. Please edit that file -->
 treeSimR <img src="man/figures/hexSticker.png" width="120" height="120" align="right" />
 ========================================================================================
 
