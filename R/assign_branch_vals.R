@@ -71,10 +71,28 @@ assign_branch_vals.costeffectiveness_tree <- function(osNode,
     osNode$Set(distn = as.character(vals$distn),
                filterFun = function(x) x$name == node_val)
 
-    osNode$Set(min = vals$min,
-               filterFun = function(x) x$name == node_val)
+    ##TODO: tidy up duplication. switch? do.call?
 
-    osNode$Set(max = vals$max,
-               filterFun = function(x) x$name == node_val)
+    if ('min' %in% names(vals)) {
+      osNode$Set(min = vals$min,
+                 filterFun = function(x) x$name == node_val)
+    }
+    if ('max' %in% names(vals)) {
+
+      osNode$Set(max = vals$max,
+                 filterFun = function(x) x$name == node_val)
+    }
+    if ('shape' %in% names(vals)) {
+
+      osNode$Set(shape = vals$shape,
+                 filterFun = function(x) x$name == node_val)
+    }
+    if ('scale' %in% names(vals)) {
+
+      osNode$Set(scale = vals$scale,
+                 filterFun = function(x) x$name == node_val)
+    }
   }
+
+  return()
 }
