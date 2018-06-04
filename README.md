@@ -1,8 +1,12 @@
-treeSimR
-================
-Nathan Green
-2018-05-02
 
+treeSimR <img src="man/figures/hexSticker.png" width="120" height="120" align="right" />
+========================================================================================
+
+<!--
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr)
+[![Build Status](https://travis-ci.org/tidyverse/purrr.svg?branch=master)](https://travis-ci.org/tidyverse/purrr)
+[![Coverage Status](https://img.shields.io/codecov/c/github/tidyverse/purrr/master.svg)](https://codecov.io/github/tidyverse/purrr?branch=master)
+-->
 Introduction
 ------------
 

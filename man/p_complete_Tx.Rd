@@ -10,5 +10,6 @@ p_complete_Tx(osNode.cost, who_levels)
 \item{who_levels}{}
 }
 \description{
-p_complete_Tx
+total prob successfully cured of LTBI for each WHO category
+number of ways to effectively complete Tx per LTBI
 }
