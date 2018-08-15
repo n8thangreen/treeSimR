@@ -29,7 +29,9 @@ means_distributions <- function(param.distns){
 
                      unif = param.distns[[i]]$params["min"] + (param.distns[[i]]$params["max"] - param.distns[[i]]$params["min"])/2,
 
-                     pert = param.distns[[i]]$params["mode"])
+                     pert = param.distns[[i]]$params["mode"],
+
+                     none = param.distns[[i]]$params["mean"])
   }
 
   return(setNames(out, names(param.distns)))

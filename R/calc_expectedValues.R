@@ -112,8 +112,10 @@ MonteCarlo_expectedValues.costeffectiveness_tree <- function(osNode,
                           filterFun = function(x) x$type == "logical")
   names(NodeNames) <- NULL
 
-  out <-  matrix(data = NA,
-                 nrow = n, ncol = length(NodeNames))
+  out <- matrix(data = NA,
+                nrow = n,
+                ncol = length(NodeNames))
+
   for (i in 1:n) {
 
     # osNode2 <- calc_expectedValues(osNode)

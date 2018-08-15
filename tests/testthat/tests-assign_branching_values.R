@@ -13,7 +13,7 @@ test_that("types of return", {
                                 min = c(2, 2, NA_real_, NA_real_),
                                 max = c(2, 2, NA, NA),
                                 distn = c("unif", "unif", NA_character_, NA_character_),
-                                val_type = c("cost", "cost", "QALYloss", "QALYloss"),
+                                val_type = c("cost", "cost", "p", "p"),
                                 p = c(NA_real_, NA_real_, 3, 4))
 
   CEtree <- costeffectiveness_tree(yaml_tree = "../testdata/test1.yaml")
@@ -22,7 +22,7 @@ test_that("types of return", {
   expect_message(assign_branch_values(CEtree$osNode,
                        CEtree$osNode,
                        parameter_p = subset(scenario_parameters,
-                                            val_type == "QALYloss"),
+                                            val_type == "p"),
                        parameter_cost = subset(scenario_parameters,
                                                val_type == "cost")), NA)
 

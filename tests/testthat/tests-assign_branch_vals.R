@@ -13,12 +13,12 @@ test_that("basic", {
                                         min = c(2, 2, NA_real_, NA_real_),
                                         max = c(2, 2, NA, NA),
                                         distn = c("unif", "unif", NA_character_, NA_character_),
-                                        val_type = c("cost", "cost", "QALYloss", "QALYloss"),
+                                        val_type = c("cost", "cost", "p", "p"),
                                         p = c(NA_real_, NA_real_, 3, 4))
 
   assign_branch_vals(CEtree$osNode,
                      parameter_p = subset(scenario_parameters,
-                                          val_type == "QALYloss"),
+                                          val_type == "p"),
                      parameter_val = subset(scenario_parameters,
                                             val_type == "cost"))
 

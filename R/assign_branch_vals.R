@@ -55,9 +55,7 @@ assign_branch_vals.costeffectiveness_tree <- function(osNode,
     if (all(c("pmin", "pmax") %in% osNode$fields)) {
 
       osNode$Set(pmin = vals,
-                 filterFun = function(x) x$name == node_p)
-
-      osNode$Set(pmax = vals,
+                 pmax = vals,
                  filterFun = function(x) x$name == node_p)
     }
   }
@@ -72,25 +70,36 @@ assign_branch_vals.costeffectiveness_tree <- function(osNode,
                filterFun = function(x) x$name == node_val)
 
     ##TODO: tidy up duplication. switch? do.call?
+    ##TODO: removed filter to outside to delete commented code? test
+
+    subPop <- Traverse(osNode, filterFun = function(x) x$name == node_val)
 
     if ('min' %in% names(vals)) {
-      osNode$Set(min = vals$min,
-                 filterFun = function(x) x$name == node_val)
+      # osNode$Set(min = vals$min,
+      #            filterFun = function(x) x$name == node_val)
+
+      Set(subPop, min = vals$min)
     }
     if ('max' %in% names(vals)) {
 
-      osNode$Set(max = vals$max,
-                 filterFun = function(x) x$name == node_val)
+      # osNode$Set(max = vals$max,
+      #            filterFun = function(x) x$name == node_val)
+
+      Set(subPop, max = vals$max)
     }
     if ('shape' %in% names(vals)) {
 
-      osNode$Set(shape = vals$shape,
-                 filterFun = function(x) x$name == node_val)
+      # osNode$Set(shape = vals$shape,
+      #            filterFun = function(x) x$name == node_val)
+
+      Set(subPop, shape = vals$shape)
     }
     if ('scale' %in% names(vals)) {
 
-      osNode$Set(scale = vals$scale,
-                 filterFun = function(x) x$name == node_val)
+      # osNode$Set(scale = vals$scale,
+      #            filterFun = function(x) x$name == node_val)
+
+      Set(subPop, scale = vals$scale)
     }
   }
 
