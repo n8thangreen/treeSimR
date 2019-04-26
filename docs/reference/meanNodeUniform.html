@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Sample from Standard Distributions — sample_distributions • treeSimR</title>
+<title>Mean of a data.tree uniform node — meanNodeUniform • treeSimR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Sample from Standard Distributions — sample_distributions" />
+<meta property="og:title" content="Mean of a data.tree uniform node — meanNodeUniform" />
 
-<meta property="og:description" content="Supply a list of defined distributions (log-normal, beta, gamma, uniform, triangle)
-and one realisation is taken of each." />
+<meta property="og:description" content="Mean of a data.tree uniform node" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,43 +117,35 @@ and one realisation is taken of each." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Sample from Standard Distributions</h1>
+    <h1>Mean of a data.tree uniform node</h1>
     <small class="dont-index">Source: <a href='https://github.com/n8thangreen/treeSimR/blob/master/R/sample_distributions.R'><code>R/sample_distributions.R</code></a></small>
-    <div class="hidden name"><code>sample_distributions.Rd</code></div>
+    <div class="hidden name"><code>meanNodeUniform.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Supply a list of defined distributions (log-normal, beta, gamma, uniform, triangle)
-and one realisation is taken of each.</p>
+    <p>Mean of a data.tree uniform node</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>sample_distributions</span>(<span class='no'>param.distns</span>)</pre>
+    <pre class="usage"><span class='fu'>meanNodeUniform</span>(<span class='no'>node</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>param.distns</th>
-      <td><p>List of distribution names and their respective parameter values</p></td>
+      <th>node</th>
+      <td><p>data.tree node</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>vector of sample points</p>
+    <div class='dont-index'><p>mean_distributions</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>sample_distributions</span>(<span class='kw'>param.distns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>distn</span> <span class='kw'>=</span> <span class='st'>"unif"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>min</span><span class='kw'>=</span><span class='fl'>0</span>, <span class='kw'>max</span><span class='kw'>=</span><span class='fl'>1</span>)))</div><div class='output co'>#&gt;             
-#&gt; 1 0.08075014</div><div class='input'><span class='fu'>sample_distributions</span>(<span class='kw'>param.distns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>distn</span> <span class='kw'>=</span> <span class='st'>"lognormal"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>mean</span><span class='kw'>=</span><span class='fl'>10</span>, <span class='kw'>sd</span><span class='kw'>=</span><span class='fl'>1</span>)))</div><div class='output co'>#&gt;           
-#&gt; 1 58187.77</div><div class='input'><span class='fu'>sample_distributions</span>(<span class='kw'>param.distns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>distn</span> <span class='kw'>=</span> <span class='st'>"beta"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>mean</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>sd</span><span class='kw'>=</span><span class='fl'>0.1</span>)))</div><div class='output co'>#&gt;            
-#&gt; 1 0.4754471</div><div class='input'><span class='fu'>sample_distributions</span>(<span class='kw'>param.distns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>distn</span> <span class='kw'>=</span> <span class='st'>"beta"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0.1</span>)))</div><div class='output co'>#&gt;            
-#&gt; 1 0.7935224</div><div class='input'><span class='fu'>sample_distributions</span>(<span class='kw'>param.distns</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>distn</span> <span class='kw'>=</span> <span class='st'>"beta"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0.1</span>)),
-                                         <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>distn</span> <span class='kw'>=</span> <span class='st'>"beta"</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>a</span><span class='kw'>=</span><span class='fl'>0.1</span>, <span class='kw'>b</span><span class='kw'>=</span><span class='fl'>0.1</span>))))</div><div class='output co'>#&gt;                      
-#&gt; 1 0.9999998 0.9994582</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -162,7 +153,7 @@ and one realisation is taken of each.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#value">Value</a></li>
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

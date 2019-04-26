@@ -3,6 +3,11 @@ output:
     github_document
 ---
 
+[![Build Status](https://travis-ci.org/Health-Economics-in-R/CEdecisiontree.svg?branch=master)](https://travis-ci.org/n8thangreen/treeSimR)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/Health-Economics-in-R/CEdecisiontree?branch=master&svg=true)](https://ci.appveyor.com/project/Hn8thangreen/treeSimR)
+[![Coverage status](https://codecov.io/gh/Health-Economics-in-R/CEdecisiontree/branch/master/graph/badge.svg)](https://codecov.io/github/n8thangreen/treeSimR?branch=master)
+[![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r set-options, echo=FALSE, cache=FALSE}
@@ -17,12 +22,6 @@ knitr::opts_chunk$set(
 
 
 # treeSimR <img src="man/figures/hexSticker.png" width="120" height="120" align="right" />
-
-<!--
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/purrr)](http://cran.r-project.org/package=purrr)
-[![Build Status](https://travis-ci.org/tidyverse/purrr.svg?branch=master)](https://travis-ci.org/tidyverse/purrr)
-[![Coverage Status](https://img.shields.io/codecov/c/github/tidyverse/purrr/master.svg)](https://codecov.io/github/tidyverse/purrr?branch=master)
--->
 
 ## Introduction
 
@@ -46,7 +45,7 @@ The package leans heavily on the `data.tree` package,
 
 
 
-## Installing `treeSimR`
+## Installing treeSimR
 
 To install the development version from github:
 ```{r eval=FALSE}
@@ -63,3 +62,6 @@ See package [Vignettes](https://n8thangreen.github.io/treeSimR/articles/vignette
 
 For plotting functions (e.g. C-E plane, C-E curve, risk profile (with uncertainty), tornado, spider, ...) see the [plotCostEffectiveness](https://github.com/n8thangreen/plotCostEffectiveness) package.
 
+## License
+
+GPL-3 © 

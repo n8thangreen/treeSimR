@@ -2,11 +2,12 @@ Package: treeSimR
 Type: Package
 Title: treeSimR
 Version: 0.1.0
-Authors@R: c(person("Nathan", "Green", role = c("aut", "cre"),
-                     email = "nathan.green@imperial.ac.uk"))
-Maintainer: Nathan Green <nathan.green@imperial.ac.uk>
+Authors@R: person("Nathan", "Green", , "ngreen1@ic.ac.uk", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0003-2745-1736"))
+Maintainer: The package maintainer <ngreen1@ic.ac.uk>
 Description: Cost-effectiveness decision tree calculation
-License: MIT
+License: MIT + file LICENSE
+Encoding: UTF-8
 LazyData: TRUE
 RoxygenNote: 6.1.1
 Imports:
@@ -24,3 +25,6 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+LinkingTo: Rcpp
+URL: https://github.com/n8thangreen/treeSimR
+BugReports: https://github.com/n8thangreen/treeSimR/issues

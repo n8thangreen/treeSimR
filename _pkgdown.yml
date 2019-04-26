@@ -1,0 +1,45 @@
+
+reference:
+- title: Manipulate decision tree
+  desc: ~
+  contents:
+  - '`assign_branch_vals`'
+  - '`assign_branch_values`'
+  - '`fill_in_missing_tree_probs`'
+  - '`myPruneFun`'
+  - '`Nodelabel`'
+  - '`payoff`'
+  - '`decision`'
+- title: Calculate decision analysis outcomes
+  desc: ~
+  contents:
+  - '`MonteCarlo_expectedValues`'
+  - '`calc_expectedValues`'
+  - '`calc_pathway_probs`'
+  - '`calc_riskprofile`'
+- title: Set-up and display decision tree
+  desc: ~
+  contents:
+  - '`costeffectiveness_tree`'
+  - '`print.costeffectiveness_tree`'
+- title: Sample from and transform distributions
+  desc: ~
+  contents:
+  - '`sample_distributions`'
+  - '`get_sd_from_normalCI`'
+  - '`get_start_state_proportions`'
+  - '`MoM_beta`'
+  - '`MoM_gamma`'
+  - '`rbeta_more_params`'
+  - '`rgamma_more_params`'
+  - '`rpert`'
+  - '`means_distributions`'
+- title: Distributions on the decision tree
+  desc: ~
+  contents:
+  - '`f_NodeUniform`'
+  - '`meanNodeUniform`'
+  - '`sampleNode`'
+  - '`sampleNodeUniform`'
+
+

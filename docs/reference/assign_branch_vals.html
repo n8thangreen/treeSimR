@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Monte Carlo Forward Simulation of Decision Tree — MonteCarlo_expectedValues • treeSimR</title>
+<title>Assign Branching Values to Decision Tree — assign_branch_vals • treeSimR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Monte Carlo Forward Simulation of Decision Tree — MonteCarlo_expectedValues" />
+<meta property="og:title" content="Assign Branching Values to Decision Tree — assign_branch_vals" />
 
-<meta property="og:description" content="Results are returned for the nodes labelled logical in decision tree.
-Require at least one logical node." />
+<meta property="og:description" content="Used in deterministic sensitivity analysis." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,73 +117,50 @@ Require at least one logical node." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Monte Carlo Forward Simulation of Decision Tree</h1>
-    <small class="dont-index">Source: <a href='https://github.com/n8thangreen/treeSimR/blob/master/R/calc_expectedValues.R'><code>R/calc_expectedValues.R</code></a></small>
-    <div class="hidden name"><code>MonteCarlo_expectedValues.Rd</code></div>
+    <h1>Assign Branching Values to Decision Tree</h1>
+    <small class="dont-index">Source: <a href='https://github.com/n8thangreen/treeSimR/blob/master/R/assign_branch_vals.R'><code>R/assign_branch_vals.R</code></a></small>
+    <div class="hidden name"><code>assign_branch_vals.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Results are returned for the nodes labelled logical in decision tree.
-Require at least one logical node.</p>
+    <p>Used in deterministic sensitivity analysis.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>MonteCarlo_expectedValues</span>(<span class='no'>osNode</span>, <span class='no'>n</span>)
-
-<span class='co'># S3 method for default</span>
-<span class='fu'>MonteCarlo_expectedValues</span>(<span class='no'>osNode</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>assign_branch_vals</span>(<span class='no'>osNode</span>, <span class='no'>parameter_p</span>, <span class='no'>parameter_val</span>)
 
 <span class='co'># S3 method for costeffectiveness_tree</span>
-<span class='fu'>MonteCarlo_expectedValues</span>(<span class='no'>osNode</span>,
-  <span class='kw'>n</span> <span class='kw'>=</span> <span class='fl'>100</span>)</pre>
+<span class='fu'>assign_branch_vals</span>(<span class='no'>osNode</span>,
+  <span class='kw'>parameter_p</span> <span class='kw'>=</span> <span class='fl'>NA</span>, <span class='kw'>parameter_val</span> <span class='kw'>=</span> <span class='fl'>NA</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>osNode</th>
-      <td><p>A data.tree object with class costeffectiveness_tree</p></td>
+      <td><p>data.tree object</p></td>
     </tr>
     <tr>
-      <th>n</th>
-      <td><p>Number of simulations</p></td>
+      <th>parameter_p</th>
+      <td><p>Decision tree node probabilities</p></td>
+    </tr>
+    <tr>
+      <th>parameter_val</th>
+      <td><p>Decision tree node value</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>list containing array of n sets of expected values and sampled nodes full names</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='calc_expectedValues.html'>calc_expectedValues</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>## read-in decision tree</span>
-<span class='no'>osNode</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='costeffectiveness_tree.html'>costeffectiveness_tree</a></span>(<span class='kw'>yaml_tree</span> <span class='kw'>=</span> <span class='st'>"raw data/LTBI_dtree-cost-distns.yaml"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>osNode</span>, <span class='st'>"type"</span>, <span class='st'>"p"</span>, <span class='st'>"distn"</span>, <span class='st'>"mean"</span>, <span class='st'>"sd"</span>)
-
-<span class='co'>## calculate a single realisation expected values</span>
-<span class='no'>osNode</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='calc_expectedValues.html'>calc_expectedValues</a></span>(<span class='no'>osNode</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/print'>print</a></span>(<span class='no'>osNode</span>, <span class='st'>"type"</span>, <span class='st'>"p"</span>, <span class='st'>"distn"</span>, <span class='st'>"mean"</span>, <span class='st'>"sd"</span>, <span class='st'>"payoff"</span>)
-
-<span class='co'>## calculate multiple realisation for specific nodes</span>
-<span class='fu'>MonteCarlo_expectedValues</span>(<span class='no'>osNode</span>, <span class='kw'>n</span><span class='kw'>=</span><span class='fl'>100</span>)
-<span class='co'># }</span><div class='input'>
+    <pre class="examples"><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#see-also">See also</a></li>
-      
+            
       <li><a href="#examples">Examples</a></li>
     </ul>
 
