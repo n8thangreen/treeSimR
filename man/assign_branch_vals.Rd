@@ -7,8 +7,8 @@
 \usage{
 assign_branch_vals(osNode, parameter_p, parameter_val)
 
-\method{assign_branch_vals}{costeffectiveness_tree}(osNode, parameter_p = NA,
-  parameter_val = NA)
+\method{assign_branch_vals}{costeffectiveness_tree}(osNode,
+  parameter_p = NA, parameter_val = NA)
 }
 \arguments{
 \item{osNode}{data.tree object}

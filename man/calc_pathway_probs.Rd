@@ -10,8 +10,8 @@ calc_pathway_probs(osNode, FUN, sample_p = FALSE)
 
 \method{calc_pathway_probs}{default}(osNode, ...)
 
-\method{calc_pathway_probs}{costeffectiveness_tree}(osNode, FUN = "product",
-  sample_p = FALSE)
+\method{calc_pathway_probs}{costeffectiveness_tree}(osNode,
+  FUN = "product", sample_p = FALSE)
 }
 \arguments{
 \item{osNode}{object of class costeffectiveness_tree}

@@ -17,9 +17,25 @@
 #' sample_distributions(param.distns = list(distn = "beta", params = c(a=0.1, b=0.1)))
 #' sample_distributions(param.distns = list(list(distn = "beta", params = c(a=0.1, b=0.1)),
 #'                                          list(distn = "beta", params = c(a=0.1, b=0.1))))
-
+#'
 sample_distributions <- function(param.distns){
 
+  if (any(is.na(param.distns))) {
+    warning("NA supplied instead of distribution.")
+    return(NA)
+  }
+  if (any(is.null(param.distns))) {
+    warning("NULL supplied instead of distribution. Returning NA.")
+    return(NA)
+  }
+  if (is.numeric(param.distns) & length(param.distns) == 1) {
+    if (param.distns <= 1 & param.distns >= 0) {
+    warning("Probability supplied instead of distribution.")
+    return(param.distns)
+    }else{
+      stop("Single number supplied not a probability.")
+    }
+  }
   if (!is.list(param.distns)) stop("Distributions not specified in a list.")
 
   if (plotrix::listDepth(param.distns) == 1)

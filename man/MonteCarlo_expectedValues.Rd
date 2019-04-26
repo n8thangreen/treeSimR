@@ -10,7 +10,8 @@ MonteCarlo_expectedValues(osNode, n)
 
 \method{MonteCarlo_expectedValues}{default}(osNode, ...)
 
-\method{MonteCarlo_expectedValues}{costeffectiveness_tree}(osNode, n = 100)
+\method{MonteCarlo_expectedValues}{costeffectiveness_tree}(osNode,
+  n = 100)
 }
 \arguments{
 \item{osNode}{A data.tree object with class costeffectiveness_tree}

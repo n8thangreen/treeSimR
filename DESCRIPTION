@@ -8,7 +8,7 @@ Maintainer: Nathan Green <nathan.green@imperial.ac.uk>
 Description: Cost-effectiveness decision tree calculation
 License: MIT
 LazyData: TRUE
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Imports:
     ape,
     data.tree,

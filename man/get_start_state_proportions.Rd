@@ -4,7 +4,8 @@
 \alias{get_start_state_proportions}
 \title{Get Start State Proportions}
 \usage{
-get_start_state_proportions(path_probs, startstateid, samplesize, numsamples)
+get_start_state_proportions(path_probs, startstateid, samplesize,
+  numsamples)
 }
 \arguments{
 \item{path_probs}{Probabilitites along each branch, from root to leaf usinghj \link{calc_pathway_probs}}
