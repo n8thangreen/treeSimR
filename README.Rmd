@@ -1,7 +1,11 @@
 ---
 output:
-    github_document
+  github_document:
+    pandoc_args: --webtex
+  md_document: default
 ---
+
+# treeSimR <img src="hexSticker.png" height="139" align="right"/>
 
 [![Build Status](https://travis-ci.org/Health-Economics-in-R/CEdecisiontree.svg?branch=master)](https://travis-ci.org/n8thangreen/treeSimR)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/Health-Economics-in-R/CEdecisiontree?branch=master&svg=true)](https://ci.appveyor.com/project/Hn8thangreen/treeSimR)
@@ -19,9 +23,6 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
-
-
-# treeSimR <img src="man/figures/hexSticker.png" width="120" height="120" align="right" />
 
 ## Introduction
 

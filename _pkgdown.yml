@@ -1,5 +1,10 @@
 
 reference:
+- title: Set-up and display decision tree
+  desc: ~
+  contents:
+  - '`costeffectiveness_tree`'
+  - '`print.costeffectiveness_tree`'
 - title: Manipulate decision tree
   desc: ~
   contents:
@@ -8,8 +13,7 @@ reference:
   - '`fill_in_missing_tree_probs`'
   - '`myPruneFun`'
   - '`Nodelabel`'
-  - '`payoff`'
-  - '`decision`'
+  - '`get_start_state_proportions`'
 - title: Calculate decision analysis outcomes
   desc: ~
   contents:
@@ -17,17 +21,13 @@ reference:
   - '`calc_expectedValues`'
   - '`calc_pathway_probs`'
   - '`calc_riskprofile`'
-- title: Set-up and display decision tree
-  desc: ~
-  contents:
-  - '`costeffectiveness_tree`'
-  - '`print.costeffectiveness_tree`'
+  - '`payoff`'
+  - '`decision`'
 - title: Sample from and transform distributions
   desc: ~
   contents:
   - '`sample_distributions`'
   - '`get_sd_from_normalCI`'
-  - '`get_start_state_proportions`'
   - '`MoM_beta`'
   - '`MoM_gamma`'
   - '`rbeta_more_params`'

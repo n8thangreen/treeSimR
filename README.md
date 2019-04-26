@@ -1,4 +1,6 @@
 
+# treeSimR <img src="hexSticker.png" height="139" align="right"/>
+
 [![Build
 Status](https://travis-ci.org/Health-Economics-in-R/CEdecisiontree.svg?branch=master)](https://travis-ci.org/n8thangreen/treeSimR)
 [![AppVeyor build
@@ -8,8 +10,6 @@ status](https://codecov.io/gh/Health-Economics-in-R/CEdecisiontree/branch/master
 [![experimental](http://badges.github.io/stability-badges/dist/experimental.svg)](http://github.com/badges/stability-badges)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# treeSimR <img src="man/figures/hexSticker.png" width="120" height="120" align="right" />
 
 ## Introduction
 
