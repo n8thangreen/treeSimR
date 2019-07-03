@@ -45,17 +45,31 @@ assign_branch_vals.costeffectiveness_tree <- function(osNode,
   # assign branching _probabilities_
   for (node_p in names_p) {
 
-    vals <- subset(parameter_p,
-                   node == node_p,
-                   select = p)
+    # point values
+    if ("p" %in% names(parameter_p)) {
 
-    osNode$Set(p = vals,
-               filterFun = function(x) x$name == node_p)
+      vals <- subset(x = parameter_p,
+                     subset = (node == node_p),
+                     select = p)
 
-    if (all(c("pmin", "pmax") %in% osNode$fields)) {
+      osNode$Set(p = vals,
+                 filterFun = function(x) x$name == node_p)
 
-      osNode$Set(pmin = vals,
-                 pmax = vals,
+      if (all(c("pmin", "pmax") %in% osNode$fields)) {
+
+        osNode$Set(pmin = vals,
+                   pmax = vals,
+                   filterFun = function(x) x$name == node_p)
+      }
+      # distns
+    } else{
+
+      vals <- subset(x = parameter_p,
+                     subset = (node == node_p))
+
+      osNode$Set(distn = "unif",
+                 pmin = vals$min,
+                 pmax = vals$max,
                  filterFun = function(x) x$name == node_p)
     }
   }
@@ -64,7 +78,7 @@ assign_branch_vals.costeffectiveness_tree <- function(osNode,
   for (node_val in names_val) {
 
     vals <- subset(x = parameter_val,
-                   subset = node == node_val)
+                   subset = (node == node_val))
 
     osNode$Set(distn = as.character(vals$distn),
                filterFun = function(x) x$name == node_val)

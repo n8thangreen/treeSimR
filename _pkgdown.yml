@@ -27,13 +27,13 @@ reference:
   desc: ~
   contents:
   - '`sample_distributions`'
+  - '`means_distributions`'
   - '`get_sd_from_normalCI`'
   - '`MoM_beta`'
   - '`MoM_gamma`'
   - '`rbeta_more_params`'
   - '`rgamma_more_params`'
   - '`rpert`'
-  - '`means_distributions`'
 - title: Distributions on the decision tree
   desc: ~
   contents:
