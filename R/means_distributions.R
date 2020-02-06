@@ -10,6 +10,10 @@
 #'
 #' param.distns <- list(distn = "unif", params = c(min = 0, max = 1))
 #' means_distributions(param.distns)
+#' param.distns <- list(distn = "gamma", params = c(shape = 21, scale = 2))
+#' means_distributions(param.distns)
+#' param.distns <- list(distn = "gamma", params = c(mean = 21, scale = 2))
+#' means_distributions(param.distns)
 #'
 means_distributions <- function(param.distns){
 
@@ -21,20 +25,44 @@ means_distributions <- function(param.distns){
 
   for (i in seq_len(n.distns)) {
 
+    param_vals <- as.list(param.distns[[i]]$params)
+
     distn <- match.arg(param.distns[[i]]$distn,
                        c("lognormal", "pert", "beta", "gamma", "unif", "triangle", "none"))
 
     out[i] <- switch(distn,
-                     gamma = param.distns[[i]]$params["shape"] * param.distns[[i]]$params["scale"],
+                     gamma = do.call(mean_gamma, args = param_vals),
 
-                     unif = param.distns[[i]]$params["min"] + (param.distns[[i]]$params["max"] - param.distns[[i]]$params["min"])/2,
+                     unif = param_vals$min + (param_vals$max - param_vals$min)/2,
 
-                     pert = param.distns[[i]]$params["mode"],
+                     pert = param_vals$mode,
 
-                     none = param.distns[[i]]$params["mean"])
+                     none = param_vals$mean)
   }
 
   return(setNames(out, names(param.distns)))
 }
 
 
+#' mean_gamma
+#'
+#' @param ...
+#'
+#' @return
+#' @export
+#'
+mean_gamma <- function(...) {
+
+  params <- list(...)
+
+  if ("mean" %in% names(params)) {
+
+    return(params$mean)
+
+  } else if (all(c("shape", "scale") %in% names(params))) {
+
+    return(params$shape * params$scale)
+  }
+
+  stop("cannot determine mean")
+}
