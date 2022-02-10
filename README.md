@@ -40,7 +40,7 @@ and examples
 To install the development version from github:
 
 ``` r
-library(devtools)
+library(remotes)
 install_github("n8thangreen/treeSimR")
 ```
 
