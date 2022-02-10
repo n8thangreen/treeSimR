@@ -11,13 +11,13 @@ status](https://codecov.io/gh/Health-Economics-in-R/CEdecisiontree/branch/master
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## Introduction
-
-An R package for easy, robust forward simulating probability decision
+> An R package for easy, robust forward simulating probability decision
 trees, calculating cost-effectiveness and probability sensitivity
 analysis (PSA).
 
-Currently contains functions to:
+## Introduction
+
+The package currently contains functions to:
 
   - read-in and check tree object
   - simulate final expected outcomes
