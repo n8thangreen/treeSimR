@@ -38,7 +38,7 @@ sample_distributions <- function(param.distns){
   }
   if (!is.list(param.distns)) stop("Distributions not specified in a list.")
 
-  if (plotrix::listDepth(param.distns) == 1)
+  if (vec_depth(param.distns) == 1)
     param.distns <- list(param.distns)
 
   n.distns <- length(param.distns)
