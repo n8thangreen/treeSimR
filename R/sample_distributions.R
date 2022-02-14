@@ -19,7 +19,6 @@
 #'                                          list(distn = "beta", params = c(a=0.1, b=0.1))))
 #'
 sample_distributions <- function(param.distns){
-
   if (any(is.na(param.distns))) {
     warning("NA supplied instead of distribution.")
     return(NA)
@@ -38,7 +37,7 @@ sample_distributions <- function(param.distns){
   }
   if (!is.list(param.distns)) stop("Distributions not specified in a list.")
 
-  if (vec_depth(param.distns) == 1)
+  if (vec_depth(param.distns) <= 2)
     param.distns <- list(param.distns)
 
   n.distns <- length(param.distns)
